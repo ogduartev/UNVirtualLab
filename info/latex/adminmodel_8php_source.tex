@@ -1,0 +1,145 @@
+\hypertarget{adminmodel_8php_source}{\section{admin/adminmodel.php}
+}
+
+\begin{DoxyCode}
+00001 <?php
+00002 require\_once(\textcolor{stringliteral}{"admin/adminblock.php"});
+00003 
+\hypertarget{adminmodel_8php_source_l00004}{}\hyperlink{classadminmodel}{00004} \textcolor{keyword}{class }\hyperlink{classadminmodel}{adminmodel} \textcolor{keyword}{extends} \hyperlink{classadminblock}{adminblock}
+00005 \{  
+00006 
+00007   \textcolor{keyword}{function} createFields()
+00008   \{
+00009     $this->blockname=$this->text(\textcolor{stringliteral}{"adminmodel\_Model"});
+00010     $this->table=\textcolor{stringliteral}{"models"};
+00011     $this->sectionidname=\textcolor{stringliteral}{"modelid"};
+00012     $this->idname=\textcolor{stringliteral}{"id"};
+00013     $this->idvalue=$this->model\_id();
+00014     $this->fields=array();
+00015     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"id"},
+00016                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"adminmodel\_Identifier"}),
+00017                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"fixed"});
+00018     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"exename"},
+00019                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"adminmodel\_Executable\_name"})
+      ,
+00020                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"fixed"});
+00021     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"name"},
+00022                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"adminmodel\_Model\_name"}),
+00023                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"text"});
+00024     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"title"},
+00025                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"adminmodel\_Model\_title"}),
+00026                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"text"});
+00027     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"description"},
+00028                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"adminmodel\_Description"}),
+00029                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"longtext"});
+00030     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"enabled"},
+00031                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"adminmodel\_Enabled"}),
+00032                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"bool"});
+00033     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"section\_id"},
+00034                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"adminsection\_Father\_section"}
+      ),
+00035                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"select section"});
+00036   \}  
+00037   
+00038   \textcolor{keyword}{function} createRelations1N()
+00039   \{
+00040     $this->Relations1N=array();
+00041 
+00042     $sql=\textcolor{stringliteral}{"SELECT id FROM variables WHERE model\_id='"}.$this->model\_id().\textcolor{stringliteral}{"' LIMIT
+       1"};
+00043     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00044     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00045     \{
+00046       $linea=mysql\_fetch\_array($result,MYSQL\_ASSOC);  
+00047       $R=array(
+00048              \textcolor{stringliteral}{"title"}=>$this->text(\textcolor{stringliteral}{"adminmodel\_Plots"}),
+00049              \textcolor{stringliteral}{"table"}=>\textcolor{stringliteral}{"plots"},
+00050              \textcolor{stringliteral}{"linkname"}=>\textcolor{stringliteral}{"plotid"},
+00051              \textcolor{stringliteral}{"id1"}=>\textcolor{stringliteral}{"id"},
+00052              \textcolor{stringliteral}{"id2"}=>\textcolor{stringliteral}{"model\_id"},
+00053              \textcolor{stringliteral}{"idvalue"}=>$this->model\_id(),
+00054              \textcolor{stringliteral}{"id3"}=>\textcolor{stringliteral}{"variable\_id"},
+00055              \textcolor{stringliteral}{"idvalue3"}=>$linea[\textcolor{stringliteral}{'id'}],
+00056              \textcolor{stringliteral}{"showdbname"}=>\textcolor{stringliteral}{"name"},
+00057              \textcolor{stringliteral}{"show"}=>$this->text(\textcolor{stringliteral}{"adminmodel\_Model\_name"}));
+00058       $this->Relations1N[]=$R;
+00059       $R=array(
+00060              \textcolor{stringliteral}{"title"}=>$this->text(\textcolor{stringliteral}{"adminmodel\_2D\_Animations"}),
+00061              \textcolor{stringliteral}{"table"}=>\textcolor{stringliteral}{"2danimations"},
+00062              \textcolor{stringliteral}{"linkname"}=>\textcolor{stringliteral}{"2danimationid"},
+00063              \textcolor{stringliteral}{"id1"}=>\textcolor{stringliteral}{"id"},
+00064              \textcolor{stringliteral}{"id2"}=>\textcolor{stringliteral}{"model\_id"},
+00065              \textcolor{stringliteral}{"idvalue"}=>$this->model\_id(),
+00066              \textcolor{stringliteral}{"showdbname"}=>\textcolor{stringliteral}{"name"},
+00067              \textcolor{stringliteral}{"show"}=>$this->text(\textcolor{stringliteral}{"adminmodel\_Animation\_name"}));
+00068       $this->Relations1N[]=$R;
+00069       $R=array(
+00070              \textcolor{stringliteral}{"title"}=>$this->text(\textcolor{stringliteral}{"adminmodel\_Control\_Groups"}),
+00071              \textcolor{stringliteral}{"table"}=>\textcolor{stringliteral}{"control\_groups"},
+00072              \textcolor{stringliteral}{"linkname"}=>\textcolor{stringliteral}{"controlgroupid"},
+00073              \textcolor{stringliteral}{"id1"}=>\textcolor{stringliteral}{"id"},
+00074              \textcolor{stringliteral}{"id2"}=>\textcolor{stringliteral}{"model\_id"},
+00075              \textcolor{stringliteral}{"idvalue"}=>$this->model\_id(),
+00076              \textcolor{stringliteral}{"showdbname"}=>\textcolor{stringliteral}{"name"},
+00077              \textcolor{stringliteral}{"show"}=>$this->text(\textcolor{stringliteral}{"adminmodel\_Control\_Group\_name"}));
+00078       $this->Relations1N[]=$R;
+00079       $R=array(
+00080              \textcolor{stringliteral}{"title"}=>$this->text(\textcolor{stringliteral}{"adminmodel\_Practices"}),
+00081              \textcolor{stringliteral}{"table"}=>\textcolor{stringliteral}{"practices"},
+00082              \textcolor{stringliteral}{"linkname"}=>\textcolor{stringliteral}{"practiceid"},
+00083              \textcolor{stringliteral}{"id1"}=>\textcolor{stringliteral}{"id"},
+00084              \textcolor{stringliteral}{"id2"}=>\textcolor{stringliteral}{"model\_id"},
+00085              \textcolor{stringliteral}{"idvalue"}=>$this->model\_id(),
+00086              \textcolor{stringliteral}{"showdbname"}=>\textcolor{stringliteral}{"name"},
+00087              \textcolor{stringliteral}{"show"}=>$this->text(\textcolor{stringliteral}{"adminmodel\_Practices\_name"}));
+00088       $this->Relations1N[]=$R;
+00089     \}
+00090   \}  
+00091   
+00092   \textcolor{keyword}{function} createRelations1NN1()
+00093   \{
+00094     $this->Relations1NN1=array();
+00095     $R=array(
+00096              \textcolor{stringliteral}{"title"}=>$this->text(\textcolor{stringliteral}{"adminmodel\_Modellers"}),
+00097              \textcolor{stringliteral}{"tableLink"}=>\textcolor{stringliteral}{"modellers\_models"},
+00098              \textcolor{stringliteral}{"table2"}=>\textcolor{stringliteral}{"modellers"},
+00099              \textcolor{stringliteral}{"linkname"}=>\textcolor{stringliteral}{"modellerid"},
+00100              \textcolor{stringliteral}{"id1"}=>\textcolor{stringliteral}{"id"},
+00101              \textcolor{stringliteral}{"id2"}=>\textcolor{stringliteral}{"id"},
+00102              \textcolor{stringliteral}{"idLink1"}=>\textcolor{stringliteral}{"model\_id"},
+00103              \textcolor{stringliteral}{"idLink2"}=>\textcolor{stringliteral}{"modeller\_id"},
+00104              \textcolor{stringliteral}{"idvalue"}=>$this->model\_id(),
+00105              \textcolor{stringliteral}{"showdbname"}=>\textcolor{stringliteral}{"concat(lastname,', ',firstname)"},
+00106              \textcolor{stringliteral}{"show"}=>$this->text(\textcolor{stringliteral}{"adminmodel\_Modeller\_select"}),
+00107              \textcolor{stringliteral}{"order"}=>array(\textcolor{stringliteral}{"lastname"},\textcolor{stringliteral}{"firstname"}));
+00108              
+00109     $R[\textcolor{stringliteral}{"subfields"}][]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"id"},
+00110                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"
+      adminmodel\_Modeller\_identifier"}),
+00111                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"fixed"});
+00112     $R[\textcolor{stringliteral}{"subfields"}][]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"lastname"},
+00113                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"adminmodel\_Modeller\_lastname
+      "}),
+00114                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"text"});
+00115     $R[\textcolor{stringliteral}{"subfields"}][]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"firstname"},
+00116                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"
+      adminmodel\_Modeller\_firstname"}),
+00117                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"text"});
+00118     $R[\textcolor{stringliteral}{"subfields"}][]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"email"},
+00119                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"adminmodel\_Modeller\_email"}),
+00120                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"text"});
+00121     $this->Relations1NN1[]=$R;
+00122   \}
+00123 \}
+00124 \textcolor{comment}{/*}
+00125 \textcolor{comment}{$M=new model();}
+00126 \textcolor{comment}{if($M->connect())}
+00127 \textcolor{comment}{\{}
+00128 \textcolor{comment}{  $M->display();}
+00129 \textcolor{comment}{\}else}
+00130 \textcolor{comment}{\{}
+00131 \textcolor{comment}{  echo "error en la conexión\(\backslash\)n";}
+00132 \textcolor{comment}{\}}
+00133 \textcolor{comment}{*/}
+00134 ?>
+\end{DoxyCode}

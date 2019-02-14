@@ -1,0 +1,178 @@
+\hypertarget{MyXml_8php_source}{\section{\-My\-Xml.\-php}
+}
+
+\begin{DoxyCode}
+00001 <?php
+00002 require\_once(\textcolor{stringliteral}{"block.php"});
+00003 
+\hypertarget{MyXml_8php_source_l00004}{}\hyperlink{classMyXml}{00004} \textcolor{keyword}{class }\hyperlink{classMyXml}{MyXml} \textcolor{keyword}{extends} \hyperlink{classblock}{block}
+00005 \{
+00006   var $tree;
+00007   \textcolor{keyword}{function} readXmlFile($fn)
+00008   \{
+00009     $xmlstr=file\_get\_contents($fn,FILE\_TEXT);
+00010     $this->readXmlString($xmlstr);
+00011   \}
+00012   
+00013   \textcolor{keyword}{function} readXmlString($xmlstr)
+00014   \{
+00015     $xml = \textcolor{keyword}{new} \hyperlink{classXMLThing}{XMLThing}($xmlstr);
+00016     $this->tree = $xml->parse(); 
+00017   \}
+00018 
+00019   \textcolor{keyword}{function} tab($tab)
+00020   \{
+00021     $str=\textcolor{stringliteral}{""};
+00022     \textcolor{keywordflow}{for}($i=0;$i<$tab;$i++)
+00023     \{
+00024       $str.=\textcolor{stringliteral}{"  "};
+00025     \}
+00026     \textcolor{keywordflow}{return} $str;
+00027   \}
+00028   
+00029   \textcolor{keyword}{function} writeXmlFile($fn)
+00030   \{
+00031     $str=$this->writeXmlString();
+00032     $f=fopen($fn,\textcolor{stringliteral}{"w"});
+00033     fwrite($f,$str);
+00034     fclose($f);
+00035   \}
+00036 
+00037   \textcolor{keyword}{function} writeXmlString()
+00038   \{
+00039     $str=\textcolor{stringliteral}{""};
+00040     $str.=\textcolor{stringliteral}{"<?xml version=\(\backslash\)"1.0\(\backslash\)" encoding=\(\backslash\)"UTF-8\(\backslash\)" standalone=\(\backslash\)"no\(\backslash\)"?>\(\backslash\)n"};
+00041     \textcolor{keywordflow}{if}(is\_array($this->tree))
+00042     \{
+00043       \textcolor{keywordflow}{foreach}($this->tree as $type=>$node)
+00044       \{
+00045         $str.=$this->writeNodeString($type,$node,0);
+00046         \textcolor{keywordflow}{continue};
+00047       \}
+00048     \}
+00049     \textcolor{keywordflow}{return} $str;
+00050   \}
+00051 
+00052   \textcolor{keyword}{function} cleanString($strin)
+00053   \{
+00054     $str=$strin;
+00055     $str=str\_replace(\textcolor{stringliteral}{"\(\backslash\)""},\textcolor{stringliteral}{"\(\backslash\)\(\backslash\)\(\backslash\)""},$str);
+00056     $str=str\_replace(\textcolor{stringliteral}{"<"},\textcolor{stringliteral}{"&lt;"},$str);
+00057     $str=str\_replace(\textcolor{stringliteral}{">"},\textcolor{stringliteral}{"&gt;"},$str);
+00058     \textcolor{keywordflow}{return} $str;
+00059   \}
+00060 
+00061   \textcolor{keyword}{function} writeNodeAttributes($node,$tab)
+00062   \{
+00063     $str=\textcolor{stringliteral}{""};
+00064     \textcolor{keywordflow}{if}(isset($node[\textcolor{stringliteral}{'attributes'}]) and is\_array($node[\textcolor{stringliteral}{'attributes'}]))
+00065     \{
+00066       $str.=\textcolor{stringliteral}{"\(\backslash\)n"};
+00067       \textcolor{keywordflow}{foreach}($node[\textcolor{stringliteral}{'attributes'}] as $att=>$value)
+00068       \{
+00069         $str.=$this->tab($tab+1);
+00070         $str.=$att.\textcolor{stringliteral}{"=\(\backslash\)""}.$this->cleanString($value).\textcolor{stringliteral}{"\(\backslash\)"\(\backslash\)n"};
+00071       \}
+00072       \textcolor{keywordflow}{if}(substr($str,strlen($str)-1)==\textcolor{stringliteral}{"\(\backslash\)n"})
+00073       \{
+00074         $str=substr($str,0,strlen($str)-1);
+00075       \}
+00076     \}
+00077     \textcolor{keywordflow}{return} $str;
+00078   \}
+00079   
+00080   \textcolor{keyword}{function} writeNodeValue($node)
+00081   \{
+00082     $str=\textcolor{stringliteral}{""};
+00083     \textcolor{keywordflow}{if}(isset($node[\textcolor{stringliteral}{'value'}]) and strlen($node[\textcolor{stringliteral}{'value'}])>0)
+00084     \{
+00085       $str.=$this->cleanString($node[\textcolor{stringliteral}{'value'}]);
+00086       \textcolor{keywordflow}{if}(substr($str,strlen($str)-1)==\textcolor{stringliteral}{"\(\backslash\)n"})
+00087       \{
+00088         $str=substr($str,0,strlen($str)-1);
+00089       \}
+00090     \}
+00091     \textcolor{keywordflow}{return} $str;
+00092   \}
+00093   
+00094   \textcolor{keyword}{function} writeNodeString($type,$node,$tab)
+00095   \{
+00096     $str=\textcolor{stringliteral}{""};
+00097     \textcolor{keywordflow}{if}(is\_array($node) and array\_key\_exists(0,$node))
+00098     \{
+00099       \textcolor{keywordflow}{foreach}($node as $subnode)
+00100       \{
+00101         $str.=$this->writeNodeString($type,$subnode,$tab);
+00102       \}
+00103       \textcolor{keywordflow}{return} $str;
+00104     \}
+00105     $str.=$this->tab($tab);
+00106     $str.=\textcolor{stringliteral}{"<"}.$type;
+00107     $str.=$this->writeNodeAttributes($node,$tab);
+00108     $str.=\textcolor{stringliteral}{">"};
+00109     $str.=$this->writeNodeValue($node);
+00110     \textcolor{keywordflow}{if}(is\_array($node))
+00111     \{
+00112       \textcolor{keywordflow}{foreach}($node as $subtype=>$subnode)
+00113       \{
+00114         \textcolor{keywordflow}{if}($subtype!=\textcolor{stringliteral}{"attributes"} and $subtype!=\textcolor{stringliteral}{"value"})
+00115         \{
+00116           $str.=$this->writeNodeString($subtype,$subnode,$tab+1);
+00117         \}
+00118       \}
+00119     \}
+00120     $str.=$this->tab($tab);
+00121     $str.=\textcolor{stringliteral}{"</"}.$type.\textcolor{stringliteral}{">\(\backslash\)n"};
+00122     \textcolor{keywordflow}{return} $str;
+00123   \}
+00124   
+00125   \textcolor{keyword}{function} insertNode(&$node,$type,$subnode)
+00126   \{
+00127     \textcolor{keywordflow}{if}(!array\_key\_exists($type,$node))
+00128     \{
+00129       $node[$type]=$subnode;
+00130       \textcolor{keywordflow}{return};
+00131     \}
+00132     \textcolor{keywordflow}{if}(array\_key\_exists(0,$node[$type]))
+00133     \{
+00134       $node[$type][]=$subnode;
+00135       \textcolor{keywordflow}{return};
+00136     \}
+00137     $sn=$node[$type];
+00138     unset($node[$type]);
+00139     $node[$type]=array();
+00140     $node[$type][]=$sn;
+00141     $node[$type][]=$subnode;
+00142   \}
+00143   
+00144   \textcolor{keyword}{function} removeNode(&$node,$type,$subnode)
+00145   \{
+00146     \textcolor{keywordflow}{if}(!array\_key\_exists($type,$node))
+00147     \{
+00148       \textcolor{keywordflow}{return};
+00149     \}  
+00150     \textcolor{keywordflow}{if}(array\_key\_exists(0,$node[$type]))
+00151     \{
+00152       unset($node[$type][$subnode]);
+00153       \textcolor{keywordflow}{return};
+00154     \}
+00155     unset($node[$type]);
+00156   \}
+00157 \}
+00158 
+00159 \textcolor{comment}{/*}
+00160 \textcolor{comment}{$X=new MyXml();}
+00161 \textcolor{comment}{$X->readXmlFile("./files/1/graphics/sensores2.svg",FILE\_TEXT);}
+00162 \textcolor{comment}{print\_r($X->tree);}
+00163 \textcolor{comment}{}
+00164 \textcolor{comment}{//$X->readXmlFile("test.xml");}
+00165 \textcolor{comment}{}
+00166 \textcolor{comment}{$n=$X->tree['a'];}
+00167 \textcolor{comment}{$sn=$X->tree['a']['d'];}
+00168 \textcolor{comment}{$X->insertNode($n,'d',$sn);}
+00169 \textcolor{comment}{print\_r($n);}
+00170 \textcolor{comment}{//print\_r($X->tree);}
+00171 \textcolor{comment}{$X->writeXmlFile("testWrite.xml");}
+00172 \textcolor{comment}{*/}
+00173 ?>
+\end{DoxyCode}

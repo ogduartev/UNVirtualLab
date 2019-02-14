@@ -1,0 +1,285 @@
+\hypertarget{svgplot_8php_source}{\section{svgplot.\-php}
+}
+
+\begin{DoxyCode}
+00001 <?php
+00002 require\_once(\textcolor{stringliteral}{'block.php'});
+00003 require\_once(\textcolor{stringliteral}{'csvreader.php'});
+00004 
+\hypertarget{svgplot_8php_source_l00005}{}\hyperlink{classSVGplot}{00005} \textcolor{keyword}{class }\hyperlink{classSVGplot}{SVGplot} \textcolor{keyword}{extends} \hyperlink{classblock}{block}
+00006 \{
+00007   var $svgStr=\textcolor{stringliteral}{""};
+00008 
+00009   var $totalWidth=300;
+00010   var $totalHeight=200;
+00011 
+00012 \textcolor{comment}{// dims (%)}
+00013   var $titleHeight=10;
+00014   var $plotHeight=80;
+00015   var $legendHeight=5;
+00016   var $framePositionX=20;
+00017   var $framePositionY=5;
+00018   var $frameWidth=75;
+00019   var $frameHeight=85;
+00020   var $tagHeight=10;
+00021   var $tagWidth=20;
+00022   var $legendSeparation=20;
+00023   
+00024 
+00025 \textcolor{comment}{// data}
+00026   var $title=\textcolor{stringliteral}{""};
+00027   var $description=\textcolor{stringliteral}{""};
+00028   var $gridX=5;
+00029   var $gridY=3;
+00030   var $autoscaleX=\textcolor{charliteral}{'1'};
+00031   var $autoscaleY=\textcolor{charliteral}{'1'};
+00032   var $minX=0.0;
+00033   var $maxX=1.0;
+00034   var $minY=0.0;
+00035   var $maxY=1.0;
+00036   var $data;
+00037   var $colors;
+00038   var $legends;
+00039   var $units;
+00040   var $descriptions;
+00041   var $legendH=\textcolor{stringliteral}{""};
+00042   var $unitsH=\textcolor{stringliteral}{""};
+00043 
+00044   \textcolor{keyword}{function} \hyperlink{classSVGplot}{SVGplot}()
+00045   \{
+00046     $this->\hyperlink{classblock}{block}();
+00047     $this->totalWidth=$this->configurationSettings[\textcolor{stringliteral}{'plotWidth'}];
+00048     $this->totalHeight=$this->configurationSettings[\textcolor{stringliteral}{'plotHeight'}];
+00049     $this->data=array();
+00050     $this->colors=array();
+00051   \}
+00052   
+00053   \textcolor{keyword}{function} settings($settings)
+00054   \{
+00055     $this->\hyperlink{classtitle}{title}=$settings[\textcolor{stringliteral}{'name'}];
+00056     $this->description=$settings[\textcolor{stringliteral}{'description'}];
+00057     $this->minX=$settings[\textcolor{stringliteral}{'minX'}];
+00058     $this->maxX=$settings[\textcolor{stringliteral}{'maxX'}];
+00059     $this->minY=$settings[\textcolor{stringliteral}{'minY'}];
+00060     $this->maxY=$settings[\textcolor{stringliteral}{'maxY'}];
+00061     $this->gridX=$settings[\textcolor{stringliteral}{'gridX'}];
+00062     $this->gridY=$settings[\textcolor{stringliteral}{'gridY'}];
+00063     $this->autoscaleX=$settings[\textcolor{stringliteral}{'autoscaleX'}];
+00064     $this->autoscaleY=$settings[\textcolor{stringliteral}{'autoscaleY'}];
+00065   \}
+00066   
+00067   \textcolor{keyword}{function} \hyperlink{classtitle}{title}()
+00068   \{
+00069     $this->svgStr.=\textcolor{stringliteral}{"  <svg width='100%' height='"}.$this->titleHeight.\textcolor{stringliteral}{"%'>\(\backslash\)n"};
+00070     $strTmp;
+00071     $this->svgStr.=\textcolor{stringliteral}{"    <text class='title' x='50%' y='85%'
+       text-anchor='middle'>"}.$this->title.\textcolor{stringliteral}{"</text>\(\backslash\)n"};
+00072     $this->svgStr.=\textcolor{stringliteral}{"  </svg>\(\backslash\)n"};
+00073   \}
+00074   
+00075   \textcolor{keyword}{function} grid()
+00076   \{
+00077     \textcolor{keywordflow}{for}($i=1;$i<$this->gridX;$i++)
+00078     \{
+00079       $X=$i*100/($this->gridX);
+00080       $this->svgStr.=\textcolor{stringliteral}{"    <line class='grid' x1='"}.$X.\textcolor{stringliteral}{"%' y1='0%' x2='"}.$X.\textcolor{stringliteral}{"%'
+       y2='100%'/>\(\backslash\)n"};
+00081     \}
+00082     \textcolor{keywordflow}{for}($i=1;$i<$this->gridY;$i++)
+00083     \{
+00084       $Y=$i*100/($this->gridY);
+00085       $this->svgStr.=\textcolor{stringliteral}{"    <line class='grid' y1='"}.$Y.\textcolor{stringliteral}{"%' x1='0%' y2='"}.$Y.\textcolor{stringliteral}{"%'
+       x2='100%'/>\(\backslash\)n"};
+00086     \}  
+00087   \}
+00088   
+00089   \textcolor{keyword}{function} curves()
+00090   \{
+00091     \textcolor{keywordflow}{foreach}($this->data as $K=>$curve)
+00092     \{
+00093       $sx=$this->totalWidth*($this->frameWidth/100)/100;
+00094       $sy=$this->totalHeight*($this->frameHeight/100)*($this->plotHeight/100)/
+      100;
+00095       $this->svgStr.=\textcolor{stringliteral}{"    <g transform='scale("}.$sx.\textcolor{stringliteral}{","}.$sy.\textcolor{stringliteral}{")'>\(\backslash\)n"};
+00096       $RGB=$this->colors[$K];
+00097       $this->svgStr.=\textcolor{stringliteral}{"     <path class='curve' style='stroke:"}.$this->colors[$K
+      ].\textcolor{stringliteral}{";fill:none' d=\(\backslash\)""};
+00098       $flag=0;
+00099       \textcolor{keywordflow}{foreach}($curve as $x=>$y)
+00100       \{
+00101         \textcolor{keywordflow}{if}($flag==0)
+00102         \{
+00103           $flag=1;
+00104           $this->svgStr.=\textcolor{stringliteral}{"M"};
+00105         \}\textcolor{keywordflow}{else}
+00106         \{
+00107           $this->svgStr.=\textcolor{stringliteral}{"L"};
+00108         \}
+00109         $this->svgStr.=number\_format(($x-$this->minX)/($this->maxX-$this->minX)
+      *100,2);
+00110         $this->svgStr.=\textcolor{stringliteral}{" "};
+00111         $this->svgStr.=number\_format(100 - ($y-$this->minY)/($this->maxY-
+      $this->minY)*100,2);
+00112         $this->svgStr.=\textcolor{stringliteral}{" "};
+00113       \}
+00114       $this->svgStr.=\textcolor{stringliteral}{"\(\backslash\)"/>\(\backslash\)n"};
+00115       $this->svgStr.=\textcolor{stringliteral}{"    </g>\(\backslash\)n"};
+00116     \}
+00117   \}
+00118   
+00119   \textcolor{keyword}{function} frame()
+00120   \{
+00121     $this->svgStr.=\textcolor{stringliteral}{"   <svg  x='"}.$this->framePositionX.\textcolor{stringliteral}{"%' y='"}.$this->
+      framePositionY.\textcolor{stringliteral}{"%' width='"}.$this->frameWidth.\textcolor{stringliteral}{"%' height='"}.$this->frameHeight.\textcolor{stringliteral}{"%'>\(\backslash\)n"};
+00122     $this->svgStr.=\textcolor{stringliteral}{"     <rect class='frame' x='0' y='0' width='100%'
+       height='100%' fill='none' />\(\backslash\)n"};
+00123     $this->grid();
+00124     $this->curves();
+00125     $this->svgStr.=\textcolor{stringliteral}{"   </svg>\(\backslash\)n"};
+00126   \}
+00127   
+00128   \textcolor{keyword}{function} strNum($x)
+00129   \{
+00130     \textcolor{keywordflow}{return} number\_format($x,2);
+00131   \}
+00132   
+00133   \textcolor{keyword}{function} tagH()
+00134   \{
+00135     $this->svgStr.=\textcolor{stringliteral}{"   <svg  x='0%' y='"}.(100-1*$this->tagHeight).\textcolor{stringliteral}{"%'
+       width='100%' height='"}.$this->tagHeight.\textcolor{stringliteral}{"%'>\(\backslash\)n"};
+00136     \textcolor{keywordflow}{for}($i=0;$i<=$this->gridX;$i++)
+00137     \{
+00138       $X=$this->framePositionX+$i*($this->frameWidth)/($this->gridX);
+00139       $value=$this->strNum($this->minX+($this->maxX-$this->minX)*$i/($this->
+      gridX));
+00140       $this->svgStr.=\textcolor{stringliteral}{"    <text class='tagH' x='"}.$X.\textcolor{stringliteral}{"%' y='100%'
+       text-anchor='middle' >"}.$value.\textcolor{stringliteral}{"</text>\(\backslash\)n"};
+00141     \}
+00142     $this->svgStr.=\textcolor{stringliteral}{"   </svg>\(\backslash\)n"};
+00143   \}
+00144 
+00145   \textcolor{keyword}{function} tagV()
+00146   \{
+00147     $this->svgStr.=\textcolor{stringliteral}{"   <svg  x='0%' y='0%' width='"}.$this->tagWidth.\textcolor{stringliteral}{"%'
+       height='100%'>\(\backslash\)n"};
+00148     \textcolor{keywordflow}{for}($i=0;$i<=$this->gridY;$i++)
+00149     \{
+00150       $Y=($this->framePositionY)+$i*($this->frameHeight)/($this->gridY);
+00151       $value=$this->strNum($this->minY+($this->maxY-$this->minY)*($this->gridY-
+      $i)/($this->gridY));
+00152       $this->svgStr.=\textcolor{stringliteral}{"    <text class='tagV' x='90%' y='"}.$Y.\textcolor{stringliteral}{"%'
+       text-anchor='end' >"}.$value.\textcolor{stringliteral}{"</text>\(\backslash\)n"};
+00153     \}
+00154     $this->svgStr.=\textcolor{stringliteral}{"   </svg>\(\backslash\)n"};
+00155   \}
+00156 
+00157   \textcolor{keyword}{function} plot()
+00158   \{
+00159     $this->svgStr.=\textcolor{stringliteral}{"  <svg x='0%' y='"}.$this->titleHeight.\textcolor{stringliteral}{"%' width='100%'
+       height='"}.$this->plotHeight.\textcolor{stringliteral}{"%'>\(\backslash\)n"};
+00160     $this->frame();
+00161     $this->tagH();
+00162     $this->tagV();
+00163     $this->svgStr.=\textcolor{stringliteral}{"  </svg>\(\backslash\)n"};
+00164   \}
+00165   
+00166   \textcolor{keyword}{function} legend()
+00167   \{
+00168     $this->svgStr.=\textcolor{stringliteral}{"  <svg x='0%' y='"}.($this->plotHeight+$this->titleHeight).\textcolor{stringliteral}{"
+      %' width='100%' height='"}.(100-$this->plotHeight+$this->titleHeight).\textcolor{stringliteral}{"%'>\(\backslash\)n"};
+00169 \textcolor{comment}{//    $this->svgStr.="   <rect fill='red' x='0' y='0' width='100%'
+       height='100%' />\(\backslash\)n";}
+00170     $cnt=0;
+00171     \textcolor{keywordflow}{foreach}($this->colors as $str=>$rgb)
+00172     \{
+00173       $strTmp=$this->legends[$str];
+00174       $strTmp.=\textcolor{stringliteral}{" : ("}.$this->units[$str].\textcolor{stringliteral}{") vs ("}.$this->unitsH.\textcolor{stringliteral}{")"};
+00175       $this->svgStr.=\textcolor{stringliteral}{"   <text class='legend' title='"}.$this->descriptions[$str
+      ].\textcolor{stringliteral}{"' y='"}.(($cnt+0.5)*100/(count($this->legends)+3)).\textcolor{stringliteral}{"%' x='5%' style='fill:"}.
+      $rgb.\textcolor{stringliteral}{";text-anchor: top;;'>"}.$strTmp.\textcolor{stringliteral}{"</text>"};
+00176       $cnt++;
+00177     \}
+00178     $this->svgStr.=\textcolor{stringliteral}{"  </svg>\(\backslash\)n"};
+00179   \}
+00180   
+00181   \textcolor{keyword}{function} display()
+00182   \{
+00183     $this->plotHeight-=count($this->legends)*$this->legendHeight;
+00184     $this->svgStr.=\textcolor{stringliteral}{"<svg class='plot' title='"}.$this->description.\textcolor{stringliteral}{"'
+       id='MyPlot' width='"}.$this->totalWidth.\textcolor{stringliteral}{"px' height='"}.$this->totalHeight.\textcolor{stringliteral}{"px'>\(\backslash\)n"};
+00185     $this->svgStr.=\textcolor{stringliteral}{"  <rect class='plot' x='0' y='0' width='100%' height='100%'
+       rx='5%' ry='5%' fill='none'/>\(\backslash\)n"};
+00186     $this->\hyperlink{classtitle}{title}();
+00187     $this->plot();
+00188     $this->legend();
+00189     $this->svgStr.=\textcolor{stringliteral}{"</svg>\(\backslash\)n"};
+00190     echo $this->svgStr;
+00191   \}
+00192   
+00193   \textcolor{keyword}{function} data($plot,$resfile)
+00194   \{
+00195     $this->data=array();
+00196     $this->colors=array();
+00197     $this->legends=array();
+00198     $this->units=array();
+00199     $this->legendH=\textcolor{stringliteral}{""};
+00200     $this->unitH=\textcolor{stringliteral}{""};
+00201     $sql=\textcolor{stringliteral}{"SELECT variables.modelicaname AS MN,variables.units AS UN,
+       plots.description AS DC}
+00202 \textcolor{stringliteral}{                 FROM plots INNER JOIN variables ON
+       plots.variable\_id=variables.id WHERE plots.id='"}.$plot[\textcolor{stringliteral}{'id'}].\textcolor{stringliteral}{"'"};
+00203     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00204     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00205     \{
+00206       $linea=mysql\_fetch\_array($result,MYSQL\_ASSOC);
+00207       $this->legendH=$linea[\textcolor{stringliteral}{'MN'}];
+00208       $this->unitsH=$linea[\textcolor{stringliteral}{'UN'}];
+00209       $this->description=$linea[\textcolor{stringliteral}{'DC'}];
+00210     \}
+00211     $sql=\textcolor{stringliteral}{"SELECT curves.*,variables.modelicaname AS MN,variables.units AS
+       UN,curves.description AS DC}
+00212 \textcolor{stringliteral}{                 FROM curves INNER JOIN variables ON
+       curves.variable\_id=variables.id WHERE plot\_id='"}.$plot[\textcolor{stringliteral}{'id'}].\textcolor{stringliteral}{"'"};
+00213     $sql.=$this->enabled(\textcolor{stringliteral}{"curves"});
+00214     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00215     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00216     \{
+00217       $csv=\textcolor{keyword}{new} \hyperlink{classcsvreader}{csvreader}();
+00218       $data=$csv->readCsv($resfile);
+00219       $x=$data[$plot[\textcolor{stringliteral}{'MN'}]];
+00220       $x=array\_slice($x,$plot[\textcolor{stringliteral}{'firstdata'}]);
+00221       $mnY=array();
+00222       $mxY=array();
+00223       \textcolor{keywordflow}{while}($linea=mysql\_fetch\_array($result,MYSQL\_ASSOC))
+00224       \{
+00225         $y=$data[$linea[\textcolor{stringliteral}{'MN'}]];
+00226         $y=array\_slice($y,$plot[\textcolor{stringliteral}{'firstdata'}]);
+00227         $xy=array\_combine($x,$y);
+00228         $this->data[$linea[\textcolor{stringliteral}{'MN'}]]=$xy;
+00229         $this->colors[$linea[\textcolor{stringliteral}{'MN'}]]=\textcolor{stringliteral}{"#"}.$linea[\textcolor{stringliteral}{'colorRGB'}];
+00230         $this->legends[$linea[\textcolor{stringliteral}{'MN'}]]=$linea[\textcolor{stringliteral}{'legend'}];
+00231         $this->units[$linea[\textcolor{stringliteral}{'MN'}]]=$linea[\textcolor{stringliteral}{'UN'}];
+00232         $this->descriptions[$linea[\textcolor{stringliteral}{'MN'}]]=$linea[\textcolor{stringliteral}{'DC'}];
+00233         \textcolor{keywordflow}{if}($this->autoscaleY==1)
+00234         \{
+00235           $mnY[]=min($y);
+00236           $mxY[]=max($y);
+00237         \}
+00238       \}
+00239       \textcolor{comment}{//autoscale}
+00240       \textcolor{keywordflow}{if}($this->autoscaleX==1)
+00241       \{
+00242         $this->minX=min($x);
+00243         $this->maxX=max($x);
+00244       \}
+00245       \textcolor{keywordflow}{if}($this->autoscaleY==1)
+00246       \{
+00247         $this->minY=min($mnY);
+00248         $this->maxY=max($mxY);
+00249       \}
+00250     \}
+00251   \}
+00252 \}
+00253 
+00254 ?>
+\end{DoxyCode}

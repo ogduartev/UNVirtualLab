@@ -1,0 +1,27 @@
+\hypertarget{title_8php_source}{\section{title.\-php}
+}
+
+\begin{DoxyCode}
+00001 <?php
+00002 require\_once(\textcolor{stringliteral}{'block.php'});
+00003 
+\hypertarget{title_8php_source_l00004}{}\hyperlink{classtitle}{00004} \textcolor{keyword}{class }\hyperlink{classtitle}{title} \textcolor{keyword}{extends} \hyperlink{classblock}{block}
+00005 \{  
+00006   \textcolor{keyword}{function} display()
+00007   \{
+00008     $model\_id=$this->model\_id();
+00009     \textcolor{keywordflow}{if}($model\_id==0)
+00010     \{
+00011       \textcolor{keywordflow}{return};
+00012     \}
+00013     $sql=\textcolor{stringliteral}{"SELECT name,title FROM models WHERE id='"}.$model\_id.\textcolor{stringliteral}{"'"};
+00014     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00015     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00016     \{
+00017       $linea=mysql\_fetch\_array($result,MYSQL\_ASSOC);
+00018       echo $linea[\textcolor{stringliteral}{'title'}];
+00019     \}
+00020   \}
+00021 \}
+00022 ?>
+\end{DoxyCode}

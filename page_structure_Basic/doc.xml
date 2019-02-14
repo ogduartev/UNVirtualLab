@@ -1,0 +1,11 @@
+<block id="unvl" type="body" class="unvl">
+  <block id="body" type="div" class="body">
+    <block id="logo" type="div" class="logo"></block>
+    <block id="title_frame" type="div" class="title_frame">
+      <block id="title" type="div" class="title" action="title"></block>
+      <block id="credits" type="div" class="credits" action="credits"></block>
+    </block>
+    <block id="documentation" type="div" class="documentationEmbed" action="documentation"></block>
+  </block>
+</block>
+

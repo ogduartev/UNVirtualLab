@@ -1,0 +1,32 @@
+\hypertarget{credits_8php_source}{\section{credits.\-php}
+}
+
+\begin{DoxyCode}
+00001 <?php
+00002 require\_once(\textcolor{stringliteral}{'block.php'});
+00003 
+\hypertarget{credits_8php_source_l00004}{}\hyperlink{classcredits}{00004} \textcolor{keyword}{class }\hyperlink{classcredits}{credits} \textcolor{keyword}{extends} \hyperlink{classblock}{block}
+00005 \{  
+00006   \textcolor{keyword}{function} display()
+00007   \{
+00008     $model\_id=$this->model\_id();
+00009     \textcolor{keywordflow}{if}($model\_id==0)
+00010     \{
+00011       \textcolor{keywordflow}{return};
+00012     \}
+00013     echo \textcolor{stringliteral}{"<script type=\(\backslash\)"text/javascript\(\backslash\)">function about(modelid)\(\backslash\)n"};
+00014     echo \textcolor{stringliteral}{"\{"};
+00015     echo \textcolor{stringliteral}{" 
+       window.open('about.php?modelid='+modelid,'','scrollbars=yes,menubar=no,height="}.$this->configurationSettings[\textcolor{stringliteral}{'aboutHeight'}].\textcolor{stringliteral}{",width="}.$this->
+      configurationSettings[\textcolor{stringliteral}{'aboutWidth'}].\textcolor{stringliteral}{"
+      ,resizable=yes,toolbar=no,location=no,status=no');"};
+00016     echo \textcolor{stringliteral}{"\}"};
+00017     echo \textcolor{stringliteral}{"</script>"};
+00018     echo \textcolor{stringliteral}{"<a onclick='about(\(\backslash\)""}.$model\_id.\textcolor{stringliteral}{"\(\backslash\)")'><img src='themes/"}.$this->
+      configurationSettings[\textcolor{stringliteral}{'theme'}].\textcolor{stringliteral}{"/img/info.gif'></a>"};
+00019   \}
+00020 \}
+00021 ?>
+00022 
+00023 
+\end{DoxyCode}

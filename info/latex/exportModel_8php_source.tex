@@ -1,0 +1,148 @@
+\hypertarget{exportModel_8php_source}{\section{samples/export\-Model.php}
+}
+
+\begin{DoxyCode}
+00001 <?php
+00002 require\_once(\textcolor{stringliteral}{"../config/config.class.php"});
+00003 
+\hypertarget{exportModel_8php_source_l00004}{}\hyperlink{classexport}{00004} \textcolor{keyword}{class }\hyperlink{classexport}{export}
+00005 \{
+00006   var $tables;
+00007   var $configurationSettings;
+00008                          
+00009   \textcolor{keyword}{function} \hyperlink{classexport}{export}()
+00010   \{
+00011     $this->\hyperlink{classtables}{tables}=array();
+00012     $conf = \textcolor{keyword}{new} \hyperlink{classconfiguration}{configuration}();
+00013     $this->configurationSettings=$conf->readconfig(\textcolor{stringliteral}{'unvlconfig.txt'});
+00014   \}
+00015   
+00016   \textcolor{keyword}{function} connect()
+00017   \{
+00018     $username=\textcolor{stringliteral}{""};
+00019     $userpass=\textcolor{stringliteral}{""};
+00020     $username=$this->configurationSettings[\textcolor{stringliteral}{'DBuser'}];
+00021     $userpass=$this->configurationSettings[\textcolor{stringliteral}{'DBuserpass'}];
+00022     \textcolor{keywordflow}{if}($link=mysql\_connect($this->configurationSettings[\textcolor{stringliteral}{'DBserver'}],$username,
+      $userpass))
+00023     \{
+00024       $sql=\textcolor{stringliteral}{"USE "}.$this->configurationSettings[\textcolor{stringliteral}{'DBname'}];
+00025       \textcolor{keywordflow}{if}(!mysql\_query($sql))
+00026       \{
+00027         echo $this->text(\textcolor{stringliteral}{'about\_No\_Database\_connection'});
+00028         \textcolor{keywordflow}{return} FALSE;
+00029       \}
+00030     \}\textcolor{keywordflow}{else}
+00031     \{
+00032       \textcolor{keywordflow}{return} FALSE;
+00033     \}
+00034     \textcolor{keywordflow}{return} $link;
+00035   \}
+00036   
+00037   \textcolor{keyword}{function} exportLine($table,$line)
+00038   \{
+00039     $this->\hyperlink{classtables}{tables}[$table][]=$line;
+00040 \textcolor{comment}{//    echo $table."\(\backslash\)n";}
+00041 \textcolor{comment}{//    print\_r($line);}
+00042   \}
+00043   
+00044   \textcolor{keyword}{function} exportModellersModels($id)
+00045   \{
+00046     $modellers\_id=array();
+00047     $sql=\textcolor{stringliteral}{"SELECT * FROM modellers\_models WHERE model\_id='"}.$id.\textcolor{stringliteral}{"'"};
+00048     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{" "}.$sql);
+00049     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00050     \{
+00051       \textcolor{keywordflow}{while}($line=mysql\_fetch\_array($result,MYSQL\_ASSOC))
+00052       \{
+00053         $modellers\_id[]=$line[\textcolor{stringliteral}{"modeller\_id"}];
+00054         $this->exportLine(\textcolor{stringliteral}{"modellers\_models"},$line);
+00055       \}
+00056     \}
+00057     \textcolor{keywordflow}{return} $modellers\_id;
+00058   \}
+00059     
+00060   \textcolor{keyword}{function} exportTableArray($tn,$idn,$id)
+00061   \{
+00062     $array\_id=array();
+00063     $sql=\textcolor{stringliteral}{"SELECT * FROM "}.$tn.\textcolor{stringliteral}{" WHERE "}.$idn.\textcolor{stringliteral}{"='"}.$id.\textcolor{stringliteral}{"'"};
+00064     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{" "}.$sql);
+00065     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00066     \{
+00067       \textcolor{keywordflow}{while}($line=mysql\_fetch\_array($result,MYSQL\_ASSOC))
+00068       \{
+00069         $array\_id[]=$line[\textcolor{stringliteral}{"id"}];
+00070         $this->exportLine($tn,$line);
+00071       \}
+00072     \}
+00073     \textcolor{keywordflow}{return} $array\_id;
+00074   \}
+00075 
+00076   \textcolor{keyword}{function} exportTable($tn,$idn,$id)
+00077   \{
+00078     $sql=\textcolor{stringliteral}{"SELECT * FROM "}.$tn.\textcolor{stringliteral}{" WHERE "}.$idn.\textcolor{stringliteral}{"='"}.$id.\textcolor{stringliteral}{"'"};
+00079     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{" "}.$sql);
+00080     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00081     \{
+00082       \textcolor{keywordflow}{while}($line=mysql\_fetch\_array($result,MYSQL\_ASSOC))
+00083       \{
+00084         $this->exportLine($tn,$line);
+00085       \}
+00086     \}
+00087   \}
+00088   
+00089   \textcolor{keyword}{function} exportTable2($tn,$idn,$mid)
+00090   \{
+00091     $modellers\_id=array();
+00092     $sql=\textcolor{stringliteral}{"SELECT * FROM "}.$tn.\textcolor{stringliteral}{" WHERE "};
+00093     \textcolor{keywordflow}{foreach}($mid as $id)
+00094     \{
+00095       $sql.=$idn.\textcolor{stringliteral}{"='"}.$id.\textcolor{stringliteral}{"' OR "};
+00096     \}
+00097     $sql=substr($sql,0,strlen($sql)-4);
+00098     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{" "}.$sql);
+00099     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00100     \{
+00101       \textcolor{keywordflow}{while}($line=mysql\_fetch\_array($result,MYSQL\_ASSOC))
+00102       \{
+00103         $this->exportLine($tn,$line);
+00104       \}
+00105     \}
+00106   \}
+00107   
+00108   \textcolor{keyword}{function} exportTables($modelID)
+00109   \{
+00110     $this->exportTable(\textcolor{stringliteral}{"models"},\textcolor{stringliteral}{"id"},$modelID);
+00111     $this->exportTable(\textcolor{stringliteral}{"practices"},\textcolor{stringliteral}{"model\_id"},$modelID);
+00112     $modellers\_ID=$this->exportModellersModels($modelID);
+00113     $this->exportTable2(\textcolor{stringliteral}{"modellers"},\textcolor{stringliteral}{"id"},$modellers\_ID);
+00114     $this->exportTable(\textcolor{stringliteral}{"parameters"},\textcolor{stringliteral}{"model\_id"},$modelID);
+00115     $control\_groups\_ID=$this->exportTableArray(\textcolor{stringliteral}{"control\_groups"},\textcolor{stringliteral}{"model\_id"},
+      $modelID);
+00116     $this->exportTable2(\textcolor{stringliteral}{"controls"},\textcolor{stringliteral}{"control\_group\_id"},$control\_groups\_ID);
+00117     $this->exportTable(\textcolor{stringliteral}{"variables"},\textcolor{stringliteral}{"model\_id"},$modelID);
+00118     $plots\_ID=$this->exportTableArray(\textcolor{stringliteral}{"plots"},\textcolor{stringliteral}{"model\_id"},$modelID);
+00119     $this->exportTable2(\textcolor{stringliteral}{"curves"},\textcolor{stringliteral}{"plot\_id"},$plots\_ID);
+00120     $animations\_ID=$this->exportTableArray(\textcolor{stringliteral}{"2danimations"},\textcolor{stringliteral}{"model\_id"},$modelID);
+00121     $this->exportTable2(\textcolor{stringliteral}{"2deffects"},\textcolor{stringliteral}{"2danimation\_id"},$animations\_ID);
+00122   \}
+00123   
+00124   \textcolor{keyword}{function} exportStr()
+00125   \{
+00126     $S=serialize($this->\hyperlink{classtables}{tables});
+00127     echo $S.\textcolor{stringliteral}{"\(\backslash\)n"};
+00128   \}
+00129   
+00130 \}
+00131 
+00132 $E=\textcolor{keyword}{new} \hyperlink{classexport}{export}();
+00133 \textcolor{keywordflow}{if}($E->connect())
+00134 \{
+00135   $E->exportTables($argv[1]);
+00136   $E->exportStr();
+00137 \}\textcolor{keywordflow}{else}
+00138 \{
+00139   echo \textcolor{stringliteral}{"No DB conection\(\backslash\)n"};
+00140 \}
+00141 ?>
+\end{DoxyCode}

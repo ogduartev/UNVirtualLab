@@ -1,0 +1,41 @@
+\hypertarget{menu_8php_source}{\section{menu.\-php}
+}
+
+\begin{DoxyCode}
+00001 <?php
+00002 require\_once(\textcolor{stringliteral}{'phptliste/tlistemysql.php'});
+00003 
+00004 
+\hypertarget{menu_8php_source_l00005}{}\hyperlink{classmenu}{00005} \textcolor{keyword}{class }\hyperlink{classmenu}{menu} \textcolor{keyword}{extends} \hyperlink{classblock}{block}
+00006 \{
+00007   
+00008   \textcolor{keyword}{function} display()
+00009   \{
+00010     $data=array();
+00011     $data[\textcolor{stringliteral}{'class'}]=\textcolor{stringliteral}{"section\_name"};
+00012     $data[\textcolor{stringliteral}{'table1'}]=\textcolor{stringliteral}{"sections"};
+00013     $data[\textcolor{stringliteral}{'up\_id1'}]=\textcolor{stringliteral}{"section\_id"};
+00014     $data[\textcolor{stringliteral}{'name1'}]=\textcolor{stringliteral}{"name"};
+00015     $data[\textcolor{stringliteral}{'help1'}]=\textcolor{stringliteral}{"description"};
+00016     $data[\textcolor{stringliteral}{'link\_id1'}]=\textcolor{stringliteral}{""};
+00017     $data[\textcolor{stringliteral}{'table2'}]=\textcolor{stringliteral}{"models"};
+00018     $data[\textcolor{stringliteral}{'up\_id2'}]=\textcolor{stringliteral}{"section\_id"};
+00019     $data[\textcolor{stringliteral}{'name2'}]=\textcolor{stringliteral}{"name"};
+00020     $data[\textcolor{stringliteral}{'help2'}]=\textcolor{stringliteral}{"description"};
+00021     $data[\textcolor{stringliteral}{'url'}]=\textcolor{stringliteral}{"block.php"};
+00022     $data[\textcolor{stringliteral}{'link\_id2'}]=\textcolor{stringliteral}{"modelid"};
+00023     $tree = \textcolor{keyword}{new} \hyperlink{classtlistemysql}{tlistemysql}(\textcolor{stringliteral}{"\_1"},\textcolor{stringliteral}{""},\textcolor{stringliteral}{"menumodel"},$data,\textcolor{stringliteral}{" AND enabled=1"}) ;
+00024     $tree->display();
+00025   \}
+00026 \}
+00027 \textcolor{comment}{/*}
+00028 \textcolor{comment}{$M=new menu();}
+00029 \textcolor{comment}{if($M->connect())}
+00030 \textcolor{comment}{\{}
+00031 \textcolor{comment}{  $M->display();}
+00032 \textcolor{comment}{\}else}
+00033 \textcolor{comment}{\{}
+00034 \textcolor{comment}{  echo "error en la conexión\(\backslash\)n";}
+00035 \textcolor{comment}{\}*/}
+00036 ?>
+\end{DoxyCode}

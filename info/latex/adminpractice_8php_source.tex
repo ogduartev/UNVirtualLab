@@ -1,0 +1,49 @@
+\hypertarget{adminpractice_8php_source}{\section{admin/adminpractice.php}
+}
+
+\begin{DoxyCode}
+00001 <?php
+00002 require\_once(\textcolor{stringliteral}{"admin/adminblock.php"});
+00003 
+\hypertarget{adminpractice_8php_source_l00004}{}\hyperlink{classadminpractice}{00004} \textcolor{keyword}{class }\hyperlink{classadminpractice}{adminpractice} \textcolor{keyword}{extends} \hyperlink{classadminblock}{adminblock}
+00005 \{  
+00006 
+00007   \textcolor{keyword}{function} createFields()
+00008   \{
+00009     $this->blockname=$this->text(\textcolor{stringliteral}{"adminpractice\_Practice"});
+00010     $this->table=\textcolor{stringliteral}{"practices"};
+00011     $this->sectionidname=\textcolor{stringliteral}{"practiceid"};
+00012     $this->idname=\textcolor{stringliteral}{"id"};
+00013     $this->idvalue=$this->practice\_id();
+00014     $this->fields=array();
+00015     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"id"},
+00016                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"adminpractice\_Identifier"}),
+00017                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"fixed"});
+00018     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"name"},
+00019                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"adminpractice\_Practice\_name"}
+      ),
+00020                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"text"});
+00021     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"header"},
+00022                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"adminpractice\_Header"}),
+00023                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"longtext"});
+00024     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"description"},
+00025                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"adminpractice\_Description"}),
+00026                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"longtext"});
+00027     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"enabled"},
+00028                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"adminpractice\_Enabled"}),
+00029                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"bool"});
+00030   \}  
+00031   
+00032 \}
+00033 \textcolor{comment}{/*}
+00034 \textcolor{comment}{$M=new model();}
+00035 \textcolor{comment}{if($M->connect())}
+00036 \textcolor{comment}{\{}
+00037 \textcolor{comment}{  $M->display();}
+00038 \textcolor{comment}{\}else}
+00039 \textcolor{comment}{\{}
+00040 \textcolor{comment}{  echo "error en la conexión\(\backslash\)n";}
+00041 \textcolor{comment}{\}}
+00042 \textcolor{comment}{*/}
+00043 ?>
+\end{DoxyCode}

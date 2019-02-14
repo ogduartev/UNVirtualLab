@@ -1,0 +1,54 @@
+\hypertarget{csvreader_8php_source}{\section{csvreader.\-php}
+}
+
+\begin{DoxyCode}
+00001 <?php
+00002 
+\hypertarget{csvreader_8php_source_l00003}{}\hyperlink{classcsvreader}{00003} \textcolor{keyword}{class }\hyperlink{classcsvreader}{csvreader}
+00004 \{
+00005   \textcolor{keyword}{function} readCsv($fn)
+00006   \{
+00007     $data=array();
+00008     $f=file($fn);
+00009     $f=str\_replace(\textcolor{stringliteral}{",\(\backslash\)n"},\textcolor{stringliteral}{""},$f);
+00010     $dataName=explode(\textcolor{charliteral}{','},str\_replace(\textcolor{charliteral}{'"'},\textcolor{stringliteral}{''},$f[0]));
+00011     \textcolor{keywordflow}{foreach}($dataName as $K=>$V)
+00012     \{
+00013       $data[$V]=array();
+00014     \}
+00015     $f=array\_slice($f,1);
+00016     \textcolor{keywordflow}{foreach}($f as $line)
+00017     \{
+00018       $dataT=explode(\textcolor{stringliteral}{","},$line);
+00019       \textcolor{keywordflow}{foreach}($dataT as $K=>$D)
+00020       \{
+00021         $data[$dataName[$K]][]=$D;
+00022       \}
+00023     \}
+00024     \textcolor{keywordflow}{return} $data;
+00025    \textcolor{comment}{//   $data es un arreglo con los valores de cada variable}
+00026   \}
+00027   
+00028   \textcolor{keyword}{function} readSync($fn)
+00029   \{
+00030     $data=$this->readCsv($fn);
+00031    \textcolor{comment}{//   $dataSync es un arreglo con variables vs time}
+00032 
+00033     $dataSync=array();
+00034     \textcolor{keywordflow}{foreach}($data as $K=>$V)
+00035     \{
+00036       $DD=array();
+00037       \textcolor{keywordflow}{foreach}($data[\textcolor{stringliteral}{'time'}] as $KK=>$VV)
+00038       \{
+00039         $DD[$VV]=$V[$KK];
+00040       \}
+00041       $dataSync[$K]=$DD;
+00042     \}
+00043     \textcolor{keywordflow}{return} $dataSync;
+00044   \}
+00045 
+00046 
+00047 \}
+00048 
+00049 ?>
+\end{DoxyCode}

@@ -1,0 +1,84 @@
+\hypertarget{admin_8php_source}{\section{admin.\-php}
+}
+
+\begin{DoxyCode}
+00001 <?php
+00002 require\_once(\textcolor{stringliteral}{'block.php'});
+00003 require\_once(\textcolor{stringliteral}{'admin/adminlogin.php'});
+00004 require\_once(\textcolor{stringliteral}{'admin/adminlogout.php'});
+00005 require\_once(\textcolor{stringliteral}{'admin/session.php'});
+00006 require\_once(\textcolor{stringliteral}{'admin/menuadmin.php'});
+00007 require\_once(\textcolor{stringliteral}{'admin/adminmodel.php'});
+00008 require\_once(\textcolor{stringliteral}{'admin/adminplot.php'});
+00009 require\_once(\textcolor{stringliteral}{'admin/admin2danim.php'});
+00010 require\_once(\textcolor{stringliteral}{'admin/admin2deffect.php'});
+00011 require\_once(\textcolor{stringliteral}{'admin/admincontrol.php'});
+00012 require\_once(\textcolor{stringliteral}{'admin/adminpractice.php'});
+00013 require\_once(\textcolor{stringliteral}{'admin/adminmodelfiles.php'});
+00014 require\_once(\textcolor{stringliteral}{'admin/adminsection.php'});
+00015 require\_once(\textcolor{stringliteral}{'admin/databasemanager.php'});
+00016 
+00017 
+00018 $B=\textcolor{keyword}{new} \hyperlink{classblock}{block}();
+00019 \textcolor{keywordflow}{if}($B->connect())
+00020 \{
+00021   $xmlFN=\textcolor{stringliteral}{"page\_structure/admin.xml"};
+00022   $section\_id=$B->section\_id();
+00023   $model\_id=$B->model\_id();
+00024   $modeller\_id=$B->modeller\_id();
+00025   $plot\_id=$B->plot\_id();
+00026   $curve\_id=$B->curve\_id();
+00027   $control\_group\_id=$B->control\_group\_id();
+00028   $control\_id=$B->control\_id();
+00029   $practice\_id=$B->practice\_id();
+00030   $c2danim\_id=$B->c2danimation\_id();
+00031   $c2deffect\_id=$B->c2deffect\_id();
+00032   $modeller\_id=$B->modeller\_id();
+00033 
+00034   session\_start();
+00035   \textcolor{keywordflow}{if}(!isset($\_SESSION[\textcolor{stringliteral}{'UNVL\_SESSION\_UNVL'}]))
+00036   \{
+00037     $SM=\textcolor{keyword}{new} \hyperlink{classsessionManager}{sessionManager}();
+00038     \textcolor{keywordflow}{if}(isset($\_POST[\textcolor{stringliteral}{'loginsubmit'}]) and $SM->verify())
+00039     \{
+00040       $xmlFN=\textcolor{stringliteral}{"page\_structure/admin.xml"};
+00041     \}\textcolor{keywordflow}{else}
+00042     \{
+00043       $xmlFN=\textcolor{stringliteral}{"page\_structure/login.xml"};
+00044     \}
+00045   \}elseif(isset($\_POST[\textcolor{stringliteral}{'exitsubmit'}]))
+00046   \{
+00047     $xmlFN=\textcolor{stringliteral}{"page\_structure/login.xml"};
+00048     session\_unset();
+00049   \}elseif($section\_id > 0)
+00050   \{
+00051     $xmlFN=\textcolor{stringliteral}{"page\_structure/adminsection.xml"};
+00052   \}elseif($model\_id > 0)
+00053   \{
+00054     $xmlFN=\textcolor{stringliteral}{"page\_structure/adminmodel.xml"};
+00055   \}elseif($plot\_id > 0 )
+00056   \{
+00057     $xmlFN=\textcolor{stringliteral}{"page\_structure/adminplot.xml"};
+00058   \}elseif($curve\_id > 0)
+00059   \{
+00060     $xmlFN=\textcolor{stringliteral}{"page\_structure/adminplot.xml"};
+00061   \}elseif($control\_group\_id > 0)
+00062   \{
+00063     $xmlFN=\textcolor{stringliteral}{"page\_structure/admincontrol.xml"};
+00064   \}elseif($control\_id > 0)
+00065   \{
+00066     $xmlFN=\textcolor{stringliteral}{"page\_structure/admincontrol.xml"};
+00067   \}elseif($practice\_id > 0)
+00068   \{
+00069     $xmlFN=\textcolor{stringliteral}{"page\_structure/adminpractice.xml"};
+00070   \}elseif($c2danim\_id > 0)
+00071   \{
+00072     $xmlFN=\textcolor{stringliteral}{"page\_structure/admin2danim.xml"};
+00073   \}elseif($c2deffect\_id > 0)
+00074   \{
+00075     $xmlFN=\textcolor{stringliteral}{"page\_structure/admin2deffect.xml"};
+00076   \}
+00077   $B->html($xmlFN);
+00078 \}
+00079 ?>
+\end{DoxyCode}

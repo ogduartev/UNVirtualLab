@@ -1,0 +1,117 @@
+\hypertarget{admincontrol_8php_source}{\section{admin/admincontrol.php}
+}
+
+\begin{DoxyCode}
+00001 <?php
+00002 require\_once(\textcolor{stringliteral}{"admin/adminblock.php"});
+00003 
+\hypertarget{admincontrol_8php_source_l00004}{}\hyperlink{classadmincontrol}{00004} \textcolor{keyword}{class }\hyperlink{classadmincontrol}{admincontrol} \textcolor{keyword}{extends} \hyperlink{classadminblock}{adminblock}
+00005 \{  
+00006 
+00007   \textcolor{keyword}{function} createFields()
+00008   \{
+00009     $this->varpar=\textcolor{stringliteral}{"parameter"};
+00010     $this->blockname=$this->text(\textcolor{stringliteral}{"admincontrol\_Control\_group"});
+00011     $this->table=\textcolor{stringliteral}{"control\_groups"};
+00012     $this->sectionidname=\textcolor{stringliteral}{"controlgroupid"};
+00013     $this->idname=\textcolor{stringliteral}{"id"};
+00014     $this->idvalue=$this->control\_group\_id();
+00015     $this->fields=array();
+00016     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"id"},
+00017                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"admincontrol\_Identifier"}),
+00018                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"fixed"});
+00019     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"model\_id"},
+00020                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"
+      admincontrol\_Model\_identifier"}),
+00021                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"model link"});
+00022     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"name"},
+00023                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"admincontrol\_Name"}),
+00024                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"text"});
+00025     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"description"},
+00026                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"admincontrol\_Description"}),
+00027                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"longtext"});
+00028     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"enabled"},
+00029                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"admincontrol\_Enabled"}),
+00030                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"bool"});
+00031   \}  
+00032   
+00033   \textcolor{keyword}{function} createRelations1N1N()
+00034   \{
+00035     $this->Relations1N1N=array();
+00036     $R=array(
+00037              \textcolor{stringliteral}{"title"}=>$this->text(\textcolor{stringliteral}{"admincontrol\_Controls"}),
+00038              \textcolor{stringliteral}{"table"}=>\textcolor{stringliteral}{"controls"},
+00039              \textcolor{stringliteral}{"linkname"}=>\textcolor{stringliteral}{"controlid"},
+00040              \textcolor{stringliteral}{"id1"}=>\textcolor{stringliteral}{"id"},
+00041              \textcolor{stringliteral}{"id2"}=>\textcolor{stringliteral}{"control\_group\_id"},
+00042              \textcolor{stringliteral}{"idvalue"}=>$this->control\_group\_id(),
+00043              \textcolor{stringliteral}{"showdbname"}=>\textcolor{stringliteral}{"name"},
+00044              \textcolor{stringliteral}{"show"}=>$this->text(\textcolor{stringliteral}{"admincontrol\_Control\_name"}),
+00045              \textcolor{stringliteral}{"subfields"}=>array());
+00046              
+00047     $R[\textcolor{stringliteral}{"subfields"}][]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"id"},
+00048                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"admincontrol\_Identifier"}),
+00049                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"fixed"});
+00050     $R[\textcolor{stringliteral}{"subfields"}][]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"name"},
+00051                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"admincontrol\_Name"}),
+00052                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"text"});
+00053     $R[\textcolor{stringliteral}{"subfields"}][]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"value"},
+00054                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"admincontrol\_Value"}),
+00055                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"text"});
+00056     $R[\textcolor{stringliteral}{"subfields"}][]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"enabled"},
+00057                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"admincontrol\_Enabled"}),
+00058                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"bool"});
+00059     $R[\textcolor{stringliteral}{"subfields"}][]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"min"},
+00060                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"admincontrol\_Minimum"}),
+00061                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"text"});
+00062     $R[\textcolor{stringliteral}{"subfields"}][]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"max"},
+00063                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"admincontrol\_Maximum"}),
+00064                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"text"});
+00065     $R[\textcolor{stringliteral}{"subfields"}][]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"step"},
+00066                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"admincontrol\_Step"}),
+00067                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"text"});
+00068     $R[\textcolor{stringliteral}{"subfields"}][]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"allowedvalues"},
+00069                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"admincontrol\_Allowed\_values"}
+      ),
+00070                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"longtext"});
+00071     $R[\textcolor{stringliteral}{"subfields"}][]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"description"},
+00072                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"admincontrol\_Description"}),
+00073                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"longtext"});
+00074     $R[\textcolor{stringliteral}{"subfields"}][\textcolor{stringliteral}{'parameter\_id'}]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"parameter\_id"},
+00075                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"admincontrol\_Parameter"}),
+00076                           \textcolor{stringliteral}{"model\_id"}=>$this->findModelId(),
+00077                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"select parameter"});
+00078     $this->Relations1N1N[]=$R;
+00079   \}  
+00080 
+00081   \textcolor{keyword}{function} findModelId()
+00082   \{
+00083     $sql=\textcolor{stringliteral}{"SELECT model\_id FROM control\_groups WHERE id="}.$this->idvalue;
+00084     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00085     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00086     \{
+00087       $linea=mysql\_fetch\_array($result,MYSQL\_ASSOC);
+00088       \textcolor{keywordflow}{return}($linea[\textcolor{stringliteral}{'model\_id'}]);
+00089     \}
+00090     \textcolor{keywordflow}{return} 0;
+00091   \}
+00092   
+00093   \textcolor{keyword}{function} update()
+00094   \{
+00095     \textcolor{keywordflow}{if}(isset($\_POST[\textcolor{stringliteral}{'update'}]))
+00096     \{
+00097       $DB=\textcolor{keyword}{new} \hyperlink{classdatabasemanager}{databasemanager}();
+00098       \textcolor{keywordflow}{if}(isset($\_POST[\textcolor{stringliteral}{'controlid'}]))
+00099       \{
+00100         $DB->update(\textcolor{stringliteral}{"controls"},\textcolor{stringliteral}{"id"},$\_POST[\textcolor{stringliteral}{'controlid'}]);
+00101       \}\textcolor{keywordflow}{else}
+00102       \{
+00103         $DB->update($this->table,$this->idname,$this->idvalue);
+00104       \}
+00105     \}
+00106   \}
+00107     
+00108   
+00109 \}
+00110 ?>
+\end{DoxyCode}

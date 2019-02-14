@@ -1,0 +1,637 @@
+\hypertarget{tlistemysql_8php_source}{\section{phptliste/tlistemysql.php}
+}
+
+\begin{DoxyCode}
+00001 <?php
+00002 require\_once(\textcolor{stringliteral}{"tliste\_rd\_l.php"}); 
+00003 \textcolor{comment}{/*}
+00004 \textcolor{comment}{ ******************************************************************************}
+00005 \textcolor{comment}{ *  Fichier: tliste.php}
+00006 \textcolor{comment}{ *  Author : R. BERTHOU}
+00007 \textcolor{comment}{ *  E-Mail : rbl@berthou.com}
+00008 \textcolor{comment}{ *  URL    : http://www.javaside.com  http://www.berthou.com}
+00009 \textcolor{comment}{ ******************************************************************************}
+00010 \textcolor{comment}{ *  Ver  * Author     *  DATE      * Description}
+00011 \textcolor{comment}{ * ------*------------*-MM-DD-YYYY-*-------------------------------------------}
+00012 \textcolor{comment}{ *  1.00 * R.BERTHOU  * 18/01/2008 * Create }
+00013 \textcolor{comment}{ * ****************************************************************************
+      **}
+00014 \textcolor{comment}{ */}
+00015  \textcolor{comment}{// ----- Constantes for tListe}
+00016   define(\textcolor{stringliteral}{"TLISTE\_CSEP"}, \textcolor{stringliteral}{"§
+
+class tlistemysql \{
+  var $\_id   = "" ;
+  var $style ;
+  var $imagePath ;
+  var $sFile     ;
+  var $sTarget   ;
+  var $node      ;
+  
+  var $url       ;
+  var $param     ;
+  
+// Tableau d'elements
+  var $arElt  ;
+  var $nbElt = 0 ;  
+   
+  var $lnode = 0 ;
+  var $iOpen = 0 ;
+  
+  var $condition="";
+
+  function tlistemysql($idd = "", $sf = "", $cc = "p1",$sqldata,$condition="") 
+  \{  
+    $this->condition=$condition;
+    $this->arElt = array() ;
+    $this->nbElt = 0 ;
+    
+    $this->\_id = $idd ;
+    
+    $this->style = $sqldata['class'] ;
+    
+    $this->getParameter($sf) ;
+    
+    $this->readMysql($sqldata,0,0);
+
+    $this->initBar();
+    $this->restoreNode();
+    $this->saveNode();
+  \}  
+  
+  function getParameter( $sf ) 
+  \{  
+    $this->param = "" ;
+    $this->url = $\_SERVER['REQUEST\_URI'] ;
+
+    if (isset($\_REQUEST[$this->\_id.'img'])) 
+    \{
+      $this->imagePath=$\_REQUEST[$this->\_id.'img'];
+      $this->param .= "&".$this->\_id."img=".$this->imagePath ;
+    \}
+    else 
+    \{
+      $this->imagePath = "./phptliste/img/ot";
+    \}
+  
+  
+    if (isset($\_REQUEST[$this->\_id.'file'])) 
+    \{
+      $this->sFile=$\_REQUEST[$this->\_id.'file'];
+      $this->param .= "&".$this->\_id."file=".$this->sFile ;
+    \}
+    else 
+    \{
+      if ($sf === "") \{
+        $this->sFile="./phptliste/txt/tliste.txt";
+      \} 
+      else
+      \{
+        $this->sFile=$sf;
+      \}
+    \}
+  
+    // recherche de la target de default
+    if (isset($\_REQUEST[$this->\_id.'target'])) 
+    \{
+      $this->sTarget=$\_REQUEST[$this->\_id.'target'];
+      $this->param .= "&".$this->\_id."target=".$this->sTarget ;
+    \}
+    else 
+    \{
+      $this->sTarget="\_blank";
+    \}
+  
+    // recherche de l etat des noeuds
+    if (isset($\_REQUEST[$this->\_id.'node'])) 
+    \{
+      $this->node=$\_REQUEST[$this->\_id.'node'];
+      $tmp=$this->\_id."node=".$this->node ;
+
+      $this->url = str\_replace("&".$tmp,"",$this->url) ;
+      $this->url = str\_replace($tmp."&","",$this->url) ;
+      $this->url = str\_replace($tmp,"",$this->url) ;
+      
+    \}
+    else 
+    \{
+      $this->node="";
+    \}
+    if ( !strpos($this->url,'?')  ) \{
+        $this->url = $this->url . "?" ;
+    \} else \{
+        $this->url = $this->url . "&" ;
+    \}
+  \}
+
+  function readMysql($sqldata,$id,$level)
+  \{
+    $sql="SELECT * FROM ".$sqldata['table1']. " WHERE ".$sqldata['up\_id1'];
+    if($id==0)
+    \{
+      $sql.=" IS NULL";
+    \}else
+    \{
+      $sql.="=".$id;
+    \}
+    $sql.=$this->condition;
+    $sql.=" ORDER BY ".$sqldata['name1'];
+    $result=mysql\_query($sql) or die(mysql\_error().": ".$sql);
+    if($result and mysql\_num\_rows($result)>0)
+    \{
+      while($linea=mysql\_fetch\_array($result,MYSQL\_ASSOC))
+      \{
+        $elt=new rd\_l();
+        $elt->sDesc=$linea[$sqldata['name1']];
+        $elt->sURL="";
+        if(strlen($sqldata['link\_id1'])>1)
+        \{
+         
+       $elt->sURL=$linea[$sqldata['url']]."?".$sqldata['link\_id1']."=".$linea['id'];
+        \}
+        $elt->sHelp=$linea[$sqldata['help1']];
+        $elt->sTarg="";
+        $elt->iN=$level;
+        $elt->iE= '0n';        // Image Number
+        $elt->iS= 1;        // Open or Close
+        $this->arElt[$this->nbElt] = $elt ;
+        $this->nbElt++ ;
+        $this->readMysql($sqldata,$linea['id'],$level+1);
+     \}
+    \}
+    
+    $sql="SELECT * FROM ".$sqldata['table2']. " WHERE ".$sqldata['up\_id2'];
+    if($id==0)
+    \{
+      $sql.=" IS NULL";
+    \}else
+    \{
+      $sql.="=".$id;
+    \}
+    $sql.=$this->condition;
+    $sql.=" ORDER BY ".$sqldata['name2'];
+    $result=mysql\_query($sql) or die(mysql\_error().": ".$sql);
+    if($result and mysql\_num\_rows($result)>0)
+    \{
+      while($linea=mysql\_fetch\_array($result,MYSQL\_ASSOC))
+      \{
+        $elt=new rd\_l();
+        $elt->sDesc=$linea[$sqldata['name2']];
+//        $elt->sURL=$linea[$sqldata['url']]."?modelid=".$linea['id'];
+       
+       $elt->sURL=$linea[$sqldata['url']]."?".$sqldata['link\_id2']."=".$linea['id'];
+        $elt->sHelp=$linea[$sqldata['help2']];
+        $elt->sTarg="";
+        $elt->iN=$level;
+        $elt->iE= 90;        // Image Number
+        $elt->iS= 1;        // Open or Close
+        $this->arElt[$this->nbElt] = $elt ;
+        $this->nbElt++ ;
+     \}
+    \}
+    return;
+  \}
+   
+  function display( ) 
+  \{
+    // global $arElt, $nbElt ;
+  
+    $iNo = 0 ;
+    for ($i=0; $i<count($this->arElt); $i=$i+1)
+    \{
+      $elt = $this->arElt[$i] ;
+      $elt->draw($iNo, $this);
+      if (($elt->iS === 0) || ($elt->iS === 1)) $iNo++ ;
+    \}
+  \}
+
+  function addElt($xlt) 
+  \{
+//    global $arElt, $nbElt, $sTarget ;
+    
+    $elt = new rd\_l() ;
+    $elt->setLine( $xlt, $this->sTarget ) ;
+  
+    if ($elt->iN > -1 && $elt->iN < 90 ) 
+    \{
+      $this->arElt[$this->nbElt] = $elt ;
+      $this->nbElt++ ;
+    \}
+  \}
+
+  function initBar()
+  \{
+  //  global $arElt  ;
+    
+    $i=count($this->arElt)-1 ;
+    $i4Prev=0;
+    $iNPrev=0;
+    $iNFin=99;
+  
+    while ($i >= 0 )
+    \{
+      if ($iNPrev === 0) $iNFin = 99 ;
+          
+      $elt = $this->arElt[ $i ] ;
+      $i-- ;
+      
+      if ( $elt->iN > $iNPrev ) 
+      \{  // Fin de branche
+        $elt->i4 = 1 + $i4Prev + (1 << $elt->iN ) ;
+        $i4Prev += (1 << $elt->iN ) ;
+        $iNFin = $elt->iN ;
+      \}
+      else 
+      \{
+        if ( $elt->iN === $iNPrev ) 
+        \{
+          $elt->i4 = $i4Prev ;
+        \}
+        else 
+        \{
+          if ($iNFin != 99) 
+          \{    // Node
+            if ($elt->iS === -1) 
+            \{
+              $elt->iS = ( $elt->iE & 1 ) ;
+              $elt->iE -= $elt->iS ;
+            \}
+          \}
+          $i4Prev = ( $i4Prev - (1 << $iNPrev ) ) ;
+          $elt->i4 = $i4Prev  ;
+          if ( ($elt->iN != $iNFin) && ($elt->iN > 0 ) ) 
+          \{
+            if ( ($i4Prev & (1 << $elt->iN)) != (1 << $elt->iN) ) 
+            \{
+              $iNFin = $elt->iN ;
+              $i4Prev = ( $i4Prev + (1 << ($iNPrev-1) ) ) ;
+              $elt->i4 = 1 + $i4Prev;
+            \}
+          \}
+        \}
+      \}
+      $iNPrev = $elt->iN ;
+    \}
+  \} 
+
+  /**
+   * restoreNode : restore nodes states
+   */
+  function restoreNode() 
+  \{
+  //  global $lnode, $node, $arElt ;
+  
+    if (is\_null($this->node) || trim($this->node) === "") return ;
+          
+    $this->lnode = doubleval($this->node) ;
+    $iNo = 0 ;
+  
+    for ($i=0; $i<count($this->arElt); $i=$i+1)
+    \{
+      $elt = $this->arElt[$i] ;
+      if ( $elt->iS > -1) 
+      \{
+        $l = $this->lnode & (1 << $iNo) ;                
+        if ($l) 
+          $elt->open() ;
+        else
+            $elt->close() ;
+        $iNo++ ;
+      \}
+    \}
+  \}
+
+  /**
+   * saveNode  : build lnode value
+   */
+  function saveNode() 
+  \{
+  //  global $lnode, $arElt ;
+  
+    /* for each elements */
+    $iNo = 0 ;
+  
+    for ($i=0; $i<count($this->arElt); $i=$i+1)
+    \{
+      $elt = $this->arElt[$i] ;
+      if ( $elt->iS > -1) 
+      \{
+        if ( $elt->iS > 0) 
+        \{
+          $this->lnode = $this->lnode | (1 << $iNo) ;                
+        \}
+        $iNo++ ;
+      \}
+    \}
+  \}
+\}
+// ------------------------------------ 
+//  End Source...
+// ------------------------------------
+?>
+"});
+00017 
+\hypertarget{tlistemysql_8php_source_l00018}{}\hyperlink{classtlistemysql}{00018} \textcolor{keyword}{class }\hyperlink{classtlistemysql}{tlistemysql} \{
+00019   var $\_id   = \textcolor{stringliteral}{""} ;
+00020   var $style ;
+00021   var $imagePath ;
+00022   var $sFile     ;
+00023   var $sTarget   ;
+00024   var $node      ;
+00025   
+00026   var $url       ;
+00027   var $param     ;
+00028   
+00029 \textcolor{comment}{// Tableau d'elements}
+00030   var $arElt  ;
+00031   var $nbElt = 0 ;  
+00032    
+00033   var $lnode = 0 ;
+00034   var $iOpen = 0 ;
+00035   
+00036   var $condition=\textcolor{stringliteral}{""};
+00037 
+00038   \textcolor{keyword}{function} \hyperlink{classtlistemysql}{tlistemysql}($idd = \textcolor{stringliteral}{""}, $sf = \textcolor{stringliteral}{""}, $cc = \textcolor{stringliteral}{"p1"},$sqldata,$condition=\textcolor{stringliteral}{""}) 
+00039   \{  
+00040     $this->condition=$condition;
+00041     $this->arElt = array() ;
+00042     $this->nbElt = 0 ;
+00043     
+00044     $this->\_id = $idd ;
+00045     
+00046     $this->style = $sqldata[\textcolor{stringliteral}{'class'}] ;
+00047     
+00048     $this->getParameter($sf) ;
+00049     
+00050     $this->readMysql($sqldata,0,0);
+00051 
+00052     $this->initBar();
+00053     $this->\hyperlink{classtlistemysql_a90b5cddbe5cda56f32fee824f6d345ba}{restoreNode}();
+00054     $this->\hyperlink{classtlistemysql_a43c24fd4e27b46f3ac409d1a8a16623b}{saveNode}();
+00055   \}  
+00056   
+00057   \textcolor{keyword}{function} getParameter( $sf ) 
+00058   \{  
+00059     $this->param = \textcolor{stringliteral}{""} ;
+00060     $this->url = $\_SERVER[\textcolor{stringliteral}{'REQUEST\_URI'}] ;
+00061 
+00062     \textcolor{keywordflow}{if} (isset($\_REQUEST[$this->\_id.\textcolor{stringliteral}{'img'}])) 
+00063     \{
+00064       $this->imagePath=$\_REQUEST[$this->\_id.\textcolor{stringliteral}{'img'}];
+00065       $this->param .= \textcolor{stringliteral}{"&"}.$this->\_id.\textcolor{stringliteral}{"img="}.$this->imagePath ;
+00066     \}
+00067     \textcolor{keywordflow}{else} 
+00068     \{
+00069       $this->imagePath = \textcolor{stringliteral}{"./phptliste/img/ot"};
+00070     \}
+00071   
+00072   
+00073     \textcolor{keywordflow}{if} (isset($\_REQUEST[$this->\_id.\textcolor{stringliteral}{'file'}])) 
+00074     \{
+00075       $this->sFile=$\_REQUEST[$this->\_id.\textcolor{stringliteral}{'file'}];
+00076       $this->param .= \textcolor{stringliteral}{"&"}.$this->\_id.\textcolor{stringliteral}{"file="}.$this->sFile ;
+00077     \}
+00078     \textcolor{keywordflow}{else} 
+00079     \{
+00080       \textcolor{keywordflow}{if} ($sf === \textcolor{stringliteral}{""}) \{
+00081         $this->sFile=\textcolor{stringliteral}{"./phptliste/txt/tliste.txt"};
+00082       \} 
+00083       \textcolor{keywordflow}{else}
+00084       \{
+00085         $this->sFile=$sf;
+00086       \}
+00087     \}
+00088   
+00089     \textcolor{comment}{// recherche de la target de default}
+00090     \textcolor{keywordflow}{if} (isset($\_REQUEST[$this->\_id.\textcolor{stringliteral}{'target'}])) 
+00091     \{
+00092       $this->sTarget=$\_REQUEST[$this->\_id.\textcolor{stringliteral}{'target'}];
+00093       $this->param .= \textcolor{stringliteral}{"&"}.$this->\_id.\textcolor{stringliteral}{"target="}.$this->sTarget ;
+00094     \}
+00095     \textcolor{keywordflow}{else} 
+00096     \{
+00097       $this->sTarget=\textcolor{stringliteral}{"\_blank"};
+00098     \}
+00099   
+00100     \textcolor{comment}{// recherche de l etat des noeuds}
+00101     \textcolor{keywordflow}{if} (isset($\_REQUEST[$this->\_id.\textcolor{stringliteral}{'node'}])) 
+00102     \{
+00103       $this->node=$\_REQUEST[$this->\_id.\textcolor{stringliteral}{'node'}];
+00104       $tmp=$this->\_id.\textcolor{stringliteral}{"node="}.$this->node ;
+00105 
+00106       $this->url = str\_replace(\textcolor{stringliteral}{"&"}.$tmp,\textcolor{stringliteral}{""},$this->url) ;
+00107       $this->url = str\_replace($tmp.\textcolor{stringliteral}{"&"},\textcolor{stringliteral}{""},$this->url) ;
+00108       $this->url = str\_replace($tmp,\textcolor{stringliteral}{""},$this->url) ;
+00109       
+00110     \}
+00111     \textcolor{keywordflow}{else} 
+00112     \{
+00113       $this->node=\textcolor{stringliteral}{""};
+00114     \}
+00115     \textcolor{keywordflow}{if} ( !strpos($this->url,\textcolor{charliteral}{'?'})  ) \{
+00116         $this->url = $this->url . \textcolor{stringliteral}{"?"} ;
+00117     \} \textcolor{keywordflow}{else} \{
+00118         $this->url = $this->url . \textcolor{stringliteral}{"&"} ;
+00119     \}
+00120   \}
+00121 
+00122   \textcolor{keyword}{function} readMysql($sqldata,$id,$level)
+00123   \{
+00124     $sql=\textcolor{stringliteral}{"SELECT * FROM "}.$sqldata[\textcolor{stringliteral}{'table1'}]. \textcolor{stringliteral}{" WHERE "}.$sqldata[\textcolor{stringliteral}{'up\_id1'}];
+00125     \textcolor{keywordflow}{if}($id==0)
+00126     \{
+00127       $sql.=\textcolor{stringliteral}{" IS NULL"};
+00128     \}\textcolor{keywordflow}{else}
+00129     \{
+00130       $sql.=\textcolor{stringliteral}{"="}.$id;
+00131     \}
+00132     $sql.=$this->condition;
+00133     $sql.=\textcolor{stringliteral}{" ORDER BY "}.$sqldata[\textcolor{stringliteral}{'name1'}];
+00134     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00135     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00136     \{
+00137       \textcolor{keywordflow}{while}($linea=mysql\_fetch\_array($result,MYSQL\_ASSOC))
+00138       \{
+00139         $elt=\textcolor{keyword}{new} rd\_l();
+00140         $elt->sDesc=$linea[$sqldata[\textcolor{stringliteral}{'name1'}]];
+00141         $elt->sURL=\textcolor{stringliteral}{""};
+00142         \textcolor{keywordflow}{if}(strlen($sqldata[\textcolor{stringliteral}{'link\_id1'}])>1)
+00143         \{
+00144           $elt->sURL=$linea[$sqldata[\textcolor{stringliteral}{'url'}]].\textcolor{stringliteral}{"?"}.$sqldata[\textcolor{stringliteral}{'link\_id1'}].\textcolor{stringliteral}{"="}.
+      $linea[\textcolor{stringliteral}{'id'}];
+00145         \}
+00146         $elt->sHelp=$linea[$sqldata[\textcolor{stringliteral}{'help1'}]];
+00147         $elt->sTarg=\textcolor{stringliteral}{""};
+00148         $elt->iN=$level;
+00149         $elt->iE= \textcolor{stringliteral}{'0n'};        \textcolor{comment}{// Image Number}
+00150         $elt->iS= 1;        \textcolor{comment}{// Open or Close}
+00151         $this->arElt[$this->nbElt] = $elt ;
+00152         $this->nbElt++ ;
+00153         $this->readMysql($sqldata,$linea[\textcolor{stringliteral}{'id'}],$level+1);
+00154      \}
+00155     \}
+00156     
+00157     $sql=\textcolor{stringliteral}{"SELECT * FROM "}.$sqldata[\textcolor{stringliteral}{'table2'}]. \textcolor{stringliteral}{" WHERE "}.$sqldata[\textcolor{stringliteral}{'up\_id2'}];
+00158     \textcolor{keywordflow}{if}($id==0)
+00159     \{
+00160       $sql.=\textcolor{stringliteral}{" IS NULL"};
+00161     \}\textcolor{keywordflow}{else}
+00162     \{
+00163       $sql.=\textcolor{stringliteral}{"="}.$id;
+00164     \}
+00165     $sql.=$this->condition;
+00166     $sql.=\textcolor{stringliteral}{" ORDER BY "}.$sqldata[\textcolor{stringliteral}{'name2'}];
+00167     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00168     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00169     \{
+00170       \textcolor{keywordflow}{while}($linea=mysql\_fetch\_array($result,MYSQL\_ASSOC))
+00171       \{
+00172         $elt=\textcolor{keyword}{new} rd\_l();
+00173         $elt->sDesc=$linea[$sqldata[\textcolor{stringliteral}{'name2'}]];
+00174 \textcolor{comment}{//        $elt->sURL=$linea[$sqldata['url']]."?modelid=".$linea['id'];}
+00175         $elt->sURL=$linea[$sqldata[\textcolor{stringliteral}{'url'}]].\textcolor{stringliteral}{"?"}.$sqldata[\textcolor{stringliteral}{'link\_id2'}].\textcolor{stringliteral}{"="}.$linea[\textcolor{stringliteral}{
+      'id'}];
+00176         $elt->sHelp=$linea[$sqldata[\textcolor{stringliteral}{'help2'}]];
+00177         $elt->sTarg=\textcolor{stringliteral}{""};
+00178         $elt->iN=$level;
+00179         $elt->iE= 90;        \textcolor{comment}{// Image Number}
+00180         $elt->iS= 1;        \textcolor{comment}{// Open or Close}
+00181         $this->arElt[$this->nbElt] = $elt ;
+00182         $this->nbElt++ ;
+00183      \}
+00184     \}
+00185     \textcolor{keywordflow}{return};
+00186   \}
+00187    
+00188   \textcolor{keyword}{function} display( ) 
+00189   \{
+00190     \textcolor{comment}{// global $arElt, $nbElt ;}
+00191   
+00192     $iNo = 0 ;
+00193     \textcolor{keywordflow}{for} ($i=0; $i<count($this->arElt); $i=$i+1)
+00194     \{
+00195       $elt = $this->arElt[$i] ;
+00196       $elt->draw($iNo, $this);
+00197       \textcolor{keywordflow}{if} (($elt->iS === 0) || ($elt->iS === 1)) $iNo++ ;
+00198     \}
+00199   \}
+00200 
+00201   \textcolor{keyword}{function} addElt($xlt) 
+00202   \{
+00203 \textcolor{comment}{//    global $arElt, $nbElt, $sTarget ;}
+00204     
+00205     $elt = \textcolor{keyword}{new} rd\_l() ;
+00206     $elt->setLine( $xlt, $this->sTarget ) ;
+00207   
+00208     \textcolor{keywordflow}{if} ($elt->iN > -1 && $elt->iN < 90 ) 
+00209     \{
+00210       $this->arElt[$this->nbElt] = $elt ;
+00211       $this->nbElt++ ;
+00212     \}
+00213   \}
+00214 
+00215   \textcolor{keyword}{function} initBar()
+00216   \{
+00217   \textcolor{comment}{//  global $arElt  ;}
+00218     
+00219     $i=count($this->arElt)-1 ;
+00220     $i4Prev=0;
+00221     $iNPrev=0;
+00222     $iNFin=99;
+00223   
+00224     \textcolor{keywordflow}{while} ($i >= 0 )
+00225     \{
+00226       \textcolor{keywordflow}{if} ($iNPrev === 0) $iNFin = 99 ;
+00227           
+00228       $elt = $this->arElt[ $i ] ;
+00229       $i-- ;
+00230       
+00231       \textcolor{keywordflow}{if} ( $elt->iN > $iNPrev ) 
+00232       \{  \textcolor{comment}{// Fin de branche}
+00233         $elt->i4 = 1 + $i4Prev + (1 << $elt->iN ) ;
+00234         $i4Prev += (1 << $elt->iN ) ;
+00235         $iNFin = $elt->iN ;
+00236       \}
+00237       \textcolor{keywordflow}{else} 
+00238       \{
+00239         \textcolor{keywordflow}{if} ( $elt->iN === $iNPrev ) 
+00240         \{
+00241           $elt->i4 = $i4Prev ;
+00242         \}
+00243         \textcolor{keywordflow}{else} 
+00244         \{
+00245           \textcolor{keywordflow}{if} ($iNFin != 99) 
+00246           \{    \textcolor{comment}{// Node}
+00247             \textcolor{keywordflow}{if} ($elt->iS === -1) 
+00248             \{
+00249               $elt->iS = ( $elt->iE & 1 ) ;
+00250               $elt->iE -= $elt->iS ;
+00251             \}
+00252           \}
+00253           $i4Prev = ( $i4Prev - (1 << $iNPrev ) ) ;
+00254           $elt->i4 = $i4Prev  ;
+00255           \textcolor{keywordflow}{if} ( ($elt->iN != $iNFin) && ($elt->iN > 0 ) ) 
+00256           \{
+00257             \textcolor{keywordflow}{if} ( ($i4Prev & (1 << $elt->iN)) != (1 << $elt->iN) ) 
+00258             \{
+00259               $iNFin = $elt->iN ;
+00260               $i4Prev = ( $i4Prev + (1 << ($iNPrev-1) ) ) ;
+00261               $elt->i4 = 1 + $i4Prev;
+00262             \}
+00263           \}
+00264         \}
+00265       \}
+00266       $iNPrev = $elt->iN ;
+00267     \}
+00268   \} 
+00269 
+\hypertarget{tlistemysql_8php_source_l00273}{}\hyperlink{classtlistemysql_a90b5cddbe5cda56f32fee824f6d345ba}{00273}   \textcolor{keyword}{function} \hyperlink{classtlistemysql_a90b5cddbe5cda56f32fee824f6d345ba}{restoreNode}() 
+00274   \{
+00275   \textcolor{comment}{//  global $lnode, $node, $arElt ;}
+00276   
+00277     \textcolor{keywordflow}{if} (is\_null($this->node) || trim($this->node) === \textcolor{stringliteral}{""}) return ;
+00278           
+00279     $this->lnode = doubleval($this->node) ;
+00280     $iNo = 0 ;
+00281   
+00282     \textcolor{keywordflow}{for} ($i=0; $i<count($this->arElt); $i=$i+1)
+00283     \{
+00284       $elt = $this->arElt[$i] ;
+00285       \textcolor{keywordflow}{if} ( $elt->iS > -1) 
+00286       \{
+00287         $l = $this->lnode & (1 << $iNo) ;                
+00288         \textcolor{keywordflow}{if} ($l) 
+00289           $elt->open() ;
+00290         \textcolor{keywordflow}{else}
+00291             $elt->close() ;
+00292         $iNo++ ;
+00293       \}
+00294     \}
+00295   \}
+00296 
+\hypertarget{tlistemysql_8php_source_l00300}{}\hyperlink{classtlistemysql_a43c24fd4e27b46f3ac409d1a8a16623b}{00300}   \textcolor{keyword}{function} \hyperlink{classtlistemysql_a43c24fd4e27b46f3ac409d1a8a16623b}{saveNode}() 
+00301   \{
+00302   \textcolor{comment}{//  global $lnode, $arElt ;}
+00303   
+00304     \textcolor{comment}{/* for each elements */}
+00305     $iNo = 0 ;
+00306   
+00307     \textcolor{keywordflow}{for} ($i=0; $i<count($this->arElt); $i=$i+1)
+00308     \{
+00309       $elt = $this->arElt[$i] ;
+00310       \textcolor{keywordflow}{if} ( $elt->iS > -1) 
+00311       \{
+00312         \textcolor{keywordflow}{if} ( $elt->iS > 0) 
+00313         \{
+00314           $this->lnode = $this->lnode | (1 << $iNo) ;                
+00315         \}
+00316         $iNo++ ;
+00317       \}
+00318     \}
+00319   \}
+00320 \}
+00321 \textcolor{comment}{// ------------------------------------ }
+00322 \textcolor{comment}{//  End Source...}
+00323 \textcolor{comment}{// ------------------------------------}
+00324 ?>
+\end{DoxyCode}

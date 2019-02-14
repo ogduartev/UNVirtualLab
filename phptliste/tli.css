@@ -1,0 +1,23 @@
+BODY	{
+	color: 		#2020AA ;
+	margin-left: 	0%;
+	margin-right: 	0%;
+	font: small verdana, arial, helvetica, sans-serif; 
+	}
+
+A:link    { color: #2020A0; }
+A:hover   { color: #FF4030; }
+
+
+img, .p0, .p1 {
+	color : #2020A0;
+	valign: top;
+	line-height:0.8em;
+	font: 8pt verdana, arial, helvetica, sans-serif;
+	}
+
+A:hover.p1   {	
+	background : #FFFFA0;
+	color : #2020A0;
+	}
+

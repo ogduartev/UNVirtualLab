@@ -1,0 +1,308 @@
+\hypertarget{adminmodelfiles_8php_source}{\section{admin/adminmodelfiles.php}
+}
+
+\begin{DoxyCode}
+00001 <?php
+00002 require\_once(\textcolor{stringliteral}{"admin/adminblock.php"});
+00003 
+\hypertarget{adminmodelfiles_8php_source_l00004}{}\hyperlink{classadminmodelfiles}{00004} \textcolor{keyword}{class }\hyperlink{classadminmodelfiles}{adminmodelfiles} \textcolor{keyword}{extends} \hyperlink{classblock}{block}
+00005 \{  
+00006   var $filedata;
+00007   
+00008   \textcolor{keyword}{function} createdata()
+00009   \{
+00010     $this->filedata=array();
+00011     $fd=array(\textcolor{stringliteral}{"name"}=>$this->text(\textcolor{stringliteral}{"adminmodelfiles\_Executable"}),
+00012               \textcolor{stringliteral}{"uploadtype"}=>\textcolor{stringliteral}{"exe"},
+00013               \textcolor{stringliteral}{"path"}=>\textcolor{stringliteral}{"files/"}.$this->model\_id().\textcolor{stringliteral}{"/bin/"},
+00014               \textcolor{stringliteral}{"process"}=>\textcolor{stringliteral}{"db\_executable"});
+00015     $this->filedata[$fd[\textcolor{stringliteral}{'uploadtype'}]]=$fd;
+00016     $fd=array(\textcolor{stringliteral}{"name"}=>$this->text(\textcolor{stringliteral}{"adminmodelfiles\_Documentation"}),
+00017               \textcolor{stringliteral}{"uploadtype"}=>\textcolor{stringliteral}{"doc"},
+00018               \textcolor{stringliteral}{"path"}=>\textcolor{stringliteral}{"files/"}.$this->model\_id().\textcolor{stringliteral}{"/doc/"},
+00019               \textcolor{stringliteral}{"process"}=>\textcolor{stringliteral}{"db\_documentation"});
+00020     $this->filedata[$fd[\textcolor{stringliteral}{'uploadtype'}]]=$fd;
+00021     $fd=array(\textcolor{stringliteral}{"name"}=>$this->text(\textcolor{stringliteral}{"adminmodelfiles\_Modelica\_files"}),
+00022               \textcolor{stringliteral}{"uploadtype"}=>\textcolor{stringliteral}{"mo"},
+00023               \textcolor{stringliteral}{"path"}=>\textcolor{stringliteral}{"files/"}.$this->model\_id().\textcolor{stringliteral}{"/modelica/"},
+00024               \textcolor{stringliteral}{"process"}=>\textcolor{stringliteral}{"db\_modelica"});
+00025     $this->filedata[$fd[\textcolor{stringliteral}{'uploadtype'}]]=$fd;
+00026   \}
+00027   
+00028   \textcolor{keyword}{function} copyfile($FILE,$FD)
+00029   \{
+00030     $fn=$FD[\textcolor{stringliteral}{'path'}].$FILE[\textcolor{stringliteral}{'name'}];
+00031     move\_uploaded\_file($FILE[\textcolor{stringliteral}{'tmp\_name'}],$fn);
+00032   \}
+00033   
+00034   \textcolor{keyword}{function} db\_modelica($FILE,$FD)
+00035   \{
+00036     $this->copyfile($FILE,$FD);
+00037     $orden= \textcolor{stringliteral}{"mv "}.$FD[\textcolor{stringliteral}{'path'}].$FILE[\textcolor{stringliteral}{'name'}].\textcolor{stringliteral}{" "}.$FD[\textcolor{stringliteral}{'path'}].\textcolor{stringliteral}{"source.tar.gz"};
+00038     passthru($orden);
+00039   \}
+00040   
+00041   \textcolor{keyword}{function} db\_documentation($FILE,$FD)
+00042   \{
+00043     $this->copyfile($FILE,$FD);
+00044     $orden= \textcolor{stringliteral}{"mv "}.$FD[\textcolor{stringliteral}{'path'}].$FILE[\textcolor{stringliteral}{'name'}].\textcolor{stringliteral}{" "}.$FD[\textcolor{stringliteral}{'path'}].\textcolor{stringliteral}{"documentation.pdf"}
+      ;
+00045     passthru($orden);
+00046   \}
+00047   
+00048   \textcolor{keyword}{function} compile($FD)
+00049   \{
+00050     chdir($FD[\textcolor{stringliteral}{'path'}]);
+00051     $orden=$this->configurationSettings[\textcolor{stringliteral}{'CompilationOrder'}].\textcolor{stringliteral}{" "};
+00052     $fnmos=glob(\textcolor{stringliteral}{"*.mos"});
+00053     \textcolor{keywordflow}{if}(count($fnmos)!=1)\{\textcolor{keywordflow}{return};\}
+00054     $orden.=$fnmos[0];
+00055     $orden.=\textcolor{stringliteral}{" "}.$this->configurationSettings[\textcolor{stringliteral}{'CompilationPostOrder'}];
+00056     passthru($orden);
+00057     chdir(\textcolor{stringliteral}{"../../.."});
+00058   \}
+00059   
+00060   \textcolor{keyword}{function} db\_executable($FILE,$FD)
+00061   \{
+00062     $fdir=$this->configurationSettings[\textcolor{stringliteral}{'unvlDir'}].\textcolor{stringliteral}{"/"};
+00063 
+00064     $orden= \textcolor{stringliteral}{"rm "}.$fdir.$FD[\textcolor{stringliteral}{'path'}].\textcolor{stringliteral}{"*"};
+00065     passthru($orden);
+00066     $orden= \textcolor{stringliteral}{"rm "}.$fdir.$FD[\textcolor{stringliteral}{'path'}].\textcolor{stringliteral}{"*.*"};
+00067     passthru($orden);
+00068     $this->copyfile($FILE,$FD);
+00069     $orden= \textcolor{stringliteral}{"gunzip -c "}.$fdir.$FD[\textcolor{stringliteral}{'path'}].$FILE[\textcolor{stringliteral}{'name'}].\textcolor{stringliteral}{" | tar -C "}.$fdir.$FD
+      [\textcolor{stringliteral}{'path'}].\textcolor{stringliteral}{" -x"};
+00070     passthru($orden);
+00071     $orden= \textcolor{stringliteral}{"rm "}.$fdir.$FD[\textcolor{stringliteral}{'path'}].$FILE[\textcolor{stringliteral}{'name'}];
+00072     passthru($orden);
+00073 
+00074     \textcolor{keywordflow}{if}($this->configurationSettings[\textcolor{stringliteral}{'Compilation'}]==TRUE)
+00075     \{
+00076       $this->compile($FD);
+00077     \}
+00078     
+00079     $f=glob($fdir.$FD[\textcolor{stringliteral}{'path'}].\textcolor{stringliteral}{"*\_init.xml"});
+00080     \textcolor{keywordflow}{if}(count($f)!=1)\{\textcolor{keywordflow}{return};\}
+00081     $fn=basename($f[0]);
+00082     $fn=substr($fn,0,strlen($fn)-9);
+00083     $exename=\textcolor{stringliteral}{""};
+00084 
+00085     \textcolor{keywordflow}{if}(file\_exists($fdir.$FD[\textcolor{stringliteral}{'path'}].\textcolor{stringliteral}{"/"}.$fn))
+00086     \{
+00087       $exename=$fn;
+00088     \}elseif(file\_exists($fdir.$FD[\textcolor{stringliteral}{'path'}].\textcolor{stringliteral}{"/"}.$fn.\textcolor{stringliteral}{".exe"}))
+00089     \{
+00090       $exename=$fn.\textcolor{stringliteral}{".exe"};
+00091     \}
+00092 
+00093    \textcolor{keywordflow}{if}(file\_exists($fdir.$FD[\textcolor{stringliteral}{'path'}].\textcolor{stringliteral}{"/"}.$exename) and 
+00094        file\_exists($fdir.$FD[\textcolor{stringliteral}{'path'}].\textcolor{stringliteral}{"/"}.$fn.\textcolor{stringliteral}{"\_init.xml"}) and
+00095        file\_exists($fdir.$FD[\textcolor{stringliteral}{'path'}].\textcolor{stringliteral}{"/"}.$fn.\textcolor{stringliteral}{"\_res.csv"}))
+00096     \{
+00097       chmod($fdir.$FD[\textcolor{stringliteral}{'path'}].$exename,0777);
+00098       $sql=\textcolor{stringliteral}{"UPDATE models SET exename='"}.$exename.\textcolor{stringliteral}{"' WHERE id='"}.$this->
+      model\_id().\textcolor{stringliteral}{"'"};
+00099       mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00100       $this->updateDBvarsAndPars($fdir.$FD[\textcolor{stringliteral}{'path'}].$fn);
+00101     \}\textcolor{keywordflow}{else}
+00102     \{
+00103       \textcolor{keywordflow}{return};
+00104     \}
+00105 
+00106   \}
+00107   
+00108   \textcolor{keyword}{function} readInitXml($fn)
+00109   \{
+00110     $xmlstr=file\_get\_contents($fn,FILE\_TEXT);
+00111     $xml = \textcolor{keyword}{new} \hyperlink{classXMLThing}{XMLThing}($xmlstr);
+00112     $this->XML = $xml->parse();
+00113   \}  
+00114   
+00115   \textcolor{keyword}{function} varsInInitXml($fn)
+00116   \{
+00117     $xmlstr=file\_get\_contents($fn,FILE\_TEXT);
+00118     $xml = \textcolor{keyword}{new} \hyperlink{classXMLThing}{XMLThing}($xmlstr);
+00119     $XML = $xml->parse();
+00120     $varXML=array();
+00121     \textcolor{keywordflow}{foreach}($XML[\textcolor{stringliteral}{'fmiModelDescription'}][\textcolor{stringliteral}{'ModelVariables'}][\textcolor{stringliteral}{'ScalarVariable'}] as 
+      $V)
+00122     \{
+00123       $varXML[$V[\textcolor{stringliteral}{'attributes'}][\textcolor{stringliteral}{'name'}]]=array(
+00124                                        \textcolor{stringliteral}{"modelicaname"}=>$V[\textcolor{stringliteral}{'attributes'}][\textcolor{stringliteral}{'name'}]
+      ,
+00125                                        \textcolor{stringliteral}{"alias"}       =>$V[\textcolor{stringliteral}{'attributes'}][\textcolor{stringliteral}{'alias'}
+      ],
+00126                                        \textcolor{stringliteral}{"description"} =>$V[\textcolor{stringliteral}{'attributes'}][\textcolor{stringliteral}{'
+      description'}],
+00127                                        \textcolor{stringliteral}{"units"}       =>$V[\textcolor{stringliteral}{'attributes'}][\textcolor{stringliteral}{'unit'}]
+      );
+00128       $type=\textcolor{stringliteral}{""};
+00129       \textcolor{keywordflow}{if}(isset($V[\textcolor{stringliteral}{'Real'}]))\{$type=\textcolor{stringliteral}{"Real"};\}
+00130       \textcolor{keywordflow}{if}(isset($V[\textcolor{stringliteral}{'Integer'}]))\{$type=\textcolor{stringliteral}{"Integer"};\}
+00131       \textcolor{keywordflow}{if}(isset($V[\textcolor{stringliteral}{'Boolean'}]))\{$type=\textcolor{stringliteral}{"Boolean"};\}
+00132       $varXML[$V[\textcolor{stringliteral}{'attributes'}][\textcolor{stringliteral}{'name'}]][\textcolor{stringliteral}{'type'}]=$type;
+00133       $varXML[$V[\textcolor{stringliteral}{'attributes'}][\textcolor{stringliteral}{'name'}]][\textcolor{stringliteral}{'value'}]=$V[$type][\textcolor{stringliteral}{'attributes'}][\textcolor{stringliteral}{'start
+      '}];
+00134       $varXML[$V[\textcolor{stringliteral}{'attributes'}][\textcolor{stringliteral}{'name'}]][\textcolor{stringliteral}{'units'}]=$V[$type][\textcolor{stringliteral}{'attributes'}][\textcolor{stringliteral}{'unit'}
+      ];
+00135     \}
+00136     $expPars=array(\textcolor{stringliteral}{"startTime"}=>\textcolor{stringliteral}{"Real"},\textcolor{stringliteral}{"stopTime"}=>\textcolor{stringliteral}{"Real"},\textcolor{stringliteral}{"stepSize"}=>\textcolor{stringliteral}{"Real"},\textcolor{stringliteral}{"
+      tolerance"}=>\textcolor{stringliteral}{"Real"},\textcolor{stringliteral}{"solver"}=>\textcolor{stringliteral}{"Text"});
+00137     \textcolor{keywordflow}{foreach}($expPars as $par=>$type)
+00138     \{
+00139       $varXML[$par]=array(\textcolor{stringliteral}{"modelicaname"}=>$par,\textcolor{stringliteral}{"alias"}=>$par,\textcolor{stringliteral}{"description"}=>\textcolor{stringliteral}{"
+      Experiment parameter"},\textcolor{stringliteral}{"units"}=>\textcolor{stringliteral}{""});
+00140       $varXML[$par][\textcolor{stringliteral}{'value'}]=$type;
+00141       $varXML[$par][\textcolor{stringliteral}{'value'}]=$XML[\textcolor{stringliteral}{'fmiModelDescription'}][\textcolor{stringliteral}{'DefaultExperiment'}][\textcolor{stringliteral}{'
+      attributes'}][$par];
+00142       $varXML[$par][\textcolor{stringliteral}{'units'}]=\textcolor{stringliteral}{""};
+00143     \}
+00144 \textcolor{comment}{//    print\_r($XML['fmiModelDescription']['DefaultExperiment']);}
+00145     \textcolor{keywordflow}{return} $varXML;
+00146   \}
+00147   
+00148   \textcolor{keyword}{function} varsInResCsv($fn)
+00149   \{
+00150     $f=file($fn);
+00151     $f=str\_replace(\textcolor{stringliteral}{",\(\backslash\)n"},\textcolor{stringliteral}{""},$f);
+00152     $dataName=explode(\textcolor{charliteral}{','},str\_replace(\textcolor{charliteral}{'"'},\textcolor{stringliteral}{''},$f[0]));
+00153     \textcolor{keywordflow}{return} $dataName;  
+00154   \}
+00155   
+00156   \textcolor{keyword}{function} inDB($Table)
+00157   \{
+00158     $varDB=array();
+00159     $sql=\textcolor{stringliteral}{"SELECT * FROM "}.$Table.\textcolor{stringliteral}{" WHERE model\_id='"}.$this->model\_id().\textcolor{stringliteral}{"'"};
+00160     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00161     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00162     \{
+00163       \textcolor{keywordflow}{while}($linea=mysql\_fetch\_array($result,MYSQL\_ASSOC))
+00164       \{
+00165         $varDB[$linea[\textcolor{stringliteral}{'modelicaname'}]]=$linea;
+00166       \}
+00167     \}
+00168     \textcolor{keywordflow}{return} $varDB;
+00169   \}
+00170     
+00171   \textcolor{keyword}{function} updateDBvarsAndPars($fn)
+00172   \{
+00173     $varParXml=$this->varsInInitXml($fn.\textcolor{stringliteral}{"\_init.xml"});
+00174     $varCsv=$this->varsInResCsv($fn.\textcolor{stringliteral}{"\_res.csv"});
+00175     $varXml=array();
+00176     $parXml=array();
+00177     \textcolor{keywordflow}{foreach}($varParXml as $mn=>$var)
+00178     \{
+00179       \textcolor{keywordflow}{if}(in\_array($mn,$varCsv))
+00180       \{
+00181         $varXml[$mn]=$var;
+00182       \}\textcolor{keywordflow}{else}
+00183       \{
+00184         $parXml[$mn]=$var;
+00185       \}
+00186     \}
+00187     $varXml[\textcolor{stringliteral}{"time"}]=array(\textcolor{stringliteral}{"modelicaname"}=>\textcolor{stringliteral}{"time"},\textcolor{stringliteral}{"alias"}=>\textcolor{stringliteral}{"time"},\textcolor{stringliteral}{"description"}=
+      >\textcolor{stringliteral}{"time"},\textcolor{stringliteral}{"units"}=>\textcolor{stringliteral}{"s"},\textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"Real"},\textcolor{stringliteral}{"value"}=>\textcolor{stringliteral}{"0"});
+00188     $this->compareUpdateXMLDB($varXml,\textcolor{stringliteral}{"variables"});
+00189     $this->compareUpdateXMLDB($parXml,\textcolor{stringliteral}{"parameters"});
+00190   \}
+00191   
+00192   \textcolor{keyword}{function} compareUpdateXMLDB($Xml,$Table)
+00193   \{    
+00194     \textcolor{comment}{// estrategia: }
+00195     \textcolor{comment}{// 1) recorrer DB. para cada var, buscar en Xml.}
+00196     \textcolor{comment}{//                      Si se encuentra el mismo modelicaname actualizar y
+       borrar de Xml. }
+00197     \textcolor{comment}{//                      Si no se encuentra borrarlo de la BD.     }
+00198     \textcolor{comment}{// 2) recorrer los que quedaron en Xml. insertarlos en la BD.}
+00199     
+00200     \textcolor{comment}{//1)}
+00201     $DB =$this->inDB($Table);
+00202     \textcolor{keywordflow}{foreach}($DB as $mn=>$var)
+00203     \{
+00204       \textcolor{keywordflow}{if}(array\_key\_exists($mn,$Xml))
+00205       \{
+00206         $strSET=\textcolor{stringliteral}{""};
+00207         \textcolor{keywordflow}{foreach}($Xml[$mn] as $K=>$V)
+00208         \{
+00209           $strSET.=$K.\textcolor{stringliteral}{"='"}.$V.\textcolor{stringliteral}{"', "};
+00210         \}
+00211         $strSET=substr($strSET,0,strlen($strSET)-2);
+00212         
+00213         $sql=\textcolor{stringliteral}{"UPDATE "}.$Table.\textcolor{stringliteral}{" SET "}.$strSET.\textcolor{stringliteral}{" WHERE id='"}.$var[\textcolor{stringliteral}{'id'}].\textcolor{stringliteral}{"'"};
+00214         mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00215         unset($Xml[$mn]);
+00216       \}\textcolor{keywordflow}{else}
+00217       \{
+00218         $sql=\textcolor{stringliteral}{"DELETE FROM "}.$Table.\textcolor{stringliteral}{" WHERE id='"}.$var[\textcolor{stringliteral}{'id'}].\textcolor{stringliteral}{"'"};
+00219         mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00220       \}
+00221     \}
+00222     \textcolor{comment}{//2)}
+00223     \textcolor{keywordflow}{foreach}($Xml as $mn=>$var)
+00224     \{
+00225       $strCOL=\textcolor{stringliteral}{"model\_id"};
+00226       $strVAL=\textcolor{stringliteral}{"'"}.$this->model\_id().\textcolor{stringliteral}{"'"};
+00227       \textcolor{keywordflow}{foreach}($Xml[$mn] as $K=>$V)
+00228       \{
+00229         $strCOL.=\textcolor{stringliteral}{", "}.$K;
+00230         $strVAL.=\textcolor{stringliteral}{", '"}.$V.\textcolor{stringliteral}{"'"};
+00231       \}
+00232       $sql=\textcolor{stringliteral}{"INSERT INTO "}.$Table.\textcolor{stringliteral}{"("}.$strCOL.\textcolor{stringliteral}{") VALUES("}.$strVAL.\textcolor{stringliteral}{")"};
+00233       mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00234     \}
+00235   \}
+00236     
+00237   \textcolor{keyword}{function} upload() 
+00238   \{
+00239     $FD=$this->filedata[$\_POST[\textcolor{stringliteral}{'uploadfiletype'}]];
+00240     \textcolor{keywordflow}{if} ($\_FILES[\textcolor{stringliteral}{"file"}.$FD[\textcolor{stringliteral}{'uploadtype'}]][\textcolor{stringliteral}{"error"}] == 0 and strlen($FD[\textcolor{stringliteral}{'process
+      '}])>0)
+00241     \{
+00242       $this->$FD[\textcolor{stringliteral}{'process'}]($\_FILES[\textcolor{stringliteral}{'file'}.$FD[\textcolor{stringliteral}{'uploadtype'}]],$FD);
+00243     \}
+00244   \}
+00245   
+00246   \textcolor{keyword}{function} displayFD($FD) 
+00247   \{
+00248     echo \textcolor{stringliteral}{" <tr>\(\backslash\)n"};
+00249     echo \textcolor{stringliteral}{"<form method=\(\backslash\)"POST\(\backslash\)" enctype=\(\backslash\)"multipart/form-data\(\backslash\)">\(\backslash\)n"};
+00250     echo \textcolor{stringliteral}{"  <td class=\(\backslash\)"updatefile\_name\(\backslash\)">"}.$FD[\textcolor{stringliteral}{'name'}].\textcolor{stringliteral}{"</td>\(\backslash\)n"};
+00251     echo \textcolor{stringliteral}{"  <td class=\(\backslash\)"updatefile\_file\(\backslash\)">\(\backslash\)n"};
+00252     echo \textcolor{stringliteral}{"   <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)"uploadfiletype\(\backslash\)" value=\(\backslash\)""}.$FD[\textcolor{stringliteral}{'
+      uploadtype'}].\textcolor{stringliteral}{"\(\backslash\)" />\(\backslash\)n"};
+00253     echo \textcolor{stringliteral}{"   <label for=\(\backslash\)"file"}.$FD[\textcolor{stringliteral}{'uploadtype'}].\textcolor{stringliteral}{"\(\backslash\)" class=\(\backslash\)"cabinet\(\backslash\)">\(\backslash\)n"};
+00254     echo \textcolor{stringliteral}{"    <input type=\(\backslash\)"file\(\backslash\)" name=\(\backslash\)"file"}.$FD[\textcolor{stringliteral}{'uploadtype'}].\textcolor{stringliteral}{"\(\backslash\)" id=\(\backslash\)"file
+      "}.$FD[\textcolor{stringliteral}{'uploadtype'}].\textcolor{stringliteral}{"\(\backslash\)" class=\(\backslash\)"file\(\backslash\)"/>\(\backslash\)n"};
+00255     echo \textcolor{stringliteral}{"   </label>\(\backslash\)n"};
+00256     echo \textcolor{stringliteral}{"  </td>\(\backslash\)n"};
+00257     echo \textcolor{stringliteral}{"  <td class=\(\backslash\)"updatefile\_button\(\backslash\)">\(\backslash\)n"};
+00258     echo \textcolor{stringliteral}{"   <input type=\(\backslash\)"submit\(\backslash\)" name=\(\backslash\)"upload\_file\(\backslash\)" value=\(\backslash\)"Enviar\(\backslash\)"
+       class=\(\backslash\)"controls\_button\_file\(\backslash\)"/>\(\backslash\)n"};
+00259     echo \textcolor{stringliteral}{"  </td>\(\backslash\)n"};
+00260     echo \textcolor{stringliteral}{"</form>\(\backslash\)n"};    
+00261     echo \textcolor{stringliteral}{"</tr>\(\backslash\)n"};
+00262   \}
+00263   
+00264   \textcolor{keyword}{function} display()
+00265   \{
+00266     $this->createdata();
+00267     \textcolor{keywordflow}{if}(isset($\_POST[\textcolor{stringliteral}{'upload\_file'}]))
+00268     \{
+00269       $this->upload();
+00270     \}
+00271     echo \textcolor{stringliteral}{"<script type=\(\backslash\)"text/javascript\(\backslash\)" src=\(\backslash\)"admin/si.files.js\(\backslash\)"></script>
+      \(\backslash\)n"};
+00272     echo \textcolor{stringliteral}{"<table class=\(\backslash\)"updatefile\(\backslash\)">\(\backslash\)n"};
+00273     \textcolor{keywordflow}{foreach}($this->filedata as $FD)
+00274     \{
+00275       $this->displayFD($FD);
+00276     \}
+00277     echo \textcolor{stringliteral}{"</table>\(\backslash\)n"};
+00278     echo \textcolor{stringliteral}{"<script type=\(\backslash\)"text/javascript\(\backslash\)">SI.Files.stylizeAll();</script>\(\backslash\)n"};
+00279   \}
+00280   
+00281 \}
+00282 
+00283 ?>
+\end{DoxyCode}

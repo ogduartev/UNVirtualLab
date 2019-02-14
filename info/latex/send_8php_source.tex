@@ -1,0 +1,16 @@
+\hypertarget{send_8php_source}{\section{send.\-php}
+}
+
+\begin{DoxyCode}
+00001 <?php
+00002 header(\textcolor{stringliteral}{'Content-type: application/csv'});
+00003 header(\textcolor{stringliteral}{'Content-Disposition: attachment; filename="data.csv"'});
+00004 
+00005 $data=$\_POST[\textcolor{stringliteral}{'data'}];
+00006 
+00007 $pos=strpos($data,\textcolor{stringliteral}{"\(\backslash\)""})+1;
+00008 $data=substr($data,$pos);
+00009 $data=str\_replace(\textcolor{stringliteral}{'";'},\textcolor{stringliteral}{''},$data);
+00010 echo $data;
+00011 ?>
+\end{DoxyCode}

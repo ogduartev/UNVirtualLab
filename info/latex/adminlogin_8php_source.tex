@@ -1,0 +1,59 @@
+\hypertarget{adminlogin_8php_source}{\section{admin/adminlogin.php}
+}
+
+\begin{DoxyCode}
+00001 <?php
+00002 require\_once(\textcolor{stringliteral}{"admin/adminblock.php"});
+00003 
+\hypertarget{adminlogin_8php_source_l00004}{}\hyperlink{classadminlogin}{00004} \textcolor{keyword}{class }\hyperlink{classadminlogin}{adminlogin} \textcolor{keyword}{extends} \hyperlink{classadminblock}{adminblock}
+00005 \{
+00006 
+00007   \textcolor{keyword}{function} showMessage()
+00008   \{
+00009     echo \textcolor{stringliteral}{"  <div class='wellcome\_box' OnClick='window.location=\(\backslash\)"unvl.php\(\backslash\)"'>\(\backslash\)n
+      "};
+00010     echo \textcolor{stringliteral}{"   <div class='wellcome'>"}.$this->text(\textcolor{stringliteral}{'adminlogin\_Wellcome\_title'}).\textcolor{stringliteral}{"
+      </div>\(\backslash\)n"};
+00011     echo \textcolor{stringliteral}{"   <div class='wellcome\_sub'>"}.$this->text(\textcolor{stringliteral}{'
+      adminlogin\_Wellcome\_subtitle'}).\textcolor{stringliteral}{"</div>\(\backslash\)n"};
+00012     echo \textcolor{stringliteral}{"   <div class='wellcome\_explain'>"}.$this->text(\textcolor{stringliteral}{'
+      adminlogin\_Wellcome\_explanation'}).\textcolor{stringliteral}{"</div>\(\backslash\)n"};
+00013     echo \textcolor{stringliteral}{"  </div>\(\backslash\)n"};
+00014   \}
+00015   
+00016   \textcolor{keyword}{function} showButtons()
+00017   \{
+00018     echo \textcolor{stringliteral}{"  <div class='wellcome\_buttons'>\(\backslash\)n"};
+00019     echo \textcolor{stringliteral}{"     <form method='POST' action='admin.php'>\(\backslash\)n"};
+00020     echo \textcolor{stringliteral}{"      <table>\(\backslash\)n"};
+00021     echo \textcolor{stringliteral}{"       <tr>\(\backslash\)n"};
+00022     echo \textcolor{stringliteral}{"        <td class='login\_label' >"}.$this->text(\textcolor{stringliteral}{'adminlogin\_User'}).\textcolor{stringliteral}{"
+      </td>\(\backslash\)n"};
+00023     echo \textcolor{stringliteral}{"        <td class='login\_data' ><input class='login' name='loginname'
+       type='text'></td>\(\backslash\)n"};
+00024     echo \textcolor{stringliteral}{"       </tr>\(\backslash\)n"};
+00025     echo \textcolor{stringliteral}{"       <tr>\(\backslash\)n"};
+00026     echo \textcolor{stringliteral}{"        <td class='login\_label' >"}.$this->text(\textcolor{stringliteral}{'adminlogin\_Password'})
+      .\textcolor{stringliteral}{"</td>\(\backslash\)n"};
+00027     echo \textcolor{stringliteral}{"        <td class='login\_data' ><input class='login' name='loginpass'
+       type='password'></td>\(\backslash\)n"};
+00028     echo \textcolor{stringliteral}{"       </tr>\(\backslash\)n"};
+00029     echo \textcolor{stringliteral}{"       <tr>\(\backslash\)n"};
+00030     echo \textcolor{stringliteral}{"        <td></td><td class='login\_button' >\(\backslash\)n"};
+00031     echo \textcolor{stringliteral}{"         <input type='submit' name='loginsubmit'
+       class='wellcome\_button' value='"}.$this->text(\textcolor{stringliteral}{'adminlogin\_Configuration'}).\textcolor{stringliteral}{"'>\(\backslash\)n"};
+00032     echo \textcolor{stringliteral}{"        </td>\(\backslash\)n"};
+00033     echo \textcolor{stringliteral}{"       </tr>\(\backslash\)n"};
+00034     echo \textcolor{stringliteral}{"      </table>\(\backslash\)n"};
+00035     echo \textcolor{stringliteral}{"     </form>\(\backslash\)n"};
+00036     echo \textcolor{stringliteral}{"  </div>\(\backslash\)n"};
+00037   \}
+00038 
+00039   \textcolor{keyword}{function} display()
+00040   \{
+00041     $this->showMessage();
+00042     $this->showButtons();
+00043   \}
+00044 \}
+00045 ?>
+\end{DoxyCode}

@@ -1,0 +1,71 @@
+
+svg.plot
+{
+  width:300px;
+  height:200px;
+  background-color:inherit;  
+  font-family: arial, times, serif;
+  font-weight: normal;
+  font-style: normal;
+}
+
+rect.plot
+{
+  fill:#ffffff;
+  stroke:#000000;
+  stroke-width:2px;
+}
+
+rect.frame
+{
+  fill:#eeeeee;
+  stroke:#000000;
+  stroke-width:2px;
+}
+
+rect.tag
+{
+  fill:#ffffff;
+  stroke:none;
+  stroke-width:1px;
+}
+
+line.grid
+{
+  stroke:#333333;
+  stroke-dasharray: 3 3;
+  stroke-width:1px;
+}
+
+text.title
+{
+  font-size:14pt;
+  fill:#555555;
+}
+
+text.tagV
+{
+  font-size:10pt;
+  fill:#888888;
+  dominant-baseline:middle;
+}
+
+text.tagH
+{
+  font-size:10pt;
+  fill:#888888;
+  dominant-baseline:auto;
+}
+
+text.legend
+{
+  font-size:10pt;
+  dominant-baseline:middle;
+}
+
+path.curve
+{
+  fill:none;
+  stroke-width:1px;
+}
+

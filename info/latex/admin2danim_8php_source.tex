@@ -1,0 +1,197 @@
+\hypertarget{admin2danim_8php_source}{\section{admin/admin2danim.php}
+}
+
+\begin{DoxyCode}
+00001 <?php
+00002 require\_once(\textcolor{stringliteral}{"admin/adminblock.php"});
+00003 require\_once(\textcolor{stringliteral}{'svganim2d.php'});
+00004 
+\hypertarget{admin2danim_8php_source_l00005}{}\hyperlink{classadmin2danim}{00005} \textcolor{keyword}{class }\hyperlink{classadmin2danim}{admin2danim} \textcolor{keyword}{extends} \hyperlink{classadminblock}{adminblock}
+00006 \{  
+00007 
+00008   \textcolor{keyword}{function} createFields()
+00009   \{
+00010     $this->varpar=\textcolor{stringliteral}{"variable"};
+00011     $this->blockname=$this->text(\textcolor{stringliteral}{"admin2danim\_2D\_animation"});
+00012     $this->table=\textcolor{stringliteral}{"2danimations"};
+00013     $this->sectionidname=\textcolor{stringliteral}{"2danimationid"};
+00014     $this->idname=\textcolor{stringliteral}{"id"};
+00015     $this->idvalue=$this->c2danimation\_id();
+00016     $this->fields=array();
+00017     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"id"},
+00018                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"admin2danim\_Identifier"}),
+00019                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"fixed"});
+00020     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"model\_id"},
+00021                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"admin2danim\_Model\_identifier
+      "}),
+00022                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"model link"});
+00023     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"name"},
+00024                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"admin2danim\_Animation\_name"})
+      ,
+00025                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"text"});
+00026     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"description"},
+00027                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"
+      admin2danim\_Animation\_description"}),
+00028                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"longtext"});
+00029     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"enabled"},
+00030                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"admin2danim\_Enabled"}),
+00031                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"bool"});
+00032     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"duration"},
+00033                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"admin2danim\_Duration"}),
+00034                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"float"});
+00035     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"sample\_time"},
+00036                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"admin2danim\_Sample\_time"}),
+00037                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"float"});
+00038   \}  
+00039   
+00040   \textcolor{keyword}{function} createRelations1N()
+00041   \{
+00042     $this->Relations1N=array();
+00043     $R=array(
+00044              \textcolor{stringliteral}{"title"}=>$this->text(\textcolor{stringliteral}{"admin2danim\_Animation"}),
+00045              \textcolor{stringliteral}{"table"}=>\textcolor{stringliteral}{"2deffects"},
+00046              \textcolor{stringliteral}{"linkname"}=>\textcolor{stringliteral}{"2deffectid"},
+00047              \textcolor{stringliteral}{"id1"}=>\textcolor{stringliteral}{"id"},
+00048              \textcolor{stringliteral}{"id2"}=>\textcolor{stringliteral}{"2danimation\_id"},
+00049              \textcolor{stringliteral}{"idvalue"}=>$this->c2danimation\_id(),
+00050              \textcolor{stringliteral}{"showdbname"}=>\textcolor{stringliteral}{"name"},
+00051              \textcolor{stringliteral}{"show"}=>$this->text(\textcolor{stringliteral}{"admin2danim\_Object\_name"}));
+00052     $this->Relations1N[]=$R;
+00053   \}  
+00054   
+00055   \textcolor{keyword}{function} createRelations1N1N()
+00056   \{
+00057     $this->Relations1N1N=array();
+00058   \}  
+00059 
+00060   \textcolor{keyword}{function} findModelId()
+00061   \{
+00062     $sql=\textcolor{stringliteral}{"SELECT model\_id FROM 2danimations WHERE id="}.$this->c2danimation\_id()
+      ;
+00063     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00064     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00065     \{
+00066       $linea=mysql\_fetch\_array($result,MYSQL\_ASSOC);
+00067       \textcolor{keywordflow}{return}($linea[\textcolor{stringliteral}{'model\_id'}]);
+00068     \}
+00069     \textcolor{keywordflow}{return} 0;
+00070   \}
+00071 
+00072   \textcolor{keyword}{function} upload() 
+00073   \{
+00074     $FILE=$\_FILES[\textcolor{stringliteral}{"filesvg"}];
+00075     \textcolor{keywordflow}{if} ($\_FILE[\textcolor{stringliteral}{"error"}] == 0)
+00076     \{
+00077       $model\_id=$this->findModelId();
+00078       $path=\textcolor{stringliteral}{"files/"}.$model\_id.\textcolor{stringliteral}{"/graphics/"};
+00079       $fn=$path.$FILE[\textcolor{stringliteral}{'name'}];
+00080       move\_uploaded\_file($FILE[\textcolor{stringliteral}{'tmp\_name'}],$fn);
+00081       $sql=\textcolor{stringliteral}{"UPDATE 2danimations SET svg\_file='"}.$FILE[\textcolor{stringliteral}{'name'}].\textcolor{stringliteral}{"' WHERE id="}.
+      $this->c2danimation\_id();
+00082       mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00083       \textcolor{comment}{// delete old files}
+00084       $svgnames=array();
+00085       $sql=\textcolor{stringliteral}{"SELECT id as FN  FROM plots WHERE model\_id="}.$model\_id;
+00086       $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00087       \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00088       \{
+00089         \textcolor{keywordflow}{while}($linea=mysql\_fetch\_array($result,MYSQL\_ASSOC))
+00090         \{
+00091           $svgnames[]=$path.\textcolor{stringliteral}{"expPlot\_"}.$linea[\textcolor{stringliteral}{'FN'}].\textcolor{stringliteral}{".svg"};
+00092         \}
+00093       \}
+00094       $sql=\textcolor{stringliteral}{"SELECT svg\_file as FN FROM 2danimations WHERE model\_id="}.$model\_id;
+00095       $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00096       \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00097       \{
+00098         \textcolor{keywordflow}{while}($linea=mysql\_fetch\_array($result,MYSQL\_ASSOC))
+00099         \{
+00100           $svgnames[]=$path.$linea[\textcolor{stringliteral}{'FN'}];
+00101         \}
+00102       \}
+00103       $files=glob($path.\textcolor{stringliteral}{"*.*"});
+00104       \textcolor{keywordflow}{foreach}($files as $fn)
+00105       \{
+00106         \textcolor{keywordflow}{if}(!in\_array($fn,$svgnames))
+00107         \{
+00108           unlink($fn);
+00109         \}
+00110       \}
+00111       \textcolor{comment}{// create tar files}
+00112       $orden= \textcolor{stringliteral}{"cd "}.$path.\textcolor{stringliteral}{"; tar -czf graphics.tar.gz *.svg "};
+00113       passthru($orden);
+00114     \}
+00115   \}
+00116   \textcolor{keyword}{function} displayPostOwn()
+00117   \{
+00118     \textcolor{keywordflow}{if}(isset($\_POST[\textcolor{stringliteral}{'upload\_file'}]))
+00119     \{
+00120       $this->upload();
+00121     \}
+00122     $filename=\textcolor{stringliteral}{""};
+00123     $sql=\textcolor{stringliteral}{"SELECT 2danimations.svg\_file as F FROM 2danimations }
+00124 \textcolor{stringliteral}{                      WHERE 2danimations.id='"}.$\_POST[\textcolor{stringliteral}{'2danimationid'}].\textcolor{stringliteral}{"'"};
+00125     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00126     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00127     \{
+00128       $linea=mysql\_fetch\_array($result,MYSQL\_ASSOC);
+00129       $filename=$linea[\textcolor{stringliteral}{"F"}];
+00130     \}
+00131     echo \textcolor{stringliteral}{"<script type=\(\backslash\)"text/javascript\(\backslash\)" src=\(\backslash\)"admin/si.files.js\(\backslash\)"></script>
+      \(\backslash\)n"};
+00132     echo \textcolor{stringliteral}{"<table class=\(\backslash\)"updatefile\(\backslash\)">\(\backslash\)n"};
+00133     echo \textcolor{stringliteral}{"<th class=\(\backslash\)"update\_title\(\backslash\)" colspan=3>"}.$this->text(\textcolor{stringliteral}{"
+      admin2danim\_SVG\_file"}).\textcolor{stringliteral}{"</th>\(\backslash\)n"};
+00134     echo \textcolor{stringliteral}{" </tr>\(\backslash\)n"};
+00135     echo \textcolor{stringliteral}{" <tr>\(\backslash\)n"};
+00136     echo \textcolor{stringliteral}{"<form method=\(\backslash\)"POST\(\backslash\)" enctype=\(\backslash\)"multipart/form-data\(\backslash\)">\(\backslash\)n"};
+00137     echo \textcolor{stringliteral}{"  <td class=\(\backslash\)"update\_name\(\backslash\)">"}.$filename.\textcolor{stringliteral}{"</td>\(\backslash\)n"};
+00138     echo \textcolor{stringliteral}{"  <td class=\(\backslash\)"update\_name\(\backslash\)">\(\backslash\)n"};
+00139     echo \textcolor{stringliteral}{"   <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)"uploadfiletype\(\backslash\)" value=\(\backslash\)"svg\(\backslash\)" />\(\backslash\)n"}
+      ;
+00140     echo \textcolor{stringliteral}{"   <label for=\(\backslash\)"filesvg\(\backslash\)" class=\(\backslash\)"cabinet\(\backslash\)">\(\backslash\)n"};
+00141     echo \textcolor{stringliteral}{"    <input type=\(\backslash\)"file\(\backslash\)" name=\(\backslash\)"filesvg\(\backslash\)" id=\(\backslash\)"filesvg\(\backslash\)" class=\(\backslash\)"file
+      \(\backslash\)"/>\(\backslash\)n"};
+00142     echo \textcolor{stringliteral}{"   </label>\(\backslash\)n"};
+00143     echo \textcolor{stringliteral}{"  </td>\(\backslash\)n"};
+00144     echo \textcolor{stringliteral}{"  <td class=\(\backslash\)"update\_name\(\backslash\)">\(\backslash\)n"};
+00145     echo \textcolor{stringliteral}{"   <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)""}.$this->sectionidname.\textcolor{stringliteral}{"\(\backslash\)" value=\(\backslash\)""}
+      .$this->idvalue.\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00146     echo \textcolor{stringliteral}{"   <input type=\(\backslash\)"submit\(\backslash\)" name=\(\backslash\)"upload\_file\(\backslash\)" value=\(\backslash\)"Enviar\(\backslash\)"
+       class=\(\backslash\)"controls\_button\_file\(\backslash\)"/>\(\backslash\)n"};
+00147     echo \textcolor{stringliteral}{"  </td>\(\backslash\)n"};
+00148     echo \textcolor{stringliteral}{"</form>\(\backslash\)n"};    
+00149     echo \textcolor{stringliteral}{"</tr>\(\backslash\)n"};
+00150     echo \textcolor{stringliteral}{" <tr>\(\backslash\)n"};
+00151     echo \textcolor{stringliteral}{"<td  class=\(\backslash\)"updatefile\_file\(\backslash\)" colspan=3>\(\backslash\)n"};
+00152     $this->displayAnim();
+00153     echo \textcolor{stringliteral}{"</td>\(\backslash\)n"};
+00154     echo \textcolor{stringliteral}{" </tr>\(\backslash\)n"};
+00155     echo \textcolor{stringliteral}{"</table>"};
+00156     echo \textcolor{stringliteral}{"<script type=\(\backslash\)"text/javascript\(\backslash\)">SI.Files.stylizeAll();</script>\(\backslash\)n"};
+00157   \}
+00158   
+00159   \textcolor{keyword}{function} displayAnim()
+00160   \{
+00161   
+00162     $sql=\textcolor{stringliteral}{"SELECT 2danimations.*,models.exename FROM 2danimations }
+00163 \textcolor{stringliteral}{                      INNER JOIN models ON 2danimations.model\_id=models.id }
+00164 \textcolor{stringliteral}{                      WHERE 2danimations.id='"}.$\_POST[\textcolor{stringliteral}{'2danimationid'}].\textcolor{stringliteral}{"'"};
+00165     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00166     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00167     \{
+00168       $linea=mysql\_fetch\_array($result,MYSQL\_ASSOC);
+00169       
+00170       $graph = \textcolor{keyword}{new} \hyperlink{classanimation2dSVG}{animation2dSVG}();
+00171       $graph->animateObject($linea,\textcolor{stringliteral}{"files/"}.$linea[\textcolor{stringliteral}{'model\_id'}].\textcolor{stringliteral}{"/bin/"}.$linea[\textcolor{stringliteral}{'
+      exename'}].\textcolor{stringliteral}{"\_res.csv"});
+00172       echo \textcolor{stringliteral}{"<div style=\(\backslash\)"text-align:center;\(\backslash\)">\(\backslash\)n"};
+00173       echo $graph->writeXmlString();
+00174       echo \textcolor{stringliteral}{"</div>\(\backslash\)n"};
+00175     \}
+00176   \}  
+00177     
+00178 \}
+00179 
+00180 ?>
+\end{DoxyCode}

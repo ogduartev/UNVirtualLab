@@ -1,0 +1,243 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<title>UNVirtualLab: Fichero Fuente about.php</title>
+
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+
+</head>
+<body>
+<div id="top"><!-- do not remove this div! -->
+
+
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  
+  
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">UNVirtualLab
+   
+   </div>
+   <div id="projectbrief">Laboratorio virtual de sistemas dinámicos</div>
+  </td>
+  
+  
+  
+ </tr>
+ </tbody>
+</table>
+</div>
+
+<!-- Generado por Doxygen 1.7.6.1 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Buscar');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Página&#160;principal</span></a></li>
+      <li><a href="annotated.html"><span>Clases</span></a></li>
+      <li class="current"><a href="files.html"><span>Archivos</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Buscar" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Lista&#160;de&#160;archivos</span></a></li>
+    </ul>
+  </div>
+</div>
+<div class="header">
+  <div class="headertitle">
+<div class="title">about.php</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 &lt;?php
+<a name="l00002"></a>00002 require_once(<span class="stringliteral">&#39;block.php&#39;</span>);
+<a name="l00003"></a>00003 
+<a name="l00004"></a><a class="code" href="classabouttable.html">00004</a> <span class="keyword">class </span><a class="code" href="classabouttable.html">abouttable</a> <span class="keyword">extends</span> <a class="code" href="classblock.html">block</a>
+<a name="l00005"></a>00005 {
+<a name="l00006"></a>00006   <span class="keyword">function</span> display()
+<a name="l00007"></a>00007   {
+<a name="l00008"></a>00008     $this-&gt;displayModel();
+<a name="l00009"></a>00009     $this-&gt;displayModellers();
+<a name="l00010"></a>00010     $this-&gt;displayFiles();
+<a name="l00011"></a>00011     $this-&gt;displayEmbedLinks();
+<a name="l00012"></a>00012     $this-&gt;displayPractices();
+<a name="l00013"></a>00013   }
+<a name="l00014"></a>00014 
+<a name="l00015"></a>00015   <span class="keyword">function</span> displayModel()
+<a name="l00016"></a>00016   {
+<a name="l00017"></a>00017     $model_data=array(<span class="stringliteral">&quot;about_Model_name&quot;</span> =&gt; <span class="stringliteral">&quot;name&quot;</span>,
+<a name="l00018"></a>00018                       <span class="stringliteral">&quot;about_Model_description&quot;</span> =&gt; <span class="stringliteral">&quot;description&quot;</span>,
+<a name="l00019"></a>00019                       <span class="stringliteral">&quot;about_Model_theory&quot;</span> =&gt; <span class="stringliteral">&quot;bibliography&quot;</span>);
+<a name="l00020"></a>00020     
+<a name="l00021"></a>00021     $sql=<span class="stringliteral">&quot;SELECT * FROM models WHERE id=&#39;&quot;</span>.$this-&gt;model_id().<span class="stringliteral">&quot;&#39;&quot;</span>;
+<a name="l00022"></a>00022     $result=mysql_query($sql) or die(mysql_error().<span class="stringliteral">&quot;: &quot;</span>.$sql);
+<a name="l00023"></a>00023     <span class="keywordflow">if</span>($result and mysql_num_rows($result)&gt;0)
+<a name="l00024"></a>00024     {
+<a name="l00025"></a>00025       $linea=mysql_fetch_array($result,MYSQL_ASSOC);
+<a name="l00026"></a>00026       echo <span class="stringliteral">&quot; &lt;tr&gt;\n&quot;</span>;
+<a name="l00027"></a>00027       echo <span class="stringliteral">&quot;  &lt;th colspan=2 class=&#39;about_title&#39;&gt;&quot;</span>.$this-&gt;text(<span class="stringliteral">&#39;about_Model_information&#39;</span>).<span class="stringliteral">&quot;&lt;/th&gt;\n&quot;</span>;
+<a name="l00028"></a>00028       echo <span class="stringliteral">&quot; &lt;/tr&gt;\n&quot;</span>;
+<a name="l00029"></a>00029       <span class="keywordflow">foreach</span>($model_data as $K=&gt;$V)
+<a name="l00030"></a>00030       {
+<a name="l00031"></a>00031         echo <span class="stringliteral">&quot; &lt;tr&gt;\n&quot;</span>;
+<a name="l00032"></a>00032         echo <span class="stringliteral">&quot;  &lt;td class=&#39;about_name&#39;&gt;&quot;</span>.$this-&gt;text($K).<span class="stringliteral">&quot;&lt;/td&gt;\n&quot;</span>;
+<a name="l00033"></a>00033         echo <span class="stringliteral">&quot;  &lt;td class=&#39;about_value&#39;&gt;&quot;</span>.$linea[$V].<span class="stringliteral">&quot;&lt;/td&gt;\n&quot;</span>;
+<a name="l00034"></a>00034         echo <span class="stringliteral">&quot; &lt;/tr&gt;\n&quot;</span>;
+<a name="l00035"></a>00035       }
+<a name="l00036"></a>00036     }
+<a name="l00037"></a>00037   }
+<a name="l00038"></a>00038 
+<a name="l00039"></a>00039   <span class="keyword">function</span> displayModellers()
+<a name="l00040"></a>00040   {
+<a name="l00041"></a>00041     
+<a name="l00042"></a>00042     $sql=<span class="stringliteral">&quot;SELECT modellers.* FROM modellers </span>
+<a name="l00043"></a>00043 <span class="stringliteral">                             INNER JOIN modellers_models ON modellers.id=modellers_models.modeller_id </span>
+<a name="l00044"></a>00044 <span class="stringliteral">                             INNER JOIN models ON modellers_models.model_id=models.id</span>
+<a name="l00045"></a>00045 <span class="stringliteral">                             WHERE models.id=&#39;&quot;</span>.$this-&gt;model_id().<span class="stringliteral">&quot;&#39;&quot;</span>;
+<a name="l00046"></a>00046     $result=mysql_query($sql) or die(mysql_error().<span class="stringliteral">&quot;: &quot;</span>.$sql);
+<a name="l00047"></a>00047     <span class="keywordflow">if</span>($result and mysql_num_rows($result)&gt;0)
+<a name="l00048"></a>00048     {
+<a name="l00049"></a>00049       echo <span class="stringliteral">&quot; &lt;tr&gt;\n&quot;</span>;
+<a name="l00050"></a>00050       echo <span class="stringliteral">&quot;  &lt;td class=&#39;about_name&#39;&gt;&quot;</span>.$this-&gt;text(<span class="stringliteral">&#39;about_Modellers&#39;</span>).<span class="stringliteral">&quot;&lt;/td&gt;\n&quot;</span>;
+<a name="l00051"></a>00051       echo <span class="stringliteral">&quot;  &lt;td class=&#39;about_value&#39;&gt;\n&quot;</span>;
+<a name="l00052"></a>00052       <span class="keywordflow">while</span>($linea=mysql_fetch_array($result,MYSQL_ASSOC))
+<a name="l00053"></a>00053       {
+<a name="l00054"></a>00054         echo $linea[<span class="stringliteral">&#39;firstname&#39;</span>].<span class="stringliteral">&quot; &quot;</span>.$linea[<span class="stringliteral">&#39;lastname&#39;</span>].<span class="stringliteral">&quot; (&quot;</span>.$linea[<span class="stringliteral">&#39;email&#39;</span>].<span class="stringliteral">&quot;)&lt;br&gt;\n&quot;</span>;
+<a name="l00055"></a>00055       }
+<a name="l00056"></a>00056       echo <span class="stringliteral">&quot;  &lt;/td&gt;\n&quot;</span>;
+<a name="l00057"></a>00057       echo <span class="stringliteral">&quot; &lt;/tr&gt;\n&quot;</span>;
+<a name="l00058"></a>00058     }
+<a name="l00059"></a>00059   }
+<a name="l00060"></a>00060   
+<a name="l00061"></a>00061   <span class="keyword">function</span> displayFiles()
+<a name="l00062"></a>00062   {
+<a name="l00063"></a>00063     $files_data=array(<span class="stringliteral">&quot;/modelica/source.tar.gz&quot;</span>=&gt;<span class="stringliteral">&quot;about_Modelica_files&quot;</span>,
+<a name="l00064"></a>00064                       <span class="stringliteral">&quot;/doc/documentation.pdf&quot;</span>=&gt;<span class="stringliteral">&quot;about_Documentation&quot;</span>,
+<a name="l00065"></a>00065                       <span class="stringliteral">&quot;/graphics/graphics.zip&quot;</span>=&gt;<span class="stringliteral">&quot;about_Graphic_files&quot;</span>);
+<a name="l00066"></a>00066     echo <span class="stringliteral">&quot; &lt;tr&gt;\n&quot;</span>;
+<a name="l00067"></a>00067     echo <span class="stringliteral">&quot;  &lt;td class=&#39;about_name&#39;&gt;&quot;</span>.$this-&gt;text(<span class="stringliteral">&#39;about_Files&#39;</span>).<span class="stringliteral">&quot;&lt;/td&gt;\n&quot;</span>;
+<a name="l00068"></a>00068     echo <span class="stringliteral">&quot;  &lt;td class=&#39;about_value&#39;&gt;\n&quot;</span>;
+<a name="l00069"></a>00069     <span class="keywordflow">foreach</span>($files_data as $K=&gt;$V)
+<a name="l00070"></a>00070     {
+<a name="l00071"></a>00071       <span class="keywordflow">if</span>(file_exists(<span class="stringliteral">&quot;./files/&quot;</span>.$this-&gt;model_id().$K))
+<a name="l00072"></a>00072       {
+<a name="l00073"></a>00073         echo <span class="stringliteral">&quot;&lt;a href=\&quot;./files/&quot;</span>.$this-&gt;model_id().$K.<span class="stringliteral">&quot;\&quot; target=&#39;_blank&#39;&gt;&quot;</span>.$this-&gt;text($V).<span class="stringliteral">&quot;&lt;br&gt;\n&quot;</span>;
+<a name="l00074"></a>00074       }
+<a name="l00075"></a>00075     }
+<a name="l00076"></a>00076     echo <span class="stringliteral">&quot;  &lt;/td&gt;\n&quot;</span>;    
+<a name="l00077"></a>00077     echo <span class="stringliteral">&quot; &lt;/tr&gt;\n&quot;</span>;
+<a name="l00078"></a>00078   }
+<a name="l00079"></a>00079   
+<a name="l00080"></a>00080   <span class="keyword">function</span> displayEmbedLinks()
+<a name="l00081"></a>00081   {
+<a name="l00082"></a>00082     echo <span class="stringliteral">&quot; &lt;tr&gt;\n&quot;</span>;
+<a name="l00083"></a>00083     echo <span class="stringliteral">&quot;  &lt;th colspan=2 class=&#39;about_title&#39;&gt;&quot;</span>.$this-&gt;text(<span class="stringliteral">&#39;about_Links_for_embedding&#39;</span>).<span class="stringliteral">&quot;&lt;/th&gt;\n&quot;</span>;
+<a name="l00084"></a>00084     echo <span class="stringliteral">&quot; &lt;/tr&gt;\n&quot;</span>;
+<a name="l00085"></a>00085     $links_data=array();
+<a name="l00086"></a>00086     $links_data[$this-&gt;text(<span class="stringliteral">&quot;about_Model&quot;</span>)]=<span class="stringliteral">&quot;&amp;lt;iframe src=\&quot;http://&quot;</span>.$this-&gt;configurationSettings[<span class="stringliteral">&#39;URLbase&#39;</span>].
+<a name="l00087"></a>00087                                                    <span class="stringliteral">&quot;/embed.php?modelid=&quot;</span>.$this-&gt;model_id().<span class="stringliteral">&quot;\&quot; width=940 height=400&amp;gt;&amp;lt;/iframe&amp;gt;&quot;</span>;
+<a name="l00088"></a>00088     <span class="keywordflow">if</span>(file_exists(<span class="stringliteral">&quot;./files/&quot;</span>.$this-&gt;model_id().<span class="stringliteral">&quot;/doc/documentation.pdf&quot;</span>))
+<a name="l00089"></a>00089     {
+<a name="l00090"></a>00090       $links_data[$this-&gt;text(<span class="stringliteral">&quot;about_Documentation&quot;</span>)]=<span class="stringliteral">&quot;&amp;lt;iframe src=\&quot;http://&quot;</span>.$this-&gt;configurationSettings[<span class="stringliteral">&#39;URLbase&#39;</span>].
+<a name="l00091"></a>00091                                                           <span class="stringliteral">&quot;/doc.php?modelid=&quot;</span>.$this-&gt;model_id().<span class="stringliteral">&quot;\&quot; width=940 height=400&amp;gt;&amp;lt;/iframe&amp;gt;&quot;</span>;
+<a name="l00092"></a>00092       $links_data[$this-&gt;text(<span class="stringliteral">&quot;about_Pdf&quot;</span>)]=<span class="stringliteral">&quot;http://&quot;</span>.$this-&gt;configurationSettings[<span class="stringliteral">&#39;URLbase&#39;</span>].
+<a name="l00093"></a>00093                                                  <span class="stringliteral">&quot;/files/&quot;</span>.$this-&gt;model_id().<span class="stringliteral">&quot;/doc/documentation.pdf&quot;</span>;
+<a name="l00094"></a>00094     }
+<a name="l00095"></a>00095     <span class="keywordflow">foreach</span>($links_data as $K=&gt;$V)
+<a name="l00096"></a>00096     {
+<a name="l00097"></a>00097       echo <span class="stringliteral">&quot; &lt;tr&gt;\n&quot;</span>;
+<a name="l00098"></a>00098       echo <span class="stringliteral">&quot;  &lt;td class=&#39;about_name&#39;&gt;\n&quot;</span>;
+<a name="l00099"></a>00099       echo $K;
+<a name="l00100"></a>00100       echo <span class="stringliteral">&quot;  &lt;/td&gt;\n&quot;</span>;    
+<a name="l00101"></a>00101       echo <span class="stringliteral">&quot;  &lt;td class=&#39;about_value&#39;&gt;\n&quot;</span>;
+<a name="l00102"></a>00102       echo $V;
+<a name="l00103"></a>00103       echo <span class="stringliteral">&quot;  &lt;/td&gt;\n&quot;</span>;    
+<a name="l00104"></a>00104       echo <span class="stringliteral">&quot; &lt;/tr&gt;\n&quot;</span>;
+<a name="l00105"></a>00105     }
+<a name="l00106"></a>00106   }
+<a name="l00107"></a>00107   
+<a name="l00108"></a>00108   <span class="keyword">function</span> displayPractices()
+<a name="l00109"></a>00109   {
+<a name="l00110"></a>00110     echo <span class="stringliteral">&quot; &lt;tr&gt;\n&quot;</span>;
+<a name="l00111"></a>00111     echo <span class="stringliteral">&quot;  &lt;th colspan=2 class=&#39;about_title&#39;&gt;&quot;</span>.$this-&gt;text(<span class="stringliteral">&#39;about_Practices&#39;</span>).<span class="stringliteral">&quot;&lt;/th&gt;\n&quot;</span>;
+<a name="l00112"></a>00112     echo <span class="stringliteral">&quot; &lt;/tr&gt;\n&quot;</span>;
+<a name="l00113"></a>00113     $sql=<span class="stringliteral">&quot;SELECT practices.* FROM practices </span>
+<a name="l00114"></a>00114 <span class="stringliteral">                             INNER JOIN models ON practices.model_id=models.id</span>
+<a name="l00115"></a>00115 <span class="stringliteral">                             WHERE models.id=&#39;&quot;</span>.$this-&gt;model_id().<span class="stringliteral">&quot;&#39;&quot;</span>;
+<a name="l00116"></a>00116     $sql.=$this-&gt;enabled(<span class="stringliteral">&quot;practices&quot;</span>);
+<a name="l00117"></a>00117     $result=mysql_query($sql) or die(mysql_error().<span class="stringliteral">&quot;: &quot;</span>.$sql);
+<a name="l00118"></a>00118     <span class="keywordflow">if</span>($result and mysql_num_rows($result)&gt;0)
+<a name="l00119"></a>00119     {
+<a name="l00120"></a>00120       <span class="keywordflow">while</span>($linea=mysql_fetch_array($result,MYSQL_ASSOC))
+<a name="l00121"></a>00121       {
+<a name="l00122"></a>00122         echo <span class="stringliteral">&quot; &lt;tr&gt;\n&quot;</span>;
+<a name="l00123"></a>00123         echo <span class="stringliteral">&quot;  &lt;td class=&#39;about_name&#39;&gt;&quot;</span>.$linea[<span class="stringliteral">&#39;name&#39;</span>].<span class="stringliteral">&quot;&lt;/td&gt;\n&quot;</span>;
+<a name="l00124"></a>00124         echo <span class="stringliteral">&quot;  &lt;td class=&#39;about_name&#39;&gt;&lt;i&gt;&quot;</span>.$linea[<span class="stringliteral">&#39;header&#39;</span>].<span class="stringliteral">&quot;&lt;/i&gt;&quot;</span>.$linea[<span class="stringliteral">&#39;description&#39;</span>].<span class="stringliteral">&quot;&lt;/td&gt;\n&quot;</span>;
+<a name="l00125"></a>00125         echo <span class="stringliteral">&quot; &lt;/tr&gt;\n&quot;</span>;
+<a name="l00126"></a>00126       }
+<a name="l00127"></a>00127     }
+<a name="l00128"></a>00128   }
+<a name="l00129"></a>00129 }
+<a name="l00130"></a>00130 
+<a name="l00131"></a>00131 $B=<span class="keyword">new</span> <a class="code" href="classblock.html">block</a>();
+<a name="l00132"></a>00132 <span class="keywordflow">if</span>($B-&gt;connect())
+<a name="l00133"></a>00133 {
+<a name="l00134"></a>00134   $xmlFN=<span class="stringliteral">&quot;page_structure/about.xml&quot;</span>;
+<a name="l00135"></a>00135   $B-&gt;html($xmlFN);
+<a name="l00136"></a>00136 }
+<a name="l00137"></a>00137 
+<a name="l00138"></a>00138 ?&gt;
+</pre></div></div><!-- contents -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Todo</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Clases</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Funciones</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+
+<hr class="footer"/><address class="footer"><small>
+Generado el Sábado, 8 de Febrero de 2014 08:30:44 para UNVirtualLab por &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.7.6.1
+</small></address>
+
+</body>
+</html>

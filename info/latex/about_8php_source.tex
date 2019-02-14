@@ -1,0 +1,158 @@
+\hypertarget{about_8php_source}{\section{about.\-php}
+}
+
+\begin{DoxyCode}
+00001 <?php
+00002 require\_once(\textcolor{stringliteral}{'block.php'});
+00003 
+\hypertarget{about_8php_source_l00004}{}\hyperlink{classabouttable}{00004} \textcolor{keyword}{class }\hyperlink{classabouttable}{abouttable} \textcolor{keyword}{extends} \hyperlink{classblock}{block}
+00005 \{
+00006   \textcolor{keyword}{function} display()
+00007   \{
+00008     $this->displayModel();
+00009     $this->displayModellers();
+00010     $this->displayFiles();
+00011     $this->displayEmbedLinks();
+00012     $this->displayPractices();
+00013   \}
+00014 
+00015   \textcolor{keyword}{function} displayModel()
+00016   \{
+00017     $model\_data=array(\textcolor{stringliteral}{"about\_Model\_name"} => \textcolor{stringliteral}{"name"},
+00018                       \textcolor{stringliteral}{"about\_Model\_description"} => \textcolor{stringliteral}{"description"},
+00019                       \textcolor{stringliteral}{"about\_Model\_theory"} => \textcolor{stringliteral}{"bibliography"});
+00020     
+00021     $sql=\textcolor{stringliteral}{"SELECT * FROM models WHERE id='"}.$this->model\_id().\textcolor{stringliteral}{"'"};
+00022     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00023     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00024     \{
+00025       $linea=mysql\_fetch\_array($result,MYSQL\_ASSOC);
+00026       echo \textcolor{stringliteral}{" <tr>\(\backslash\)n"};
+00027       echo \textcolor{stringliteral}{"  <th colspan=2 class='about\_title'>"}.$this->text(\textcolor{stringliteral}{'
+      about\_Model\_information'}).\textcolor{stringliteral}{"</th>\(\backslash\)n"};
+00028       echo \textcolor{stringliteral}{" </tr>\(\backslash\)n"};
+00029       \textcolor{keywordflow}{foreach}($model\_data as $K=>$V)
+00030       \{
+00031         echo \textcolor{stringliteral}{" <tr>\(\backslash\)n"};
+00032         echo \textcolor{stringliteral}{"  <td class='about\_name'>"}.$this->text($K).\textcolor{stringliteral}{"</td>\(\backslash\)n"};
+00033         echo \textcolor{stringliteral}{"  <td class='about\_value'>"}.$linea[$V].\textcolor{stringliteral}{"</td>\(\backslash\)n"};
+00034         echo \textcolor{stringliteral}{" </tr>\(\backslash\)n"};
+00035       \}
+00036     \}
+00037   \}
+00038 
+00039   \textcolor{keyword}{function} displayModellers()
+00040   \{
+00041     
+00042     $sql=\textcolor{stringliteral}{"SELECT modellers.* FROM modellers }
+00043 \textcolor{stringliteral}{                             INNER JOIN modellers\_models ON
+       modellers.id=modellers\_models.modeller\_id }
+00044 \textcolor{stringliteral}{                             INNER JOIN models ON
+       modellers\_models.model\_id=models.id}
+00045 \textcolor{stringliteral}{                             WHERE models.id='"}.$this->model\_id().\textcolor{stringliteral}{"'"};
+00046     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00047     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00048     \{
+00049       echo \textcolor{stringliteral}{" <tr>\(\backslash\)n"};
+00050       echo \textcolor{stringliteral}{"  <td class='about\_name'>"}.$this->text(\textcolor{stringliteral}{'about\_Modellers'}).\textcolor{stringliteral}{"</td>\(\backslash\)n"}
+      ;
+00051       echo \textcolor{stringliteral}{"  <td class='about\_value'>\(\backslash\)n"};
+00052       \textcolor{keywordflow}{while}($linea=mysql\_fetch\_array($result,MYSQL\_ASSOC))
+00053       \{
+00054         echo $linea[\textcolor{stringliteral}{'firstname'}].\textcolor{stringliteral}{" "}.$linea[\textcolor{stringliteral}{'lastname'}].\textcolor{stringliteral}{" ("}.$linea[\textcolor{stringliteral}{'email'}].\textcolor{stringliteral}{"
+      )<br>\(\backslash\)n"};
+00055       \}
+00056       echo \textcolor{stringliteral}{"  </td>\(\backslash\)n"};
+00057       echo \textcolor{stringliteral}{" </tr>\(\backslash\)n"};
+00058     \}
+00059   \}
+00060   
+00061   \textcolor{keyword}{function} displayFiles()
+00062   \{
+00063     $files\_data=array(\textcolor{stringliteral}{"/modelica/source.tar.gz"}=>\textcolor{stringliteral}{"about\_Modelica\_files"},
+00064                       \textcolor{stringliteral}{"/doc/documentation.pdf"}=>\textcolor{stringliteral}{"about\_Documentation"},
+00065                       \textcolor{stringliteral}{"/graphics/graphics.zip"}=>\textcolor{stringliteral}{"about\_Graphic\_files"});
+00066     echo \textcolor{stringliteral}{" <tr>\(\backslash\)n"};
+00067     echo \textcolor{stringliteral}{"  <td class='about\_name'>"}.$this->text(\textcolor{stringliteral}{'about\_Files'}).\textcolor{stringliteral}{"</td>\(\backslash\)n"};
+00068     echo \textcolor{stringliteral}{"  <td class='about\_value'>\(\backslash\)n"};
+00069     \textcolor{keywordflow}{foreach}($files\_data as $K=>$V)
+00070     \{
+00071       \textcolor{keywordflow}{if}(file\_exists(\textcolor{stringliteral}{"./files/"}.$this->model\_id().$K))
+00072       \{
+00073         echo \textcolor{stringliteral}{"<a href=\(\backslash\)"./files/"}.$this->model\_id().$K.\textcolor{stringliteral}{"\(\backslash\)" target='\_blank'>"}.
+      $this->text($V).\textcolor{stringliteral}{"<br>\(\backslash\)n"};
+00074       \}
+00075     \}
+00076     echo \textcolor{stringliteral}{"  </td>\(\backslash\)n"};    
+00077     echo \textcolor{stringliteral}{" </tr>\(\backslash\)n"};
+00078   \}
+00079   
+00080   \textcolor{keyword}{function} displayEmbedLinks()
+00081   \{
+00082     echo \textcolor{stringliteral}{" <tr>\(\backslash\)n"};
+00083     echo \textcolor{stringliteral}{"  <th colspan=2 class='about\_title'>"}.$this->text(\textcolor{stringliteral}{'
+      about\_Links\_for\_embedding'}).\textcolor{stringliteral}{"</th>\(\backslash\)n"};
+00084     echo \textcolor{stringliteral}{" </tr>\(\backslash\)n"};
+00085     $links\_data=array();
+00086     $links\_data[$this->text(\textcolor{stringliteral}{"about\_Model"})]=\textcolor{stringliteral}{"&lt;iframe src=\(\backslash\)"http://"}.$this->
+      configurationSettings[\textcolor{stringliteral}{'URLbase'}].
+00087                                                    \textcolor{stringliteral}{"/embed.php?modelid="}.$this
+      ->model\_id().\textcolor{stringliteral}{"\(\backslash\)" width=940 height=400&gt;&lt;/iframe&gt;"};
+00088     \textcolor{keywordflow}{if}(file\_exists(\textcolor{stringliteral}{"./files/"}.$this->model\_id().\textcolor{stringliteral}{"/doc/documentation.pdf"}))
+00089     \{
+00090       $links\_data[$this->text(\textcolor{stringliteral}{"about\_Documentation"})]=\textcolor{stringliteral}{"&lt;iframe src=\(\backslash\)"http://
+      "}.$this->configurationSettings[\textcolor{stringliteral}{'URLbase'}].
+00091                                                           \textcolor{stringliteral}{"/doc.php?modelid="}.
+      $this->model\_id().\textcolor{stringliteral}{"\(\backslash\)" width=940 height=400&gt;&lt;/iframe&gt;"};
+00092       $links\_data[$this->text(\textcolor{stringliteral}{"about\_Pdf"})]=\textcolor{stringliteral}{"http://"}.$this->
+      configurationSettings[\textcolor{stringliteral}{'URLbase'}].
+00093                                                  \textcolor{stringliteral}{"/files/"}.$this->model\_id().\textcolor{stringliteral}{"
+      /doc/documentation.pdf"};
+00094     \}
+00095     \textcolor{keywordflow}{foreach}($links\_data as $K=>$V)
+00096     \{
+00097       echo \textcolor{stringliteral}{" <tr>\(\backslash\)n"};
+00098       echo \textcolor{stringliteral}{"  <td class='about\_name'>\(\backslash\)n"};
+00099       echo $K;
+00100       echo \textcolor{stringliteral}{"  </td>\(\backslash\)n"};    
+00101       echo \textcolor{stringliteral}{"  <td class='about\_value'>\(\backslash\)n"};
+00102       echo $V;
+00103       echo \textcolor{stringliteral}{"  </td>\(\backslash\)n"};    
+00104       echo \textcolor{stringliteral}{" </tr>\(\backslash\)n"};
+00105     \}
+00106   \}
+00107   
+00108   \textcolor{keyword}{function} displayPractices()
+00109   \{
+00110     echo \textcolor{stringliteral}{" <tr>\(\backslash\)n"};
+00111     echo \textcolor{stringliteral}{"  <th colspan=2 class='about\_title'>"}.$this->text(\textcolor{stringliteral}{'about\_Practices'}).\textcolor{stringliteral}{
+      "</th>\(\backslash\)n"};
+00112     echo \textcolor{stringliteral}{" </tr>\(\backslash\)n"};
+00113     $sql=\textcolor{stringliteral}{"SELECT practices.* FROM practices }
+00114 \textcolor{stringliteral}{                             INNER JOIN models ON practices.model\_id=models.id}
+00115 \textcolor{stringliteral}{                             WHERE models.id='"}.$this->model\_id().\textcolor{stringliteral}{"'"};
+00116     $sql.=$this->enabled(\textcolor{stringliteral}{"practices"});
+00117     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00118     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00119     \{
+00120       \textcolor{keywordflow}{while}($linea=mysql\_fetch\_array($result,MYSQL\_ASSOC))
+00121       \{
+00122         echo \textcolor{stringliteral}{" <tr>\(\backslash\)n"};
+00123         echo \textcolor{stringliteral}{"  <td class='about\_name'>"}.$linea[\textcolor{stringliteral}{'name'}].\textcolor{stringliteral}{"</td>\(\backslash\)n"};
+00124         echo \textcolor{stringliteral}{"  <td class='about\_name'><i>"}.$linea[\textcolor{stringliteral}{'header'}].\textcolor{stringliteral}{"</i>"}.$linea[\textcolor{stringliteral}{'
+      description'}].\textcolor{stringliteral}{"</td>\(\backslash\)n"};
+00125         echo \textcolor{stringliteral}{" </tr>\(\backslash\)n"};
+00126       \}
+00127     \}
+00128   \}
+00129 \}
+00130 
+00131 $B=\textcolor{keyword}{new} \hyperlink{classblock}{block}();
+00132 \textcolor{keywordflow}{if}($B->connect())
+00133 \{
+00134   $xmlFN=\textcolor{stringliteral}{"page\_structure/about.xml"};
+00135   $B->html($xmlFN);
+00136 \}
+00137 
+00138 ?>
+\end{DoxyCode}

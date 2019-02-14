@@ -1,0 +1,299 @@
+\hypertarget{classXMLThing}{\section{\-Referencia de la \-Clase \-X\-M\-L\-Thing}
+\label{classXMLThing}\index{\-X\-M\-L\-Thing@{\-X\-M\-L\-Thing}}
+}
+\subsection*{\-Métodos públicos}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classXMLThing_a1c153caf15cb3b1a2159d5e879a3f6ca}{\-X\-M\-L\-Thing} (\$xml=\-N\-U\-L\-L)
+\item 
+\hyperlink{classXMLThing_a8d408058141c8a030b433b2deb822baf}{parse} (\$xml=\-N\-U\-L\-L)
+\item 
+\hyperlink{classXMLThing_ae18a74c5d5979c699b42b1f9a8fedbba}{parse\-\_\-recurse} ()
+\item 
+\hyperlink{classXMLThing_aa5d425088bd74ca4f3f9c1a9bc9ac453}{parse\-\_\-init} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Atributos públicos}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classXMLThing_a07538f3f144881632ffd11d3699e5562}{{\bfseries \$raw\-X\-M\-L}}\label{classXMLThing_a07538f3f144881632ffd11d3699e5562}
+
+\item 
+\hypertarget{classXMLThing_a0c4f39e54503d71299dc274d787dd0f3}{{\bfseries \$value\-Array} = array()}\label{classXMLThing_a0c4f39e54503d71299dc274d787dd0f3}
+
+\item 
+\hypertarget{classXMLThing_a49615464bf3ef0a0ef606179ff55afc1}{{\bfseries \$key\-Array} = array()}\label{classXMLThing_a49615464bf3ef0a0ef606179ff55afc1}
+
+\item 
+\hypertarget{classXMLThing_a0f4ddacd5ff9a4dabcbddc39aa47f9c5}{{\bfseries \$parsed} = array()}\label{classXMLThing_a0f4ddacd5ff9a4dabcbddc39aa47f9c5}
+
+\item 
+\hypertarget{classXMLThing_a9165f7eec1b7840c6076b294ef497f68}{{\bfseries \$index} = 0}\label{classXMLThing_a9165f7eec1b7840c6076b294ef497f68}
+
+\item 
+\hypertarget{classXMLThing_a658a4bd3bff6ade05283ad48aec5379b}{{\bfseries \$attrib\-Key} = 'attributes'}\label{classXMLThing_a658a4bd3bff6ade05283ad48aec5379b}
+
+\item 
+\hypertarget{classXMLThing_a9948e8517f8b349298a20d9286a3b2b7}{{\bfseries \$value\-Key} = 'value'}\label{classXMLThing_a9948e8517f8b349298a20d9286a3b2b7}
+
+\item 
+\hypertarget{classXMLThing_a445699d05b90f941d5b09ad3331da61a}{{\bfseries \$cdata\-Key} = 'cdata'}\label{classXMLThing_a445699d05b90f941d5b09ad3331da61a}
+
+\item 
+\hypertarget{classXMLThing_a4d29070c404490ab9ef64c44485fb330}{{\bfseries \$is\-Error} = false}\label{classXMLThing_a4d29070c404490ab9ef64c44485fb330}
+
+\item 
+\hypertarget{classXMLThing_afd5fee61b2486f3c5f03b0da62f69b62}{{\bfseries \$error} = ''}\label{classXMLThing_afd5fee61b2486f3c5f03b0da62f69b62}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Descripción detallada}
+\begin{DoxyAuthor}{\-Autor}
+wickedfather at hotmail.\-com
+\end{DoxyAuthor}
+\-P\-H\-P4 and \-P\-H\-P5 compatible
+
+14th \-Apr cdata\-Key index for open tags fixed \-Class to parse xml into an array the way \-I like it.
+
+\begin{DoxyAuthor}{\-Autor}
+wickedfather at hotmail.\-com 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{\-Versión}
+0.\-0.\-2 
+\end{DoxyVersion}
+
+
+\-Definición en la línea 17 del archivo xmlthing.\-class.\-php.
+
+
+
+\subsection{\-Documentación de las funciones miembro}
+\hypertarget{classXMLThing_a8d408058141c8a030b433b2deb822baf}{\index{\-X\-M\-L\-Thing@{\-X\-M\-L\-Thing}!parse@{parse}}
+\index{parse@{parse}!XMLThing@{\-X\-M\-L\-Thing}}
+\subsubsection[{parse}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-X\-M\-L\-Thing\-::parse} (
+\begin{DoxyParamCaption}
+\item[{\$}]{xml = {\ttfamily \-N\-U\-L\-L}}
+\end{DoxyParamCaption}
+)}}\label{classXMLThing_a8d408058141c8a030b433b2deb822baf}
+\-Turns xml into a lovely array 
+\begin{DoxyParams}{\-Parámetros}
+{\em string} & option xml to parse. \-That supplied to constructor used otherwise. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Devuelve}
+array parsed data 
+\end{DoxyReturn}
+
+
+\-Definición en la línea 61 del archivo xmlthing.\-class.\-php.
+
+
+\begin{DoxyCode}
+        {
+                if (!is_null($xml))
+                {
+                        $this->rawXML = $xml;
+                }
+
+                $this->isError = false;
+                        // setup
+                if (!$this->parse_init())
+                {
+                        return false;
+                }
+
+                $this->index = 0;
+                $this->parsed = $this->parse_recurse();
+                $this->status = 'parsing complete';
+
+                return $this->parsed;
+        }
+\end{DoxyCode}
+\hypertarget{classXMLThing_aa5d425088bd74ca4f3f9c1a9bc9ac453}{\index{\-X\-M\-L\-Thing@{\-X\-M\-L\-Thing}!parse\-\_\-init@{parse\-\_\-init}}
+\index{parse\-\_\-init@{parse\-\_\-init}!XMLThing@{\-X\-M\-L\-Thing}}
+\subsubsection[{parse\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-X\-M\-L\-Thing\-::parse\-\_\-init} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classXMLThing_aa5d425088bd74ca4f3f9c1a9bc9ac453}
+\-Turns the xml into the array pairs with xml\-\_\-parse\-\_\-into\-\_\-struct \begin{DoxyReturn}{\-Devuelve}
+bool 
+\end{DoxyReturn}
+
+
+\-Definición en la línea 186 del archivo xmlthing.\-class.\-php.
+
+
+\begin{DoxyCode}
+        {
+        $this->parser = xml_parser_create();
+
+        $parser = $this->parser;
+        xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);     // Dont
+       mess with my cAsE sEtTings
+        xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);               
+      // Dont bother with empty info
+        if (!$res = (bool)xml_parse_into_struct($parser, $this->rawXML, $this->
+      valueArray, $this->keyArray))
+                {
+                        $this->isError = true;
+            $this->error = 'error: '.xml_error_string(xml_get_error_code(
+      $parser)).' at line '.xml_get_current_line_number($parser);
+        }
+        xml_parser_free($parser);
+
+                return $res;
+        }
+\end{DoxyCode}
+\hypertarget{classXMLThing_ae18a74c5d5979c699b42b1f9a8fedbba}{\index{\-X\-M\-L\-Thing@{\-X\-M\-L\-Thing}!parse\-\_\-recurse@{parse\-\_\-recurse}}
+\index{parse\-\_\-recurse@{parse\-\_\-recurse}!XMLThing@{\-X\-M\-L\-Thing}}
+\subsubsection[{parse\-\_\-recurse}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-X\-M\-L\-Thing\-::parse\-\_\-recurse} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classXMLThing_ae18a74c5d5979c699b42b1f9a8fedbba}
+\-Turns the struct array into a nested one \begin{DoxyReturn}{\-Devuelve}
+array 
+\end{DoxyReturn}
+
+
+\-Definición en la línea 88 del archivo xmlthing.\-class.\-php.
+
+
+\begin{DoxyCode}
+        {               // data found at this level
+                $found = array();
+                        // count of the number of times a tag has been found at
+       this level
+                $tagCount = array();
+
+                        // loop through the tags - I use a lazy referencing
+       thing for where data should go
+
+                while (isset($this->valueArray[$this->index]))
+                {
+                        $tag = $this->valueArray[$this->index];
+                        $this->index++;
+
+                                // if it's a close then return straight away
+
+                        if ($tag['type'] == 'close')
+                        {
+                                return $found;
+                        }
+                                // if it's cdata translate it as a complete tag
+       named $this->cdataKey
+                        if ($tag['type'] == 'cdata')
+                        {
+                                $tag['tag'] = $this->cdataKey;
+                                $tag['type'] = 'complete';
+                        }
+
+                        $tagName = $tag['tag'];
+
+                                // this bit below creates a reference to where
+       the data should be going, 
+                                // it saves on some conditions in the switch,
+       but it probably annoyingly obfuscating
+                                // has this tag already appeared at this level
+       ?  If so we need mods
+
+                        if (isset($tagCount[$tagName]))
+                        {               // transform to an array IF only one of
+       the tags been before
+                                if ($tagCount[$tagName] == 1)
+                                {
+                                        $found[$tagName] = array($found[
+      $tagName]);
+                                }
+                                        //$found[$tagName][$tagCount[$tagName]]
+       = '';   // doesn't need to happen, the reference below is enough
+                                $tagRef =& $found[$tagName][$tagCount[$tagName]
+      ];
+                                $tagCount[$tagName]++;
+                        }
+                        else    // just use the variable
+                        {
+                                $tagCount[$tagName] = 1;
+                                $tagRef =& $found[$tagName];
+                        }
+
+                                // now do the work
+
+                        switch ($tag['type'])
+                        {
+                                case 'open':
+                                        $tagRef = $this->parse_recurse();
+
+                                        if (isset($tag['attributes']))
+                                        {
+                                                $tagRef[$this->attribKey] = 
+      $tag['attributes'];
+                                        }
+                                                // open CAN have a value - it
+       makes sense to include it as cdata
+                                        if (isset($tag['value']))
+                                        {
+                                                if (isset($tagRef[$this->
+      cdataKey]))    // push it to the start of the cdata array if it's present
+                                                {
+                                                        $tagRef[$this->cdataKey
+      ] = (array)$tagRef[$this->cdataKey];     // <-- needed for php5 compatibility];
+                                                        array_unshift($tagRef[
+      $this->cdataKey], $tag['value']);
+                                                }
+                                                else
+                                                {
+                                                        $tagRef[$this->cdataKey
+      ] = $tag['value'];
+                                                }
+                                        }
+                                        break;
+
+                                case 'complete':
+                                        if (isset($tag['attributes']))
+                                        {
+                                                $tagRef[$this->attribKey] = 
+      $tag['attributes'];
+                                                $tagRef =& $tagRef[$this->
+      valueKey];
+                                        }
+
+                                        if (isset($tag['value']))
+                                        {
+                                                $tagRef = $tag['value'];
+                                        }
+                                        break;
+                        }                       
+                }
+
+                return $found;
+        }
+\end{DoxyCode}
+\hypertarget{classXMLThing_a1c153caf15cb3b1a2159d5e879a3f6ca}{\index{\-X\-M\-L\-Thing@{\-X\-M\-L\-Thing}!\-X\-M\-L\-Thing@{\-X\-M\-L\-Thing}}
+\index{\-X\-M\-L\-Thing@{\-X\-M\-L\-Thing}!XMLThing@{\-X\-M\-L\-Thing}}
+\subsubsection[{\-X\-M\-L\-Thing}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-X\-M\-L\-Thing\-::\-X\-M\-L\-Thing} (
+\begin{DoxyParamCaption}
+\item[{\$}]{xml = {\ttfamily \-N\-U\-L\-L}}
+\end{DoxyParamCaption}
+)}}\label{classXMLThing_a1c153caf15cb3b1a2159d5e879a3f6ca}
+\-Constructor 
+\begin{DoxyParams}{\-Parámetros}
+{\em string} & xml data to parse -\/ optional \\
+\hline
+\end{DoxyParams}
+
+
+\-Definición en la línea 49 del archivo xmlthing.\-class.\-php.
+
+
+\begin{DoxyCode}
+        {
+        $this->rawXML = $xml;
+    }
+\end{DoxyCode}
+
+
+\-La documentación para esta clase fue generada a partir del siguiente fichero\-:\begin{DoxyCompactItemize}
+\item 
+xmlthing.\-class.\-php\end{DoxyCompactItemize}

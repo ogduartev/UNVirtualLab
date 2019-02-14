@@ -1,0 +1,32 @@
+\hypertarget{embed_8php_source}{\section{embed.\-php}
+}
+
+\begin{DoxyCode}
+00001 <?php
+00002 require\_once(\textcolor{stringliteral}{'block.php'});
+00003 require\_once(\textcolor{stringliteral}{'menu.php'});
+00004 require\_once(\textcolor{stringliteral}{'title.php'});
+00005 require\_once(\textcolor{stringliteral}{'credits.php'});
+00006 require\_once(\textcolor{stringliteral}{'documentation.php'});
+00007 require\_once(\textcolor{stringliteral}{'controls.php'});
+00008 require\_once(\textcolor{stringliteral}{'simulator.php'});
+00009 require\_once(\textcolor{stringliteral}{'outputs.php'});
+00010 require\_once(\textcolor{stringliteral}{'plots.php'});
+00011 require\_once(\textcolor{stringliteral}{'anim2d.php'});
+00012 require\_once(\textcolor{stringliteral}{'tables.php'});
+00013 require\_once(\textcolor{stringliteral}{'erase.php'});
+00014 
+00015 $B=\textcolor{keyword}{new} \hyperlink{classblock}{block}();
+00016 \textcolor{keywordflow}{if}($B->connect())
+00017 \{
+00018   $xmlFN=\textcolor{stringliteral}{"page\_structure/embed.xml"};
+00019 
+00020   \textcolor{keywordflow}{if}(isset($\_POST[\textcolor{stringliteral}{'simulate'}]))
+00021   \{
+00022     $model\_id=$B->model\_id();
+00023   \}
+00024 
+00025   $B->html($xmlFN);
+00026 \}
+00027 ?>
+\end{DoxyCode}

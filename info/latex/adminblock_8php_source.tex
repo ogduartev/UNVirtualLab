@@ -1,0 +1,626 @@
+\hypertarget{adminblock_8php_source}{\section{admin/adminblock.php}
+}
+
+\begin{DoxyCode}
+00001 <?php
+00002 require\_once(\textcolor{stringliteral}{"block.php"});
+00003 
+\hypertarget{adminblock_8php_source_l00004}{}\hyperlink{classadminblock}{00004} \textcolor{keyword}{class }\hyperlink{classadminblock}{adminblock} \textcolor{keyword}{extends} \hyperlink{classblock}{block}
+00005 \{  
+00006   var $fields;
+00007   var $table;
+00008   var $sectionidname;
+00009   var $idname;
+00010   var $idvalue;
+00011   var $blockname;
+00012   
+00013   var $relations1N;
+00014   var $relations1N1N;
+00015   var $relations1NN1; \textcolor{comment}{// p.ej. modellers}
+00016     
+00017   \textcolor{keyword}{function} selectSection($level,$section\_sql,$section\_id)
+00018   \{
+00019     $sql=\textcolor{stringliteral}{"SELECT id,name,description FROM sections WHERE section\_id"}.
+      $section\_sql;
+00020     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00021     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00022     \{
+00023       \textcolor{keywordflow}{while}($linea=mysql\_fetch\_array($result,MYSQL\_ASSOC))
+00024       \{
+00025         $selected=\textcolor{stringliteral}{""};
+00026         \textcolor{keywordflow}{if}($section\_id==$linea[\textcolor{stringliteral}{'id'}])\{$selected=\textcolor{stringliteral}{"selected=\(\backslash\)"yes\(\backslash\)""};\}
+00027         echo \textcolor{stringliteral}{"<option value=\(\backslash\)""}.$linea[\textcolor{stringliteral}{'id'}].\textcolor{stringliteral}{"\(\backslash\)" "}.$selected.\textcolor{stringliteral}{">"};
+00028         \textcolor{keywordflow}{for}($i=0;$i<$level;$i++)\{echo \textcolor{stringliteral}{"-"};\}
+00029         echo $linea[\textcolor{stringliteral}{'name'}].\textcolor{stringliteral}{"</option>\(\backslash\)n"};
+00030         $this->selectSection($level+1,\textcolor{stringliteral}{"="}.$linea[\textcolor{stringliteral}{'id'}],$section\_id);
+00031       \}
+00032     \}
+00033   \}
+00034     
+00035   \textcolor{keyword}{function} selectFromTable($table,$model\_id,$variable\_id)
+00036   \{
+00037     $sql=\textcolor{stringliteral}{"SELECT id,modelicaname,alias,description FROM "}.$table.\textcolor{stringliteral}{" WHERE
+       model\_id="}.$model\_id;
+00038     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00039     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00040     \{
+00041       \textcolor{keywordflow}{while}($linea=mysql\_fetch\_array($result,MYSQL\_ASSOC))
+00042       \{
+00043         $selected=\textcolor{stringliteral}{""};
+00044         \textcolor{keywordflow}{if}($variable\_id==$linea[\textcolor{stringliteral}{'id'}])\{$selected=\textcolor{stringliteral}{"selected=\(\backslash\)"yes\(\backslash\)""};\}
+00045         echo \textcolor{stringliteral}{"<option value=\(\backslash\)""}.$linea[\textcolor{stringliteral}{'id'}].\textcolor{stringliteral}{"\(\backslash\)" "}.$selected.\textcolor{stringliteral}{">"};
+00046         echo $linea[\textcolor{stringliteral}{'modelicaname'}].\textcolor{stringliteral}{" ("}.$linea[\textcolor{stringliteral}{'alias'}].\textcolor{stringliteral}{")</option>\(\backslash\)n"};
+00047       \}
+00048     \}
+00049   \}
+00050   
+00051   \textcolor{keyword}{function} selectOptions($F,$id)
+00052   \{
+00053     $sql=\textcolor{stringliteral}{"SELECT "}.$F[\textcolor{stringliteral}{'dbname'}].\textcolor{stringliteral}{" AS D FROM "}.$F[\textcolor{stringliteral}{'table'}].\textcolor{stringliteral}{" WHERE id="}.$id;
+00054     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00055     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00056     \{
+00057       $linea=mysql\_fetch\_array($result,MYSQL\_ASSOC);echo $linea[\textcolor{charliteral}{'D'}];
+00058       \textcolor{keywordflow}{foreach}($F[\textcolor{stringliteral}{'options'}] as $O=>$V)
+00059       \{
+00060         $selected=\textcolor{stringliteral}{""};
+00061         \textcolor{keywordflow}{if}($V==$linea[\textcolor{charliteral}{'D'}])\{$selected=\textcolor{stringliteral}{"selected=\(\backslash\)"yes\(\backslash\)""};\}
+00062         echo \textcolor{stringliteral}{"      <option value=\(\backslash\)""}.$V.\textcolor{stringliteral}{"\(\backslash\)" "}.$selected.\textcolor{stringliteral}{">"}.$O.\textcolor{stringliteral}{"</option>\(\backslash\)n"};
+00063       \}
+00064     \}
+00065   \}
+00066   
+00067   \textcolor{keyword}{function} displayOneField($data,$F,$class)
+00068   \{
+00069       \textcolor{keywordflow}{switch}($F[\textcolor{stringliteral}{'type'}])
+00070       \{
+00071         \textcolor{keywordflow}{case} \textcolor{stringliteral}{"bool"}: 
+00072                      $selected=\textcolor{stringliteral}{""}; 
+00073                      echo \textcolor{stringliteral}{"\(\backslash\)n    <select name=\(\backslash\)"db\_"}.$F[\textcolor{stringliteral}{'dbname'}].\textcolor{stringliteral}{"\(\backslash\)" class=\(\backslash\)""}
+      .$class.\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00074                      \textcolor{keywordflow}{if}($data[$F[\textcolor{stringliteral}{'dbname'}]]==\textcolor{charliteral}{'1'})\{$selected=\textcolor{stringliteral}{"selected=\(\backslash\)"yes\(\backslash\)""};
+      \}\textcolor{keywordflow}{else}\{$selected=\textcolor{stringliteral}{""};\}
+00075                      echo \textcolor{stringliteral}{"      <option value=\(\backslash\)"1\(\backslash\)" "}.$selected.\textcolor{stringliteral}{">"}.$this->
+      text(\textcolor{stringliteral}{"adminblock\_Yes"}).\textcolor{stringliteral}{"</option>\(\backslash\)n"};
+00076                      \textcolor{keywordflow}{if}($data[$F[\textcolor{stringliteral}{'dbname'}]]==\textcolor{charliteral}{'0'})\{$selected=\textcolor{stringliteral}{"selected=\(\backslash\)"yes\(\backslash\)""};
+      \}\textcolor{keywordflow}{else}\{$selected=\textcolor{stringliteral}{""};\}
+00077                      echo \textcolor{stringliteral}{"      <option value=\(\backslash\)"0\(\backslash\)" "}.$selected.\textcolor{stringliteral}{">"}.$this->
+      text(\textcolor{stringliteral}{"adminblock\_No"}).\textcolor{stringliteral}{"</option>\(\backslash\)n"};
+00078                      echo \textcolor{stringliteral}{"    </select>\(\backslash\)n"};
+00079                      \textcolor{keywordflow}{break};
+00080         \textcolor{keywordflow}{case} \textcolor{stringliteral}{"check"}: 
+00081                      $checked=\textcolor{stringliteral}{""}; 
+00082                      \textcolor{keywordflow}{if}($F[\textcolor{stringliteral}{'value'}]==\textcolor{charliteral}{'1'})\{$checked=\textcolor{stringliteral}{"checked"};\}\textcolor{keywordflow}{else}\{$checked=\textcolor{stringliteral}{""};
+      \}
+00083                      echo \textcolor{stringliteral}{"<input type=\(\backslash\)"checkbox\(\backslash\)" name=\(\backslash\)"db\_"}.$F[\textcolor{stringliteral}{'dbname'}].\textcolor{stringliteral}{"
+      \(\backslash\)" class=\(\backslash\)""}.$class.\textcolor{stringliteral}{"\(\backslash\)" value=\(\backslash\)"1\(\backslash\)" "}.$checked.\textcolor{stringliteral}{">"};
+00084                      \textcolor{keywordflow}{break};
+00085         \textcolor{keywordflow}{case} \textcolor{stringliteral}{"int"}:
+00086         \textcolor{keywordflow}{case} \textcolor{stringliteral}{"float"}:
+00087         \textcolor{keywordflow}{case} \textcolor{stringliteral}{"text"}: 
+00088                      echo \textcolor{stringliteral}{"<input name=\(\backslash\)"db\_"}.$F[\textcolor{stringliteral}{'dbname'}].\textcolor{stringliteral}{"\(\backslash\)" value='"}.
+      str\_replace(\textcolor{stringliteral}{"'"},\textcolor{stringliteral}{"\(\backslash\)""},$data[$F[\textcolor{stringliteral}{'dbname'}]]).\textcolor{stringliteral}{"' class=\(\backslash\)""}.$class.\textcolor{stringliteral}{"\(\backslash\)"></input>"};
+00089                      \textcolor{keywordflow}{break};
+00090         \textcolor{keywordflow}{case} \textcolor{stringliteral}{"longtext"}: 
+00091                      echo \textcolor{stringliteral}{"<textarea name=\(\backslash\)"db\_"}.$F[\textcolor{stringliteral}{'dbname'}].\textcolor{stringliteral}{"\(\backslash\)" class=\(\backslash\)""}.
+      $class.\textcolor{stringliteral}{"\(\backslash\)">"}.$data[$F[\textcolor{stringliteral}{'dbname'}]].\textcolor{stringliteral}{"</textarea>"};
+00092                      \textcolor{keywordflow}{break};
+00093         \textcolor{keywordflow}{case} \textcolor{stringliteral}{"select options"}:
+00094                      echo \textcolor{stringliteral}{"<select name=\(\backslash\)"db\_"}.$F[\textcolor{stringliteral}{'dbname'}].\textcolor{stringliteral}{"\(\backslash\)" class=\(\backslash\)""}.
+      $class.\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00095                      $this->selectOptions($F,$data[\textcolor{stringliteral}{'id'}]);
+00096                      echo \textcolor{stringliteral}{"</select>\(\backslash\)n"};
+00097                      \textcolor{keywordflow}{break};
+00098         \textcolor{keywordflow}{case} \textcolor{stringliteral}{"select section"}:
+00099                      \textcolor{keywordflow}{if}($data[\textcolor{stringliteral}{'section\_id'}]>0)
+00100                      \{
+00101                        echo \textcolor{stringliteral}{"<select name=\(\backslash\)"db\_"}.$F[\textcolor{stringliteral}{'dbname'}].\textcolor{stringliteral}{"\(\backslash\)" class=\(\backslash\)""}.
+      $class.\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00102                        $this->selectSection(0,\textcolor{stringliteral}{" IS NULL"},$data[\textcolor{stringliteral}{'section\_id'}]);
+00103                        echo \textcolor{stringliteral}{"</select>\(\backslash\)n"};
+00104                      \}
+00105                      \textcolor{keywordflow}{break};
+00106         \textcolor{keywordflow}{case} \textcolor{stringliteral}{"select variable"}:
+00107                      echo \textcolor{stringliteral}{"<select name=\(\backslash\)"db\_"}.$F[\textcolor{stringliteral}{'dbname'}].\textcolor{stringliteral}{"\(\backslash\)" class=\(\backslash\)""}.
+      $class.\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00108                      $this->selectFromTable(\textcolor{stringliteral}{"variables"},$F[\textcolor{stringliteral}{'model\_id'}],$data[$F
+      [\textcolor{stringliteral}{'dbname'}]]);
+00109                      echo \textcolor{stringliteral}{"</select>\(\backslash\)n"};
+00110                      \textcolor{keywordflow}{break};
+00111         \textcolor{keywordflow}{case} \textcolor{stringliteral}{"select parameter"}:
+00112                      echo \textcolor{stringliteral}{"<select name=\(\backslash\)"db\_"}.$F[\textcolor{stringliteral}{'dbname'}].\textcolor{stringliteral}{"\(\backslash\)" class=\(\backslash\)""}.
+      $class.\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00113                      $this->selectFromTable(\textcolor{stringliteral}{"parameters"},$F[\textcolor{stringliteral}{'model\_id'}],$data[
+      $F[\textcolor{stringliteral}{'dbname'}]]);
+00114                      echo \textcolor{stringliteral}{"</select>\(\backslash\)n"};
+00115                      \textcolor{keywordflow}{break};
+00116         \textcolor{keywordflow}{case} \textcolor{stringliteral}{"color"} :
+00117                      echo \textcolor{stringliteral}{"<input class='color' name=\(\backslash\)"db\_"}.$F[\textcolor{stringliteral}{'dbname'}].\textcolor{stringliteral}{"\(\backslash\)"
+       value=\(\backslash\)""}.$data[$F[\textcolor{stringliteral}{'dbname'}]].\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00118                      \textcolor{keywordflow}{break};
+00119         \textcolor{keywordflow}{case} \textcolor{stringliteral}{"model link"}:
+00120                      echo \textcolor{stringliteral}{"<a href=\(\backslash\)"admin.php?modelid="}.$data[$F[\textcolor{stringliteral}{'dbname'}]].\textcolor{stringliteral}{"
+      \(\backslash\)">"}.$data[$F[\textcolor{stringliteral}{'dbname'}]].\textcolor{stringliteral}{"</a>\(\backslash\)n"};
+00121                      \textcolor{keywordflow}{break};
+00122         \textcolor{keywordflow}{case} \textcolor{stringliteral}{"fixed"}:
+00123         \textcolor{keywordflow}{default}: 
+00124                      echo $data[$F[\textcolor{stringliteral}{'dbname'}]];
+00125                      \textcolor{keywordflow}{break};  
+00126       \}
+00127   \}
+00128     
+00129   \textcolor{keyword}{function} displayFields($data)
+00130   \{
+00131     \textcolor{keywordflow}{foreach}($this->fields as $F)
+00132     \{
+00133       echo \textcolor{stringliteral}{" <tr>\(\backslash\)n"};
+00134       echo \textcolor{stringliteral}{"  <td class=\(\backslash\)"update\_name\(\backslash\)">"};
+00135       echo $F[\textcolor{stringliteral}{'showname'}];
+00136       echo \textcolor{stringliteral}{"</td>\(\backslash\)n"};
+00137       echo \textcolor{stringliteral}{"  <td class=\(\backslash\)"update\_value\(\backslash\)">"};
+00138       $this->displayOneField($data,$F,\textcolor{stringliteral}{"normalUpdate"});
+00139       echo \textcolor{stringliteral}{"</td>\(\backslash\)n"};
+00140     \}
+00141   \}
+00142   
+00143   \textcolor{keyword}{function} update()
+00144   \{
+00145     \textcolor{keywordflow}{if}(isset($\_POST[\textcolor{stringliteral}{'update'}]))
+00146     \{
+00147       $DB=\textcolor{keyword}{new} \hyperlink{classdatabasemanager}{databasemanager}();
+00148       $DB->update($this->table,$this->idname,$this->idvalue);
+00149     \}
+00150     $this->update1NN1();
+00151   \}
+00152   
+00153   \textcolor{keyword}{function} update1NN1()
+00154   \{
+00155     \textcolor{keywordflow}{if}(isset($\_POST[\textcolor{stringliteral}{'update1NN1'}]))
+00156     \{
+00157       $DB=\textcolor{keyword}{new} \hyperlink{classdatabasemanager}{databasemanager}();
+00158       $DB->update1NN1($this->idvalue);
+00159     \}
+00160   \}
+00161   
+00162   \textcolor{keyword}{function} insert()
+00163   \{
+00164     \textcolor{keywordflow}{if}(isset($\_POST[\textcolor{stringliteral}{'insert'}]))
+00165     \{
+00166       $DB=\textcolor{keyword}{new} \hyperlink{classdatabasemanager}{databasemanager}();
+00167       $id=$DB->insert();
+00168       \textcolor{keywordflow}{if}(isset($\_POST[\textcolor{stringliteral}{'insert\_table'}]) and $\_POST[\textcolor{stringliteral}{'insert\_table'}]==\textcolor{stringliteral}{"models"})
+00169       \{
+00170         $DB->createDirectories($id);
+00171       \}
+00172     \}
+00173     $this->insert1NN1();
+00174   \}
+00175   
+00176   \textcolor{keyword}{function} insert1NN1()
+00177   \{
+00178     \textcolor{keywordflow}{if}(isset($\_POST[\textcolor{stringliteral}{'insert1NN1'}]))
+00179     \{
+00180       $DB=\textcolor{keyword}{new} \hyperlink{classdatabasemanager}{databasemanager}();
+00181       $DB->insert1NN1($this->idvalue);
+00182     \}
+00183   \}
+00184   
+00185   \textcolor{keyword}{function} \textcolor{keyword}{delete}()
+00186   \{
+00187     \textcolor{keywordflow}{if}(isset($\_POST[\textcolor{stringliteral}{'delete'}]))
+00188     \{
+00189       $DB=\textcolor{keyword}{new} \hyperlink{classdatabasemanager}{databasemanager}();
+00190       $DB->delete();
+00191       \textcolor{keywordflow}{if}(isset($\_POST[\textcolor{stringliteral}{'delete\_table'}]) and $\_POST[\textcolor{stringliteral}{'delete\_table'}]==\textcolor{stringliteral}{"models"})
+00192       \{
+00193         $DB->deleteDirectories($\_POST[\textcolor{stringliteral}{'delete\_id'}]);
+00194       \}
+00195     \}
+00196     $this->delete1NN1();
+00197   \}
+00198   
+00199   \textcolor{keyword}{function} delete1NN1()
+00200   \{
+00201     \textcolor{keywordflow}{if}(isset($\_POST[\textcolor{stringliteral}{'delete1NN1'}]))
+00202     \{
+00203       $DB=\textcolor{keyword}{new} \hyperlink{classdatabasemanager}{databasemanager}();
+00204       $DB->delete1NN1($\_POST[\textcolor{stringliteral}{'delete\_id'}]);
+00205     \}
+00206   \}
+00207   
+00208   \textcolor{keyword}{function} createRelations1N()
+00209   \{
+00210     $this->Relations1N=array();
+00211   \}  
+00212   
+00213   \textcolor{keyword}{function} createRelations1N1N()
+00214   \{
+00215     $this->Relations1N1N=array();
+00216   \}  
+00217   
+00218   \textcolor{keyword}{function} createRelations1NN1()
+00219   \{
+00220     $this->Relations1NN1=array();
+00221   \}  
+00222     
+00223   \textcolor{keyword}{function} displayOwn()
+00224   \{
+00225     echo \textcolor{stringliteral}{"<form method=\(\backslash\)"POST\(\backslash\)" action=\(\backslash\)"admin.php\(\backslash\)">\(\backslash\)n"};
+00226     echo \textcolor{stringliteral}{"<table class=\(\backslash\)"update\(\backslash\)">\(\backslash\)n"};
+00227     echo \textcolor{stringliteral}{"<tr><th class=\(\backslash\)"update\_title\(\backslash\)" colspan='2'>"}.$this->blockname.\textcolor{stringliteral}{"
+      </th></tr>"};
+00228     $sql=\textcolor{stringliteral}{"SELECT * FROM "}.$this->table.\textcolor{stringliteral}{" WHERE "}.$this->idname.\textcolor{stringliteral}{"='"}.$this->
+      idvalue.\textcolor{stringliteral}{"'"};
+00229     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00230     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00231     \{
+00232       $linea=mysql\_fetch\_array($result,MYSQL\_ASSOC);
+00233       $this->displayFields($linea);
+00234     \}
+00235     echo \textcolor{stringliteral}{"</table>\(\backslash\)n"};
+00236     echo \textcolor{stringliteral}{"<input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)""}.$this->sectionidname.\textcolor{stringliteral}{"\(\backslash\)" value=\(\backslash\)""}.
+      $this->idvalue.\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00237     echo \textcolor{stringliteral}{"<div class=\(\backslash\)"controls\_buttons\(\backslash\)">\(\backslash\)n"};
+00238     echo \textcolor{stringliteral}{"<input type=\(\backslash\)"submit\(\backslash\)" class=\(\backslash\)"controls\_button\(\backslash\)" name=\(\backslash\)"update\(\backslash\)"
+       value=\(\backslash\)""}.$this->text(\textcolor{stringliteral}{"adminblock\_Update"}).\textcolor{stringliteral}{"\(\backslash\)"/>\(\backslash\)n"};
+00239     echo \textcolor{stringliteral}{"</div>\(\backslash\)n"};
+00240     echo \textcolor{stringliteral}{"</form>\(\backslash\)n"};
+00241   \}
+00242   
+00243   \textcolor{keyword}{function} displayOneRelation1N($rel)
+00244   \{
+00245     echo \textcolor{stringliteral}{"<table class=\(\backslash\)"update\(\backslash\)">\(\backslash\)n"};
+00246     echo \textcolor{stringliteral}{"<tr><th class=\(\backslash\)"update\_title\(\backslash\)"colspan='2'>"}.$rel[\textcolor{stringliteral}{'title'}].\textcolor{stringliteral}{"</th></tr>
+      "};
+00247     echo \textcolor{stringliteral}{"<tr><th class=\(\backslash\)"update\_title\(\backslash\)">"}.$rel[\textcolor{stringliteral}{'show'}].\textcolor{stringliteral}{"</th><th class=\(\backslash\)"
+      update\_title\(\backslash\)">"}.$this->text(\textcolor{stringliteral}{"adminblock\_Actions"}).\textcolor{stringliteral}{"</th></tr>\(\backslash\)n"};
+00248     $sql=\textcolor{stringliteral}{"SELECT "}.$rel[\textcolor{stringliteral}{'id1'}].\textcolor{stringliteral}{" AS ID, "}.$rel[\textcolor{stringliteral}{'showdbname'}]. \textcolor{stringliteral}{" AS NAME FROM "}.
+      $rel[\textcolor{stringliteral}{'table'}].\textcolor{stringliteral}{" WHERE "}.$rel[\textcolor{stringliteral}{'id2'}].\textcolor{stringliteral}{"="}.$rel[\textcolor{stringliteral}{'idvalue'}];
+00249 \textcolor{comment}{//    echo $sql;}
+00250     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00251     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00252     \{
+00253       \textcolor{keywordflow}{while}($linea=mysql\_fetch\_array($result,MYSQL\_ASSOC))
+00254       \{
+00255         echo \textcolor{stringliteral}{" <tr>\(\backslash\)n"};
+00256         echo \textcolor{stringliteral}{"  <td class=\(\backslash\)"update\_name\(\backslash\)">"};
+00257         echo $linea[\textcolor{stringliteral}{'NAME'}];
+00258         echo \textcolor{stringliteral}{"  </td>\(\backslash\)n"};
+00259         echo \textcolor{stringliteral}{"  <td class=\(\backslash\)"update\_name\(\backslash\)">\(\backslash\)n"};
+00260         echo \textcolor{stringliteral}{"   <form action=\(\backslash\)"admin.php\(\backslash\)" method=\(\backslash\)"POST\(\backslash\)">\(\backslash\)n"};
+00261         echo \textcolor{stringliteral}{"    <div class=\(\backslash\)"controls\_buttons\(\backslash\)">\(\backslash\)n"};
+00262         echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)""}.$rel[\textcolor{stringliteral}{'linkname'}].\textcolor{stringliteral}{"\(\backslash\)" value=
+      \(\backslash\)""}.$linea[\textcolor{stringliteral}{'ID'}].\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00263         echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"submit\(\backslash\)" class=\(\backslash\)"controls\_button\(\backslash\)" name=\(\backslash\)"edit
+      \(\backslash\)"   value=\(\backslash\)""}.$this->text(\textcolor{stringliteral}{"adminblock\_Edit"}).\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00264         echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)"delete\_table\(\backslash\)" value=\(\backslash\)""}.$rel[\textcolor{stringliteral}{
+      'table'}].\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00265         echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)"delete\_colid\(\backslash\)" value=\(\backslash\)""}.$rel[\textcolor{stringliteral}{
+      'id1'}].\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00266         echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)"delete\_id\(\backslash\)" value=\(\backslash\)""}.$linea[\textcolor{stringliteral}{'
+      ID'}].\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00267         echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"submit\(\backslash\)" class=\(\backslash\)"controls\_button\(\backslash\)" name=\(\backslash\)"
+      delete\(\backslash\)" value=\(\backslash\)""}.$this->text(\textcolor{stringliteral}{"adminblock\_Delete"}).\textcolor{stringliteral}{"\(\backslash\)" onClick=\(\backslash\)"return confirm('"}.
+      $this->text(\textcolor{stringliteral}{"adminblock\_Delete\_confirm"}).\textcolor{stringliteral}{"')\(\backslash\)">\(\backslash\)n"};
+00268         echo \textcolor{stringliteral}{"    </div>\(\backslash\)n"};
+00269         echo \textcolor{stringliteral}{"   </form>\(\backslash\)n"};
+00270         echo \textcolor{stringliteral}{"  </td>"};
+00271         echo \textcolor{stringliteral}{" </tr>\(\backslash\)n"};
+00272       \}
+00273     \}
+00274     echo \textcolor{stringliteral}{" <tr>\(\backslash\)n"};
+00275     echo \textcolor{stringliteral}{"  <form action=\(\backslash\)"admin.php\(\backslash\)" method=\(\backslash\)"post\(\backslash\)">\(\backslash\)n"};
+00276     echo \textcolor{stringliteral}{"   <td class=\(\backslash\)"update\_name\(\backslash\)">"};
+00277     echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"text\(\backslash\)" name=\(\backslash\)"db\_"}.$rel[\textcolor{stringliteral}{'showdbname'}].\textcolor{stringliteral}{"\(\backslash\)" value=\(\backslash\)"
+      "}.$this->text(\textcolor{stringliteral}{"adminblock\_No\_name"}).\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00278     echo \textcolor{stringliteral}{"   </td><td class=\(\backslash\)"update\_name\(\backslash\)">"};
+00279     echo \textcolor{stringliteral}{"    <div class=\(\backslash\)"controls\_buttons\(\backslash\)">\(\backslash\)n"};
+00280     echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)""}.$this->sectionidname.\textcolor{stringliteral}{"\(\backslash\)" value=
+      \(\backslash\)""}.$this->idvalue.\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00281 \textcolor{comment}{//    echo "     <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)"".$rel['linkname']."\(\backslash\)"
+       value=\(\backslash\)"".$rel['idvalue']."\(\backslash\)">\(\backslash\)n";}
+00282     echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)"insert\_table\(\backslash\)" value=\(\backslash\)""}.$rel[\textcolor{stringliteral}{'
+      table'}].\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00283     echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)"db\_"}.$rel[\textcolor{stringliteral}{'id2'}].\textcolor{stringliteral}{"\(\backslash\)" value=\(\backslash\)""}.
+      $rel[\textcolor{stringliteral}{'idvalue'}].\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00284     \textcolor{keywordflow}{if}(isset($rel[\textcolor{stringliteral}{'id3'}]))
+00285     \{
+00286       echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)"db\_"}.$rel[\textcolor{stringliteral}{'id3'}].\textcolor{stringliteral}{"\(\backslash\)" value=\(\backslash\)""}.
+      $rel[\textcolor{stringliteral}{'idvalue3'}].\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00287     \}
+00288     echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"submit\(\backslash\)" class=\(\backslash\)"controls\_button\(\backslash\)" name=\(\backslash\)"insert\(\backslash\)"
+       value=\(\backslash\)""}.$this->text(\textcolor{stringliteral}{"adminblock\_Add"}).\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00289     echo \textcolor{stringliteral}{"    </div>\(\backslash\)n"};
+00290     echo \textcolor{stringliteral}{"   </td>"};
+00291     echo \textcolor{stringliteral}{"  </form>\(\backslash\)n"};
+00292     echo \textcolor{stringliteral}{" </tr>\(\backslash\)n"};
+00293     echo \textcolor{stringliteral}{"</table>\(\backslash\)n"};
+00294   \}
+00295   
+00296   \textcolor{keyword}{function} displayRelations1N()
+00297   \{
+00298     \textcolor{keywordflow}{foreach}($this->Relations1N as $rel1N)
+00299     \{
+00300       $this->displayOneRelation1N($rel1N);
+00301     \}
+00302   \}
+00303 
+00304   \textcolor{keyword}{function} displayOneRelation1N1N($rel)
+00305   \{
+00306     $ncols=count($rel[\textcolor{stringliteral}{'subfields'}]);
+00307   
+00308     echo \textcolor{stringliteral}{"<table class=\(\backslash\)"update\(\backslash\)">\(\backslash\)n"};
+00309     echo \textcolor{stringliteral}{"<tr><th class=\(\backslash\)"update\_title\(\backslash\)" colspan='"}.($ncols+2).\textcolor{stringliteral}{"'>"}.$rel[\textcolor{stringliteral}{'title
+      '}].\textcolor{stringliteral}{"</th></tr>"};
+00310     echo \textcolor{stringliteral}{"<tr><th class=\(\backslash\)"update\_title\(\backslash\)"></th><th class=\(\backslash\)"update\_title\(\backslash\)"
+       colspan='"}.($ncols+1).\textcolor{stringliteral}{"'>Datos</th></tr>\(\backslash\)n"};
+00311     echo \textcolor{stringliteral}{"<tr><th class=\(\backslash\)"update\_title\(\backslash\)">"}.$rel[\textcolor{stringliteral}{'show'}].\textcolor{stringliteral}{"</th>\(\backslash\)n"};
+00312     \textcolor{keywordflow}{foreach}($rel[\textcolor{stringliteral}{'subfields'}] as $K=>$F)
+00313     \{
+00314       echo \textcolor{stringliteral}{"<th class=\(\backslash\)"update\_title\(\backslash\)">"}.$F[\textcolor{stringliteral}{'showname'}].\textcolor{stringliteral}{"</th>"};
+00315     \}
+00316     echo \textcolor{stringliteral}{"<th class=\(\backslash\)"update\_title\(\backslash\)">Acciones</th></tr>\(\backslash\)n"};
+00317     $sql=\textcolor{stringliteral}{"SELECT "}.$rel[\textcolor{stringliteral}{'id1'}].\textcolor{stringliteral}{" AS ID, "}.$rel[\textcolor{stringliteral}{'showdbname'}].\textcolor{stringliteral}{" AS NAME, "}.$rel[\textcolor{stringliteral}{
+      'table'}].\textcolor{stringliteral}{".* FROM "}.$rel[\textcolor{stringliteral}{'table'}].\textcolor{stringliteral}{" WHERE "}.$rel[\textcolor{stringliteral}{'id2'}].\textcolor{stringliteral}{"="}.$rel[\textcolor{stringliteral}{'idvalue'}];
+00318     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00319     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00320     \{
+00321       \textcolor{keywordflow}{while}($linea=mysql\_fetch\_array($result,MYSQL\_ASSOC))
+00322       \{
+00323         echo \textcolor{stringliteral}{" <tr>\(\backslash\)n"};
+00324         echo \textcolor{stringliteral}{"   <form action=\(\backslash\)"admin.php\(\backslash\)" method=\(\backslash\)"POST\(\backslash\)">\(\backslash\)n"};
+00325         echo \textcolor{stringliteral}{"  <td class=\(\backslash\)"update\_name\(\backslash\)">"};
+00326         echo $linea[\textcolor{stringliteral}{'NAME'}];
+00327         echo \textcolor{stringliteral}{"  </td>\(\backslash\)n"};
+00328         \textcolor{keywordflow}{foreach}($rel[\textcolor{stringliteral}{'subfields'}] as $FF)
+00329         \{
+00330           echo \textcolor{stringliteral}{"  <td class=\(\backslash\)"update\_value\(\backslash\)">"};
+00331           $this->displayOneField($linea,$FF,\textcolor{stringliteral}{"miniUpdate"});
+00332           echo \textcolor{stringliteral}{"</td>\(\backslash\)n"};
+00333         \}
+00334         echo \textcolor{stringliteral}{"  <td class=\(\backslash\)"update\_name\(\backslash\)">\(\backslash\)n"};
+00335         echo \textcolor{stringliteral}{"    <div class=\(\backslash\)"controls\_buttons\(\backslash\)">\(\backslash\)n"};
+00336         echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)""}.$this->sectionidname.\textcolor{stringliteral}{"\(\backslash\)"
+       value=\(\backslash\)""}.$this->idvalue.\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00337         echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)""}.$rel[\textcolor{stringliteral}{'linkname'}].\textcolor{stringliteral}{"\(\backslash\)" value=
+      \(\backslash\)""}.$linea[\textcolor{stringliteral}{'ID'}].\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00338         echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"submit\(\backslash\)" class=\(\backslash\)"controls\_button\(\backslash\)" name=\(\backslash\)"
+      update\(\backslash\)"   value=\(\backslash\)""}.$this->text(\textcolor{stringliteral}{"adminblock\_Update"}).\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00339         echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)"delete\_table\(\backslash\)" value=\(\backslash\)""}.$rel[\textcolor{stringliteral}{
+      'table'}].\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00340         echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)"delete\_colid\(\backslash\)" value=\(\backslash\)""}.$rel[\textcolor{stringliteral}{
+      'id1'}].\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00341         echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)"delete\_id\(\backslash\)" value=\(\backslash\)""}.$linea[\textcolor{stringliteral}{'
+      ID'}].\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00342         echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"submit\(\backslash\)" class=\(\backslash\)"controls\_button\(\backslash\)" name=\(\backslash\)"
+      delete\(\backslash\)" value=\(\backslash\)""}.$this->text(\textcolor{stringliteral}{"adminblock\_Delete"}).\textcolor{stringliteral}{"\(\backslash\)" onClick=\(\backslash\)"return confirm('"}.
+      $this->text(\textcolor{stringliteral}{"adminblock\_Delete\_confirm"}).\textcolor{stringliteral}{"')\(\backslash\)">\(\backslash\)n"};
+00343         echo \textcolor{stringliteral}{"    </div>\(\backslash\)n"};
+00344         echo \textcolor{stringliteral}{"  </td>"};
+00345         echo \textcolor{stringliteral}{"   </form>\(\backslash\)n"};
+00346         echo \textcolor{stringliteral}{" </tr>\(\backslash\)n"};
+00347       \}
+00348     \}
+00349     \textcolor{comment}{// INSERT }
+00350     
+00351     $sql=\textcolor{stringliteral}{"SELECT id FROM "}.$this->varpar.\textcolor{stringliteral}{"s WHERE model\_id='"}.$this->
+      findModelId().\textcolor{stringliteral}{"' LIMIT 1"};
+00352     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00353     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00354     \{
+00355       $linea=mysql\_fetch\_array($result,MYSQL\_ASSOC);
+00356       echo \textcolor{stringliteral}{" <tr>\(\backslash\)n"};
+00357       echo \textcolor{stringliteral}{"   <td class=\(\backslash\)"update\_name\(\backslash\)" colspan=\(\backslash\)""}.($ncols+2).\textcolor{stringliteral}{"\(\backslash\)">"};
+00358       echo \textcolor{stringliteral}{"    <form action=\(\backslash\)"admin.php\(\backslash\)" method=\(\backslash\)"post\(\backslash\)">\(\backslash\)n"};
+00359       echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"text\(\backslash\)" name=\(\backslash\)"db\_"}.$rel[\textcolor{stringliteral}{'showdbname'}].\textcolor{stringliteral}{"\(\backslash\)" value=
+      \(\backslash\)""}.$this->text(\textcolor{stringliteral}{"adminblock\_No\_name"}).\textcolor{stringliteral}{"\(\backslash\)" class=\(\backslash\)"normalUpdate\(\backslash\)">\(\backslash\)n"};
+00360       echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)""}.$this->sectionidname.\textcolor{stringliteral}{"\(\backslash\)"
+       value=\(\backslash\)""}.$this->idvalue.\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00361       echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)"insert\_table\(\backslash\)" value=\(\backslash\)""}.$rel[\textcolor{stringliteral}{'
+      table'}].\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00362       echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)"db\_"}.$rel[\textcolor{stringliteral}{'id2'}].\textcolor{stringliteral}{"\(\backslash\)" value=\(\backslash\)""}.
+      $this->idvalue.\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00363       echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)"db\_"}.$this->varpar.\textcolor{stringliteral}{"\_id\(\backslash\)" value=
+      \(\backslash\)""}.$linea[\textcolor{stringliteral}{'id'}].\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};    
+00364       echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"submit\(\backslash\)" class=\(\backslash\)"controls\_button\(\backslash\)" name=\(\backslash\)"insert
+      \(\backslash\)" value=\(\backslash\)""}.$this->text(\textcolor{stringliteral}{"adminblock\_Add"}).\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00365       echo \textcolor{stringliteral}{"    </form>\(\backslash\)n"};
+00366       echo \textcolor{stringliteral}{"   </td>"};
+00367       echo \textcolor{stringliteral}{" </tr>\(\backslash\)n"};
+00368     \}
+00369     
+00370     echo \textcolor{stringliteral}{"</table>\(\backslash\)n"};
+00371   \}
+00372     
+00373   \textcolor{keyword}{function} displayRelations1N1N()
+00374   \{
+00375     \textcolor{keywordflow}{foreach}($this->Relations1N1N as $rel1N1N)
+00376     \{
+00377       $this->displayOneRelation1N1N($rel1N1N);
+00378     \}
+00379   \}
+00380   
+00381   \textcolor{keyword}{function} displayOneRelation1NN1($rel)
+00382   \{
+00383     $ncols=count($rel[\textcolor{stringliteral}{'subfields'}]);
+00384 
+00385     echo \textcolor{stringliteral}{"<table class=\(\backslash\)"update\(\backslash\)">\(\backslash\)n"};
+00386     echo \textcolor{stringliteral}{"<tr><th class=\(\backslash\)"update\_title\(\backslash\)" colspan='"}.($ncols+2).\textcolor{stringliteral}{"'>"}.$rel[\textcolor{stringliteral}{'title
+      '}].\textcolor{stringliteral}{"</th></tr>"};
+00387     echo \textcolor{stringliteral}{"<tr><th class=\(\backslash\)"update\_title\(\backslash\)">"}.$rel[\textcolor{stringliteral}{'show'}].\textcolor{stringliteral}{"</th>\(\backslash\)n"};
+00388     \textcolor{keywordflow}{foreach}($rel[\textcolor{stringliteral}{'subfields'}] as $K=>$F)
+00389     \{
+00390       echo \textcolor{stringliteral}{"<th class=\(\backslash\)"update\_title\(\backslash\)">"}.$F[\textcolor{stringliteral}{'showname'}].\textcolor{stringliteral}{"</th>"};
+00391     \}
+00392     echo \textcolor{stringliteral}{"<th class=\(\backslash\)"update\_title\(\backslash\)">Acciones</th></tr>\(\backslash\)n"};
+00393     \textcolor{comment}{// SELECTED}
+00394     $id\_selected=array();
+00395     $sql=\textcolor{stringliteral}{"SELECT "}.$rel[\textcolor{stringliteral}{'idLink2'}].\textcolor{stringliteral}{" AS IDSELECTED FROM "}.$rel[\textcolor{stringliteral}{'tableLink'}].\textcolor{stringliteral}{"
+       WHERE "}.$rel[\textcolor{stringliteral}{'idLink1'}].\textcolor{stringliteral}{"="}.$rel[\textcolor{stringliteral}{'idvalue'}];
+00396     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00397     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00398     \{
+00399       \textcolor{keywordflow}{while}($linea=mysql\_fetch\_array($result,MYSQL\_ASSOC))
+00400       \{
+00401         $id\_selected[]=$linea[\textcolor{stringliteral}{'IDSELECTED'}];
+00402       \}
+00403     \}
+00404     \textcolor{comment}{// TABLE}
+00405     
+00406     $sql=\textcolor{stringliteral}{"SELECT *,id AS ID FROM "}.$rel[\textcolor{stringliteral}{'table2'}];
+00407     $cnt=0;
+00408     \textcolor{keywordflow}{foreach}($rel[\textcolor{stringliteral}{"order"}] as $or)
+00409     \{
+00410       \textcolor{keywordflow}{if}($cnt==0)
+00411       \{
+00412         $sql.=\textcolor{stringliteral}{" ORDER BY "};
+00413       \}
+00414       $cnt++;
+00415       $sql.=$or;
+00416       \textcolor{keywordflow}{if}($cnt<count($rel[\textcolor{stringliteral}{"order"}]))
+00417       \{
+00418         $sql.=\textcolor{stringliteral}{", "};
+00419       \}
+00420     \}
+00421 
+00422     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00423     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00424     \{
+00425       \textcolor{keywordflow}{while}($linea=mysql\_fetch\_array($result,MYSQL\_ASSOC))
+00426       \{
+00427         echo \textcolor{stringliteral}{" <tr>\(\backslash\)n"};
+00428         echo \textcolor{stringliteral}{"   <form action=\(\backslash\)"admin.php\(\backslash\)" method=\(\backslash\)"POST\(\backslash\)">\(\backslash\)n"};
+00429         $F=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"modeller\_id"},\textcolor{stringliteral}{"showname"}=>\textcolor{stringliteral}{""},\textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"check"},\textcolor{stringliteral}{"value"}
+      =>0);
+00430         \textcolor{keywordflow}{if}(in\_array($linea[\textcolor{stringliteral}{'id'}],$id\_selected))
+00431         \{
+00432           $F[\textcolor{stringliteral}{'value'}]=1;
+00433         \}
+00434         $data=array();
+00435         echo \textcolor{stringliteral}{"     <td class=\(\backslash\)"update\_value\(\backslash\)">"};
+00436         echo $this->displayOneField($data,$F,\textcolor{stringliteral}{"checkUpdate"});
+00437         echo \textcolor{stringliteral}{"       <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)"tableLink\(\backslash\)" value=\(\backslash\)""}.$rel[\textcolor{stringliteral}{'
+      tableLink'}].\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00438         echo \textcolor{stringliteral}{"       <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)"table2\(\backslash\)" value=\(\backslash\)""}.$rel[\textcolor{stringliteral}{'
+      table2'}].\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00439         echo \textcolor{stringliteral}{"       <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)"id1\(\backslash\)" value=\(\backslash\)""}.$rel[\textcolor{stringliteral}{'id1'}].\textcolor{stringliteral}{
+      "\(\backslash\)">\(\backslash\)n"};
+00440         echo \textcolor{stringliteral}{"       <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)"id2\(\backslash\)" value=\(\backslash\)""}.$rel[\textcolor{stringliteral}{'id2'}].\textcolor{stringliteral}{
+      "\(\backslash\)">\(\backslash\)n"};
+00441         echo \textcolor{stringliteral}{"       <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)"idLink1\(\backslash\)" value=\(\backslash\)""}.$rel[\textcolor{stringliteral}{'
+      idLink1'}].\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00442         echo \textcolor{stringliteral}{"       <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)"idLink2\(\backslash\)" value=\(\backslash\)""}.$rel[\textcolor{stringliteral}{'
+      idLink2'}].\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00443         echo \textcolor{stringliteral}{"</td>\(\backslash\)n"};
+00444         \textcolor{keywordflow}{foreach}($rel[\textcolor{stringliteral}{'subfields'}] AS $FF)
+00445         \{
+00446           echo \textcolor{stringliteral}{"  <td class=\(\backslash\)"update\_value\(\backslash\)">"};
+00447           $this->displayOneField($linea,$FF,\textcolor{stringliteral}{"mediumUpdate"});
+00448           echo \textcolor{stringliteral}{"</td>\(\backslash\)n"};          
+00449         \}
+00450         echo \textcolor{stringliteral}{"    <td class=\(\backslash\)"update\_value\(\backslash\)">\(\backslash\)n"};
+00451         echo \textcolor{stringliteral}{"      <div class=\(\backslash\)"controls\_buttons\(\backslash\)">\(\backslash\)n"};
+00452         echo \textcolor{stringliteral}{"       <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)""}.$this->sectionidname.\textcolor{stringliteral}{"\(\backslash\)"
+       value=\(\backslash\)""}.$this->idvalue.\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00453         echo \textcolor{stringliteral}{"       <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)""}.$rel[\textcolor{stringliteral}{'linkname'}].\textcolor{stringliteral}{"\(\backslash\)"
+       value=\(\backslash\)""}.$linea[\textcolor{stringliteral}{'ID'}].\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00454         echo \textcolor{stringliteral}{"       <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)"id2Value\(\backslash\)" value=\(\backslash\)""}.$linea[\textcolor{stringliteral}{
+      'ID'}].\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00455         echo \textcolor{stringliteral}{"       <input type=\(\backslash\)"submit\(\backslash\)" class=\(\backslash\)"controls\_button\(\backslash\)" name=\(\backslash\)"
+      update1NN1\(\backslash\)" value=\(\backslash\)""}.$this->text(\textcolor{stringliteral}{"adminblock\_Update"}).\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00456         echo \textcolor{stringliteral}{"       <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)"delete\_id\(\backslash\)" value=\(\backslash\)""}.$linea
+      [\textcolor{stringliteral}{'ID'}].\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00457         echo \textcolor{stringliteral}{"       <input type=\(\backslash\)"submit\(\backslash\)" class=\(\backslash\)"controls\_button\(\backslash\)" name=\(\backslash\)"
+      delete1NN1\(\backslash\)" value=\(\backslash\)""}.$this->text(\textcolor{stringliteral}{"adminblock\_Delete"}).\textcolor{stringliteral}{"\(\backslash\)" onClick=\(\backslash\)"return
+       confirm('"}.$this->text(\textcolor{stringliteral}{"adminblock\_Delete\_confirm"}).\textcolor{stringliteral}{"')\(\backslash\)">\(\backslash\)n"};
+00458         echo \textcolor{stringliteral}{"      </div>\(\backslash\)n"};
+00459         echo \textcolor{stringliteral}{"    </td>\(\backslash\)n"};
+00460         echo \textcolor{stringliteral}{"   </form>\(\backslash\)n"};
+00461         echo \textcolor{stringliteral}{" </tr>\(\backslash\)n"};
+00462       \}
+00463     \}
+00464     
+00465     \textcolor{comment}{// INSERT}
+00466     echo \textcolor{stringliteral}{" <tr>\(\backslash\)n"};
+00467     echo \textcolor{stringliteral}{"  <form action=\(\backslash\)"admin.php\(\backslash\)" method=\(\backslash\)"post\(\backslash\)">\(\backslash\)n"};
+00468     echo \textcolor{stringliteral}{"   <td class=\(\backslash\)"update\_value\(\backslash\)">\(\backslash\)n"};
+00469     echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)"tableLink\(\backslash\)" value=\(\backslash\)""}.$rel[\textcolor{stringliteral}{'
+      tableLink'}].\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00470     echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)"table2\(\backslash\)" value=\(\backslash\)""}.$rel[\textcolor{stringliteral}{'table2'}].\textcolor{stringliteral}{
+      "\(\backslash\)">\(\backslash\)n"};
+00471     echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)"idLink1\(\backslash\)" value=\(\backslash\)""}.$rel[\textcolor{stringliteral}{'idLink1'}
+      ].\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00472     echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)"idLink2\(\backslash\)" value=\(\backslash\)""}.$rel[\textcolor{stringliteral}{'idLink2'}
+      ].\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00473     echo \textcolor{stringliteral}{"   </td>\(\backslash\)n"};
+00474     \textcolor{keywordflow}{foreach}($rel[\textcolor{stringliteral}{'subfields'}] AS $FF)
+00475     \{
+00476       echo \textcolor{stringliteral}{"  <td class=\(\backslash\)"update\_value\(\backslash\)">\(\backslash\)n"};
+00477       \textcolor{keywordflow}{if}($FF[\textcolor{stringliteral}{'type'}]==\textcolor{stringliteral}{"text"})
+00478       \{
+00479         echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"text\(\backslash\)" name=\(\backslash\)"db\_"}.$FF[\textcolor{stringliteral}{'dbname'}].\textcolor{stringliteral}{"\(\backslash\)" value=\(\backslash\)""}
+      .$this->text(\textcolor{stringliteral}{"adminblock\_No\_name"}).\textcolor{stringliteral}{"\(\backslash\)" class=\(\backslash\)"mediumUpdate\(\backslash\)">\(\backslash\)n"};
+00480       \}
+00481       echo \textcolor{stringliteral}{"  </td>\(\backslash\)n"};          
+00482     \}
+00483     echo \textcolor{stringliteral}{"  <td class=\(\backslash\)"update\_value\(\backslash\)">\(\backslash\)n"};
+00484     echo \textcolor{stringliteral}{"    <div class=\(\backslash\)"controls\_buttons\(\backslash\)">\(\backslash\)n"};
+00485     echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)""}.$this->sectionidname.\textcolor{stringliteral}{"\(\backslash\)" value=
+      \(\backslash\)""}.$this->idvalue.\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00486     echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"hidden\(\backslash\)" name=\(\backslash\)"insert\_table\(\backslash\)" value=\(\backslash\)""}.$rel[\textcolor{stringliteral}{'
+      table'}].\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00487     echo \textcolor{stringliteral}{"     <input type=\(\backslash\)"submit\(\backslash\)" class=\(\backslash\)"controls\_button\(\backslash\)" name=\(\backslash\)"
+      insert1NN1\(\backslash\)" value=\(\backslash\)""}.$this->text(\textcolor{stringliteral}{"adminblock\_Add"}).\textcolor{stringliteral}{"\(\backslash\)">\(\backslash\)n"};
+00488     echo \textcolor{stringliteral}{"    </div>\(\backslash\)n"};
+00489     echo \textcolor{stringliteral}{"   </td>\(\backslash\)n"};
+00490     echo \textcolor{stringliteral}{"  </form>\(\backslash\)n"};
+00491     echo \textcolor{stringliteral}{" </tr>\(\backslash\)n"};
+00492     
+00493     echo \textcolor{stringliteral}{"</table>\(\backslash\)n"};
+00494   \}
+00495 
+00496   \textcolor{keyword}{function} displayRelations1NN1()
+00497   \{
+00498     \textcolor{keywordflow}{foreach}($this->Relations1NN1 as $rel1NN1)
+00499     \{
+00500       $this->displayOneRelation1NN1($rel1NN1);
+00501     \}
+00502   \}
+00503   
+00504   \textcolor{keyword}{function} createFieldsAndRelations()
+00505   \{
+00506     $this->createFields();
+00507     $this->createRelations1N();
+00508     $this->createRelations1N1N();
+00509     $this->createRelations1NN1();
+00510   \}
+00511   
+00512   \textcolor{keyword}{function} displayPostOwn()\{\}
+00513   
+00514   \textcolor{keyword}{function} displayAll()
+00515   \{
+00516     $this->displayOwn();
+00517     $this->displayPostOwn();
+00518     $this->displayRelations1N();
+00519     $this->displayRelations1N1N();
+00520     $this->displayRelations1NN1();
+00521   \}  
+00522   
+00523   \textcolor{keyword}{function} display()
+00524   \{
+00525     $this->createFieldsAndRelations();
+00526     \textcolor{keywordflow}{if}($this->idvalue==0)
+00527     \{
+00528       \textcolor{keywordflow}{return};
+00529     \}
+00530     $this->update();
+00531     $this->insert();
+00532     $this->\textcolor{keyword}{delete}();
+00533     
+00534     $this->displayAll();
+00535   \}
+00536   
+00537 \}
+00538 ?>
+00539 
+\end{DoxyCode}

@@ -1,0 +1,204 @@
+\hypertarget{adminplot_8php_source}{\section{admin/adminplot.php}
+}
+
+\begin{DoxyCode}
+00001 <?php
+00002 require\_once(\textcolor{stringliteral}{"admin/adminblock.php"});
+00003 require\_once(\textcolor{stringliteral}{"svgplot.php"});
+00004 
+\hypertarget{adminplot_8php_source_l00005}{}\hyperlink{classadminplot}{00005} \textcolor{keyword}{class }\hyperlink{classadminplot}{adminplot} \textcolor{keyword}{extends} \hyperlink{classadminblock}{adminblock}
+00006 \{  
+00007 
+00008   \textcolor{keyword}{function} createFields()
+00009   \{
+00010     $this->varpar=\textcolor{stringliteral}{"variable"};
+00011     $this->blockname=$this->text(\textcolor{stringliteral}{"adminplot\_Plot"});
+00012     $this->table=\textcolor{stringliteral}{"plots"};
+00013     $this->sectionidname=\textcolor{stringliteral}{"plotid"};
+00014     $this->idname=\textcolor{stringliteral}{"id"};
+00015     $this->idvalue=$this->plot\_id();
+00016     $this->fields=array();
+00017     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"id"},
+00018                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"adminplot\_Identifier"}),
+00019                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"fixed"});
+00020     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"model\_id"},
+00021                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"adminplot\_Model\_identifier"})
+      ,
+00022                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"model link"});
+00023     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"name"},
+00024                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"adminplot\_Plot\_name"}),
+00025                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"text"});
+00026     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"description"},
+00027                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"adminplot\_Description"}),
+00028                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"longtext"});
+00029     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"enabled"},
+00030                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"adminplot\_Enabled"}),
+00031                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"bool"});
+00032     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"variable\_id"},
+00033                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"
+      adminplot\_Horizontal\_variable"}),
+00034                           \textcolor{stringliteral}{"model\_id"}=>$this->findModelId(),
+00035                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"select variable"});
+00036     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"minX"},
+00037                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"
+      adminplot\_Minimum\_horizontal\_value"}),
+00038                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"float"});
+00039     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"maxX"},
+00040                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"
+      adminplot\_Maximum\_horizontal\_value"}),
+00041                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"float"});
+00042     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"gridX"},
+00043                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"
+      adminplot\_Horizontal\_divisions"}),
+00044                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"int"});
+00045     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"autoscaleX"},
+00046                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"
+      adminplot\_Horizontal\_autoscale"}),
+00047                           \textcolor{stringliteral}{"value"}=>$this->findAutoscale(\textcolor{stringliteral}{"X"}),
+00048                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"bool"});
+00049     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"minY"},
+00050                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"
+      adminplot\_Minimum\_vertical\_value"}),
+00051                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"float"});
+00052     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"maxY"},
+00053                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"
+      adminplot\_Maximum\_vertical\_value"}),
+00054                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"float"});
+00055     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"gridY"},
+00056                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"adminplot\_Vertical\_divisions
+      "}),
+00057                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"int"});
+00058     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"autoscaleY"},
+00059                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"adminplot\_Vertical\_autoscale
+      "}),
+00060                           \textcolor{stringliteral}{"value"}=>$this->findAutoscale(\textcolor{stringliteral}{"Y"}),
+00061                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"bool"});
+00062     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"firstdata"},
+00063                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"adminplot\_First\_data"}),
+00064                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"int"});
+00065   \}  
+00066    
+00067   \textcolor{keyword}{function} createRelations1N1N()
+00068   \{
+00069     $this->Relations1N1N=array();
+00070     $R=array(
+00071              \textcolor{stringliteral}{"title"}=>$this->text(\textcolor{stringliteral}{"adminplot\_Curves"}),
+00072              \textcolor{stringliteral}{"table"}=>\textcolor{stringliteral}{"curves"},
+00073              \textcolor{stringliteral}{"linkname"}=>\textcolor{stringliteral}{"curveid"},
+00074              \textcolor{stringliteral}{"id1"}=>\textcolor{stringliteral}{"id"},
+00075              \textcolor{stringliteral}{"id2"}=>\textcolor{stringliteral}{"plot\_id"},
+00076              \textcolor{stringliteral}{"idvalue"}=>$this->plot\_id(),
+00077              \textcolor{stringliteral}{"showdbname"}=>\textcolor{stringliteral}{"name"},
+00078              \textcolor{stringliteral}{"show"}=>$this->text(\textcolor{stringliteral}{"adminplot\_Curve\_name"}),
+00079              \textcolor{stringliteral}{"subfields"}=>array());
+00080              
+00081     $R[\textcolor{stringliteral}{"subfields"}][]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"id"},
+00082                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"adminplot\_Identifier"}),
+00083                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"fixed"});
+00084     $R[\textcolor{stringliteral}{"subfields"}][]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"name"},
+00085                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"adminplot\_Curve\_name"}),
+00086                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"text"});
+00087     $R[\textcolor{stringliteral}{"subfields"}][]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"legend"},
+00088                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"adminplot\_Legend"}),
+00089                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"text"});
+00090     $R[\textcolor{stringliteral}{"subfields"}][]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"enabled"},
+00091                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"adminplot\_Enabled"}),
+00092                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"bool"});
+00093     $R[\textcolor{stringliteral}{"subfields"}][]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"description"},
+00094                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"adminplot\_Description"}),
+00095                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"longtext"});
+00096     $R[\textcolor{stringliteral}{"subfields"}][\textcolor{stringliteral}{'variable\_id'}]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"variable\_id"},
+00097                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"adminplot\_Vertical\_variable"}
+      ),
+00098                           \textcolor{stringliteral}{"model\_id"}=>$this->findModelId(),
+00099                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"select variable"});
+00100     $R[\textcolor{stringliteral}{"subfields"}][]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"colorRGB"},
+00101                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"adminplot\_Color"}),
+00102                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"color"});
+00103     $this->Relations1N1N[]=$R;
+00104   \}  
+00105   
+00106   \textcolor{keyword}{function} findModelId()
+00107   \{
+00108     $sql=\textcolor{stringliteral}{"SELECT model\_id FROM plots WHERE id="}.$this->plot\_id();
+00109     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00110     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00111     \{
+00112       $linea=mysql\_fetch\_array($result,MYSQL\_ASSOC);
+00113       \textcolor{keywordflow}{return}($linea[\textcolor{stringliteral}{'model\_id'}]);
+00114     \}
+00115     \textcolor{keywordflow}{return} 0;
+00116   \}
+00117   
+00118   \textcolor{keyword}{function} findAutoscale($axis)
+00119   \{
+00120     \textcolor{keywordflow}{if}(isset($\_POST[\textcolor{stringliteral}{'db\_autoscale'}.$axis]))
+00121     \{
+00122       \textcolor{keywordflow}{return} $\_POST[\textcolor{stringliteral}{'db\_autoscale'}.$axis];
+00123     \}
+00124     $sql=\textcolor{stringliteral}{"SELECT autoscale"}.$axis.\textcolor{stringliteral}{" AS A FROM plots WHERE id="}.$this->plot\_id()
+      ;
+00125     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00126     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00127     \{
+00128       $linea=mysql\_fetch\_array($result,MYSQL\_ASSOC);
+00129       \textcolor{keywordflow}{return}($linea[\textcolor{charliteral}{'A'}]);
+00130     \}
+00131     \textcolor{keywordflow}{return} 0;
+00132   \}
+00133   
+00134   \textcolor{keyword}{function} displayPostOwn()
+00135   \{
+00136     $this->displayPlot();
+00137   \}
+00138   
+00139   \textcolor{keyword}{function} displayPlot()
+00140   \{
+00141   
+00142     $sql=\textcolor{stringliteral}{"SELECT plots.*,variables.modelicaname AS MN,models.exename FROM plots
+       }
+00143 \textcolor{stringliteral}{                      INNER JOIN variables ON plots.variable\_id=variables.id}
+00144 \textcolor{stringliteral}{                      INNER JOIN models ON plots.model\_id=models.id }
+00145 \textcolor{stringliteral}{                      WHERE plots.id='"}.$\_POST[\textcolor{stringliteral}{'plotid'}].\textcolor{stringliteral}{"'"};
+00146     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00147     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00148     \{
+00149       $linea=mysql\_fetch\_array($result,MYSQL\_ASSOC);
+00150       $graph = \textcolor{keyword}{new} svgplot();
+00151       $graph->settings($linea);
+00152       $graph->data($linea,\textcolor{stringliteral}{"files/"}.$linea[\textcolor{stringliteral}{'model\_id'}].\textcolor{stringliteral}{"/bin/"}.$linea[\textcolor{stringliteral}{'exename'}]
+      .\textcolor{stringliteral}{"\_res.csv"});
+00153       echo \textcolor{stringliteral}{"<div style=\(\backslash\)"text-align:center;\(\backslash\)">\(\backslash\)n"};
+00154       $graph->display(); 
+00155       echo \textcolor{stringliteral}{"</div>\(\backslash\)n"};
+00156       $fsvg=fopen(\textcolor{stringliteral}{"files/"}.$linea[\textcolor{stringliteral}{'model\_id'}].\textcolor{stringliteral}{"/graphics/expPlot\_"}.$linea[\textcolor{stringliteral}{'id'}]
+      .\textcolor{stringliteral}{".svg"},\textcolor{stringliteral}{"w"});
+00157       fwrite($fsvg,\textcolor{stringliteral}{"<?xml-stylesheet type=\(\backslash\)"text/css\(\backslash\)" href=\(\backslash\)"themes/"}.$this->
+      configurationSettings[\textcolor{stringliteral}{'theme'}].\textcolor{stringliteral}{"/styleSVG.css\(\backslash\)" ?> \(\backslash\)n"});
+00158       fwrite($fsvg,$graph->svgStr);
+00159       fclose($fsvg);
+00160     \}
+00161     $dir=\textcolor{stringliteral}{"files/"}.$linea[\textcolor{stringliteral}{'model\_id'}].\textcolor{stringliteral}{"/graphics/"};
+00162     $orden= \textcolor{stringliteral}{"cd "}.$dir.\textcolor{stringliteral}{"; tar -czf graphics.tar.gz *.svg "};
+00163     passthru($orden);
+00164   \}  
+00165   
+00166   \textcolor{keyword}{function} update()
+00167   \{
+00168     \textcolor{keywordflow}{if}(isset($\_POST[\textcolor{stringliteral}{'update'}]))
+00169     \{
+00170       $DB=\textcolor{keyword}{new} \hyperlink{classdatabasemanager}{databasemanager}();
+00171       \textcolor{keywordflow}{if}(isset($\_POST[\textcolor{stringliteral}{'curveid'}]))
+00172       \{
+00173         $DB->update(\textcolor{stringliteral}{"curves"},\textcolor{stringliteral}{"id"},$\_POST[\textcolor{stringliteral}{'curveid'}]);
+00174       \}\textcolor{keywordflow}{else}
+00175       \{
+00176         $DB->update($this->table,$this->idname,$this->idvalue);
+00177       \}
+00178     \}
+00179   \}
+00180     
+00181 \}
+00182 
+00183 ?>
+\end{DoxyCode}

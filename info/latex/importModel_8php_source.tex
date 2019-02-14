@@ -1,0 +1,137 @@
+\hypertarget{importModel_8php_source}{\section{samples/import\-Model.php}
+}
+
+\begin{DoxyCode}
+00001 <?php
+00002 require\_once(\textcolor{stringliteral}{"../config/config.class.php"});
+00003 
+\hypertarget{importModel_8php_source_l00004}{}\hyperlink{classimport}{00004} \textcolor{keyword}{class }\hyperlink{classimport}{import}
+00005 \{
+00006   var $tables;
+00007   var $id\_eq;
+00008   var $configurationSettings;
+00009                          
+00010   \textcolor{keyword}{function} \textcolor{keyword}{import}()
+00011   \{
+00012     $this->\hyperlink{classtables}{tables}=array();
+00013     $this->id\_eq=array();
+00014     $conf = \textcolor{keyword}{new} \hyperlink{classconfiguration}{configuration}();
+00015     $this->configurationSettings=$conf->readconfig(\textcolor{stringliteral}{'unvlconfig.txt'});
+00016   \}
+00017   
+00018   \textcolor{keyword}{function} connect()
+00019   \{
+00020     $username=\textcolor{stringliteral}{""};
+00021     $userpass=\textcolor{stringliteral}{""};
+00022     $username=$this->configurationSettings[\textcolor{stringliteral}{'DBadmin'}];
+00023     $userpass=$this->configurationSettings[\textcolor{stringliteral}{'DBadminpass'}];
+00024     \textcolor{keywordflow}{if}($link=mysql\_connect($this->configurationSettings[\textcolor{stringliteral}{'DBserver'}],$username,
+      $userpass))
+00025     \{
+00026       $sql=\textcolor{stringliteral}{"USE "}.$this->configurationSettings[\textcolor{stringliteral}{'DBname'}];
+00027       \textcolor{keywordflow}{if}(!mysql\_query($sql))
+00028       \{
+00029         echo $this->text(\textcolor{stringliteral}{'about\_No\_Database\_connection'});
+00030         \textcolor{keywordflow}{return} FALSE;
+00031       \}
+00032     \}\textcolor{keywordflow}{else}
+00033     \{
+00034       \textcolor{keywordflow}{return} FALSE;
+00035     \}
+00036     \textcolor{keywordflow}{return} $link;
+00037   \}
+00038 
+00039   \textcolor{keyword}{function} importTable($tn,$eqs)
+00040   \{
+00041     \textcolor{keywordflow}{if}(!isset($this->\hyperlink{classtables}{tables}[$tn]))\{\textcolor{keywordflow}{return};\}
+00042     \textcolor{keywordflow}{foreach}($this->\hyperlink{classtables}{tables}[$tn] as $t)
+00043     \{
+00044       $flag=0;
+00045       \textcolor{keywordflow}{if}(array\_key\_exists(\textcolor{stringliteral}{"id"},$t))
+00046       \{
+00047         $flag=\textcolor{keyword}{true};
+00048         $id1=$t[\textcolor{stringliteral}{'id'}];
+00049       \}
+00050       unset($t[\textcolor{stringliteral}{'id'}]);
+00051       $sql=\textcolor{stringliteral}{"INSERT INTO "}.$tn.\textcolor{stringliteral}{"("};
+00052       \textcolor{keywordflow}{foreach}($t as $K=>$V)
+00053       \{
+00054         $sql.=$K.\textcolor{stringliteral}{", "};
+00055       \}
+00056       $sql=substr($sql,0,strlen($sql)-2);
+00057       $sql.=\textcolor{stringliteral}{") VALUES("};    
+00058       \textcolor{keywordflow}{foreach}($t as $K=>$V)
+00059       \{
+00060         \textcolor{keywordflow}{if}(isset($this->id\_eq[$K][$V]))
+00061         \{
+00062           $V=$this->id\_eq[$K][$V];
+00063         \}
+00064         $sql.=\textcolor{stringliteral}{"'"}.$V.\textcolor{stringliteral}{"', "};
+00065       \}
+00066       $sql=substr($sql,0,strlen($sql)-2);
+00067       $sql.=\textcolor{stringliteral}{")"};
+00068 \textcolor{comment}{//      echo $sql."\(\backslash\)n";}
+00069       mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00070       $id2=mysql\_insert\_id();
+00071       \textcolor{keywordflow}{if}($flag)
+00072       \{
+00073         \textcolor{keywordflow}{foreach}($eqs as $eq)
+00074         \{
+00075           $this->id\_eq[$eq][$id1]=$id2;    
+00076         \}
+00077       \}
+00078     \}
+00079   \}  
+00080   
+00081   \textcolor{keyword}{function} findRootSection()
+00082   \{
+00083     $sql=\textcolor{stringliteral}{"SELECT * FROM sections WHERE section\_id IS NULL "};
+00084     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{" "}.$sql);
+00085     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00086     \{
+00087       $line=mysql\_fetch\_array($result,MYSQL\_ASSOC);
+00088       $rootID=$line[\textcolor{stringliteral}{'id'}];
+00089     \}
+00090     \textcolor{keywordflow}{foreach}($this->\hyperlink{classtables}{tables}[\textcolor{stringliteral}{"models"}] as $T)
+00091     \{
+00092       $this->id\_eq[\textcolor{stringliteral}{"section\_id"}][$T[\textcolor{stringliteral}{"section\_id"}]]=$rootID;        
+00093     \}
+00094   \}
+00095 
+00096   \textcolor{keyword}{function} importTables()
+00097   \{
+00098     $this->findRootSection();
+00099     $this->importTable(\textcolor{stringliteral}{"models"},array(\textcolor{stringliteral}{"model\_id"}));
+00100     $this->importTable(\textcolor{stringliteral}{"practices"},array());
+00101     $this->importTable(\textcolor{stringliteral}{"modellers"},array(\textcolor{stringliteral}{"modeller\_id"}));
+00102     $this->importTable(\textcolor{stringliteral}{"modellers\_models"},array());
+00103     $this->importTable(\textcolor{stringliteral}{"parameters"},array(\textcolor{stringliteral}{"parameter\_id"}));
+00104     $this->importTable(\textcolor{stringliteral}{"control\_groups"},array(\textcolor{stringliteral}{"control\_group\_id"}));
+00105     $this->importTable(\textcolor{stringliteral}{"controls"},array());
+00106     $this->importTable(\textcolor{stringliteral}{"variables"},array(\textcolor{stringliteral}{"variable\_id"},\textcolor{stringliteral}{"variable\_aux\_id"}));
+00107     $this->importTable(\textcolor{stringliteral}{"plots"},array(\textcolor{stringliteral}{"plot\_id"}));
+00108     $this->importTable(\textcolor{stringliteral}{"curves"},array());
+00109     $this->importTable(\textcolor{stringliteral}{"2danimations"},array(\textcolor{stringliteral}{"2danimation\_id"}));
+00110     $this->importTable(\textcolor{stringliteral}{"2deffects"},array());
+00111   \}
+00112   
+00113   \textcolor{keyword}{function} importStr($fn)
+00114   \{
+00115     $f=fopen($fn,\textcolor{stringliteral}{"r"});
+00116     $S=fread($f,filesize($fn));
+00117     $this->\hyperlink{classtables}{tables}=unserialize($S);
+00118   \}
+00119   
+00120 \}
+00121 
+00122 $E=\textcolor{keyword}{new} \textcolor{keyword}{import}();
+00123 \textcolor{keywordflow}{if}($E->connect())
+00124 \{
+00125   $E->importStr($argv[1]);
+00126   $E->importTables();
+00127 \}\textcolor{keywordflow}{else}
+00128 \{
+00129   echo \textcolor{stringliteral}{"No DB conection\(\backslash\)n"};
+00130 \}
+00131 ?>
+\end{DoxyCode}

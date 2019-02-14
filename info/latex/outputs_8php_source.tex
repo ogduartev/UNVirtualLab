@@ -1,0 +1,20 @@
+\hypertarget{outputs_8php_source}{\section{outputs.\-php}
+}
+
+\begin{DoxyCode}
+00001 <?php
+00002 require\_once(\textcolor{stringliteral}{'block.php'});
+00003 
+\hypertarget{outputs_8php_source_l00004}{}\hyperlink{classoutputs}{00004} \textcolor{keyword}{class }\hyperlink{classoutputs}{outputs} \textcolor{keyword}{extends} \hyperlink{classblock}{block}
+00005 \{  
+00006   \textcolor{keyword}{function} display()
+00007   \{
+00008     $model\_id=$this->model\_id();
+00009     $\_POST[\textcolor{stringliteral}{'modelid'}]=$model\_id;
+00010     $S=\textcolor{keyword}{new} \hyperlink{classsimulator}{simulator}();
+00011     $S->simulate($model\_id);
+00012   \}
+00013 \}
+00014 
+00015 ?>
+\end{DoxyCode}

@@ -1,0 +1,29 @@
+\hypertarget{session_8php_source}{\section{admin/session.php}
+}
+
+\begin{DoxyCode}
+00001 <?php
+00002 require\_once(\textcolor{stringliteral}{'admin/adminblock.php'});
+00003 
+\hypertarget{session_8php_source_l00004}{}\hyperlink{classsessionManager}{00004} \textcolor{keyword}{class }\hyperlink{classsessionManager}{sessionManager} \textcolor{keyword}{extends} \hyperlink{classadminblock}{adminblock} 
+00005 \{
+00006   \textcolor{keyword}{function} verify()
+00007   \{
+00008     session\_start();
+00009     \textcolor{keywordflow}{if}($this->connect())
+00010     \{
+00011       $sql=\textcolor{stringliteral}{"SELECT * FROM users WHERE user\_name=\(\backslash\)""}.$\_POST[\textcolor{stringliteral}{'loginname'}].\textcolor{stringliteral}{"\(\backslash\)" AND
+       password=SHA1(\(\backslash\)""}.$\_POST[\textcolor{stringliteral}{'loginpass'}].\textcolor{stringliteral}{"\(\backslash\)")"};
+00012       $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00013       \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00014       \{
+00015         $\_SESSION[\textcolor{stringliteral}{'UNVL\_SESSION\_UNVL'}]=\textcolor{keyword}{true};
+00016         \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+00017       \}
+00018     \}
+00019     \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+00020   \}
+00021 \}
+00022 
+00023 ?>
+\end{DoxyCode}

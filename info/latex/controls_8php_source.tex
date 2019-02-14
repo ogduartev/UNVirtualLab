@@ -1,0 +1,418 @@
+\hypertarget{controls_8php_source}{\section{controls.\-php}
+}
+
+\begin{DoxyCode}
+00001 <?php
+00002 require\_once(\textcolor{stringliteral}{'block.php'});
+00003 
+\hypertarget{controls_8php_source_l00004}{}\hyperlink{classcontrols}{00004} \textcolor{keyword}{class }\hyperlink{classcontrols}{controls} \textcolor{keyword}{extends} \hyperlink{classblock}{block}
+00005 \{  
+00006   var $datos;
+00007   \textcolor{keyword}{function} displayControl($data)
+00008   \{
+00009     \textcolor{keywordflow}{if}(!isset($\_POST[\textcolor{stringliteral}{'parameter\_id\_'}.$data[\textcolor{stringliteral}{'parameter\_id'}]]))\{$\_POST[\textcolor{stringliteral}{'
+      parameter\_id\_'}.$data[\textcolor{stringliteral}{'parameter\_id'}]]=$data[\textcolor{stringliteral}{'value'}];\}
+00010     $\_POST[\textcolor{stringliteral}{'parameter\_id\_'}.$data[\textcolor{stringliteral}{'parameter\_id'}]]=$this->validateValue($data[\textcolor{stringliteral}{'
+      type'}],
+00011                                                                        $data[\textcolor{stringliteral}{'
+      parameter\_id'}],
+00012                                                                        $\_POST[\textcolor{stringliteral}{'
+      parameter\_id\_'}.$data[\textcolor{stringliteral}{'parameter\_id'}]],
+00013                                                                        $data[\textcolor{stringliteral}{'
+      value'}]);
+00014     $value=$\_POST[\textcolor{stringliteral}{'parameter\_id\_'}.$data[\textcolor{stringliteral}{'parameter\_id'}]];
+00015     echo \textcolor{stringliteral}{"     <tr>\(\backslash\)n"};
+00016     echo \textcolor{stringliteral}{"      <td class='controls' title='"}.$data[\textcolor{stringliteral}{'description'}].\textcolor{stringliteral}{"'>"}.$data[\textcolor{stringliteral}{'
+      name'}];
+00017     \textcolor{keywordflow}{if}(strlen($data[\textcolor{stringliteral}{'units'}])>0)
+00018     \{
+00019       echo\textcolor{stringliteral}{" ("}.$data[\textcolor{stringliteral}{'units'}].\textcolor{stringliteral}{")"};
+00020     \}
+00021     
+00022     echo \textcolor{stringliteral}{"      </td>\(\backslash\)n"};
+00023     echo \textcolor{stringliteral}{"      <td>\(\backslash\)n"};
+00024     echo \textcolor{stringliteral}{"        <div class=\(\backslash\)"controls\_change\(\backslash\)" >\(\backslash\)n"};
+00025     echo \textcolor{stringliteral}{"          <input class='controls' name='parameter\_id\_"}.$data[\textcolor{stringliteral}{'
+      parameter\_id'}].\textcolor{stringliteral}{"'  onchange=\(\backslash\)"cambia("}.$data[\textcolor{stringliteral}{'parameter\_id'}].\textcolor{stringliteral}{");\(\backslash\)"  autocomplete='off'>
+      \(\backslash\)n"};
+00026     echo \textcolor{stringliteral}{"          <svg class='controls' xmlns=\(\backslash\)"http://www.w3.org/2000/svg\(\backslash\)"
+       version=\(\backslash\)"1.1\(\backslash\)" onload='Init(evt);' onmousemove='Drag(evt);'
+       onmouseup='Drop(evt);'>\(\backslash\)n"};
+00027     echo \textcolor{stringliteral}{"           <rect id=\(\backslash\)"C"}.$data[\textcolor{stringliteral}{'parameter\_id'}].\textcolor{stringliteral}{"\(\backslash\)" x=\(\backslash\)"0\(\backslash\)" y=\(\backslash\)"0\(\backslash\)"
+       width=\(\backslash\)"100%\(\backslash\)" height=\(\backslash\)"100%\(\backslash\)" class='control\_back'/>\(\backslash\)n"};
+00028     $d=$this->datos[$data[\textcolor{stringliteral}{'parameter\_id'}]];
+00029     $posx=($d[\textcolor{stringliteral}{'value'}]-$d[\textcolor{stringliteral}{'min'}])/($d[\textcolor{stringliteral}{'max'}]-$d[\textcolor{stringliteral}{'min'}])*100;
+00030     echo \textcolor{stringliteral}{"            <rect id=\(\backslash\)"B"}.$data[\textcolor{stringliteral}{'parameter\_id'}].\textcolor{stringliteral}{"\(\backslash\)"
+       onmousedown='Grab(evt,"}.$data[\textcolor{stringliteral}{'parameter\_id'}].\textcolor{stringliteral}{")' x=\(\backslash\)""}.$posx.\textcolor{stringliteral}{"%\(\backslash\)" y=\(\backslash\)"1\(\backslash\)" class='control\_bar'
+       width=\(\backslash\)"5%\(\backslash\)" height=\(\backslash\)"100%\(\backslash\)"/>\(\backslash\)n"};
+00031     echo \textcolor{stringliteral}{"          </svg>\(\backslash\)n"};
+00032     echo \textcolor{stringliteral}{"        </div>\(\backslash\)n"};
+00033     echo \textcolor{stringliteral}{"      </td>\(\backslash\)n"};
+00034     echo \textcolor{stringliteral}{"      <td>\(\backslash\)n"};
+00035     echo \textcolor{stringliteral}{"        <div class=\(\backslash\)"controls\_change\(\backslash\)" >\(\backslash\)n"};
+00036     echo \textcolor{stringliteral}{"          <div onclick=\(\backslash\)"cambio("}.$data[\textcolor{stringliteral}{'parameter\_id'}].\textcolor{stringliteral}{",1);\(\backslash\)" 
+       class=\(\backslash\)"controls\_change\_plus\(\backslash\)"></div>\(\backslash\)n"};
+00037     echo \textcolor{stringliteral}{"          <div onclick=\(\backslash\)"cambio("}.$data[\textcolor{stringliteral}{'parameter\_id'}].\textcolor{stringliteral}{",-1);\(\backslash\)"
+       class=\(\backslash\)"controls\_change\_minus\(\backslash\)"></div>\(\backslash\)n"};
+00038     echo \textcolor{stringliteral}{"        </div>\(\backslash\)n"};
+00039     echo \textcolor{stringliteral}{"      </td>\(\backslash\)n"};
+00040     echo \textcolor{stringliteral}{"     </tr>\(\backslash\)n"};
+00041   \}
+00042 
+00043   \textcolor{keyword}{function} displaySelect($data)
+00044   \{
+00045     \textcolor{keywordflow}{if}(!isset($\_POST[\textcolor{stringliteral}{'parameter\_id\_'}.$data[\textcolor{stringliteral}{'parameter\_id'}]]))\{$\_POST[\textcolor{stringliteral}{'
+      parameter\_id\_'}.$data[\textcolor{stringliteral}{'parameter\_id'}]]=$data[\textcolor{stringliteral}{'value'}];\}
+00046     $\_POST[\textcolor{stringliteral}{'parameter\_id\_'}.$data[\textcolor{stringliteral}{'parameter\_id'}]]=$this->validateValue($data[\textcolor{stringliteral}{'
+      type'}],
+00047                                                                        $data[\textcolor{stringliteral}{'
+      parameter\_id'}],
+00048                                                                        $\_POST[\textcolor{stringliteral}{'
+      parameter\_id\_'}.$data[\textcolor{stringliteral}{'parameter\_id'}]],
+00049                                                                        $data[\textcolor{stringliteral}{'
+      value'}]);
+00050     $value=$\_POST[\textcolor{stringliteral}{'parameter\_id\_'}.$data[\textcolor{stringliteral}{'parameter\_id'}]];echo $value;
+00051     echo \textcolor{stringliteral}{"     <tr>\(\backslash\)n"};
+00052     echo \textcolor{stringliteral}{"      <td class='controls' title='"}.$data[\textcolor{stringliteral}{'description'}].\textcolor{stringliteral}{"'>"}.$data[\textcolor{stringliteral}{'
+      name'}];
+00053     \textcolor{keywordflow}{if}(strlen($data[\textcolor{stringliteral}{'units'}])>0)
+00054     \{
+00055       echo\textcolor{stringliteral}{" ("}.$data[\textcolor{stringliteral}{'units'}].\textcolor{stringliteral}{")"};
+00056     \}
+00057     
+00058     echo \textcolor{stringliteral}{"      </td>\(\backslash\)n"};
+00059     echo \textcolor{stringliteral}{"      <td>\(\backslash\)n"};
+00060     echo \textcolor{stringliteral}{"        <div class=\(\backslash\)"controls\_change\(\backslash\)" >\(\backslash\)n"};
+00061     echo \textcolor{stringliteral}{"         <select class='controls' name='parameter\_id\_"}.$data[\textcolor{stringliteral}{'
+      parameter\_id'}].\textcolor{stringliteral}{"'>\(\backslash\)n"};
+00062     $opciones=explode(\textcolor{stringliteral}{";"},str\_replace(\textcolor{stringliteral}{"\(\backslash\)n"},\textcolor{stringliteral}{""},$data[\textcolor{stringliteral}{'allowedvalues'}]));
+00063     \textcolor{keywordflow}{foreach}($opciones as $opcion)
+00064     \{
+00065       $op=explode(\textcolor{stringliteral}{"/"},str\_replace(\textcolor{stringliteral}{"\(\backslash\)n"},\textcolor{stringliteral}{""},$opcion));
+00066       \textcolor{keywordflow}{if}(count($op)<2)\{\textcolor{keywordflow}{continue};\}
+00067       $valueOp=$op[0];
+00068       $labelOp=$op[1];
+00069       echo \textcolor{stringliteral}{"          <option"};
+00070       \textcolor{keywordflow}{if}($value==$valueOp)
+00071       \{
+00072         echo \textcolor{stringliteral}{" selected='yes'"};
+00073       \}
+00074       echo  \textcolor{stringliteral}{" value=\(\backslash\)""}.$valueOp.\textcolor{stringliteral}{"\(\backslash\)">"};
+00075       echo $labelOp;
+00076       echo \textcolor{stringliteral}{"</option>\(\backslash\)n"};
+00077     \}
+00078     echo \textcolor{stringliteral}{"        </div>\(\backslash\)n"};
+00079     echo \textcolor{stringliteral}{"      </td>\(\backslash\)n"};
+00080     echo \textcolor{stringliteral}{"     </tr>\(\backslash\)n"};
+00081   \}
+00082   
+00083   \textcolor{keyword}{function} displayControls($control\_group\_id)
+00084   \{
+00085     \textcolor{keywordflow}{if}($control\_group\_id==0)
+00086     \{
+00087       \textcolor{keywordflow}{return};
+00088     \}
+00089     $sql=\textcolor{stringliteral}{"SELECT controls.*,parameters.type FROM controls INNER JOIN parameters
+       ON controls.parameter\_id=parameters.id }
+00090 \textcolor{stringliteral}{                   WHERE control\_group\_id='"}.$control\_group\_id.\textcolor{stringliteral}{"'"};
+00091     $sql.=$this->enabled(\textcolor{stringliteral}{"controls"});
+00092     $sql.=\textcolor{stringliteral}{" ORDER BY name"};
+00093     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00094     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00095     \{
+00096       \textcolor{keywordflow}{while}($linea=mysql\_fetch\_array($result,MYSQL\_ASSOC))
+00097       \{
+00098         $allowed=explode(\textcolor{stringliteral}{";"},str\_replace(\textcolor{stringliteral}{"\(\backslash\)n"},\textcolor{stringliteral}{""},$linea[\textcolor{stringliteral}{'allowedvalues'}]));
+00099         \textcolor{keywordflow}{if}(count($allowed)>1)
+00100         \{
+00101           $this->displaySelect($linea);
+00102         \}\textcolor{keywordflow}{else}
+00103         \{
+00104           $this->displayControl($linea);
+00105         \}
+00106       \}
+00107     \}
+00108   \}
+00109 
+00110   \textcolor{keyword}{function} datos($model\_id)
+00111   \{
+00112     $this->datos=array();
+00113     $sql=\textcolor{stringliteral}{"SELECT
+       parameters.id,controls.min,controls.max,controls.step,controls.value,parameters.type FROM controls }
+00114 \textcolor{stringliteral}{                            INNER JOIN control\_groups ON
+       controls.control\_group\_id=control\_groups.id}
+00115 \textcolor{stringliteral}{                            INNER JOIN parameters ON
+       controls.parameter\_id=parameters.id}
+00116 \textcolor{stringliteral}{                            WHERE control\_groups.model\_id='"}.$model\_id.\textcolor{stringliteral}{"'"};
+00117     $sql.=$this->enabled(\textcolor{stringliteral}{"control\_groups"});
+00118     $sql.=$this->enabled(\textcolor{stringliteral}{"controls"});
+00119     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00120     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00121     \{
+00122       \textcolor{keywordflow}{while}($linea=mysql\_fetch\_array($result,MYSQL\_ASSOC))
+00123       \{
+00124         $this->datos[$linea[\textcolor{stringliteral}{'id'}]]=array(\textcolor{stringliteral}{'min'}=>$linea[\textcolor{stringliteral}{'min'}],\textcolor{stringliteral}{'max'}=>$linea[\textcolor{stringliteral}{'
+      max'}],\textcolor{stringliteral}{'step'}=>$linea[\textcolor{stringliteral}{'step'}],\textcolor{stringliteral}{'value'}=>$linea[\textcolor{stringliteral}{'value'}],\textcolor{stringliteral}{'type'}=>$linea[\textcolor{stringliteral}{'type'}]);
+00125         
+00126         \textcolor{keywordflow}{if}(isset($\_POST[\textcolor{stringliteral}{'parameter\_id\_'}.$linea[\textcolor{stringliteral}{'id'}]]) and !isset($\_POST[\textcolor{stringliteral}{'reset
+      '}]))
+00127         \{
+00128           $this->datos[$linea[\textcolor{stringliteral}{'id'}]][\textcolor{stringliteral}{'value'}]=$\_POST[\textcolor{stringliteral}{'parameter\_id\_'}.$linea[\textcolor{stringliteral}{'id
+      '}]];
+00129         \}
+00130         $this->datos[$linea[\textcolor{stringliteral}{'id'}]][\textcolor{stringliteral}{'value'}]=$this->validateValue($linea[\textcolor{stringliteral}{'type'}]
+      ,
+00131                                                                  $linea[\textcolor{stringliteral}{'id'}],
+00132                                                                  $this->datos[
+      $linea[\textcolor{stringliteral}{'id'}]][\textcolor{stringliteral}{'value'}],
+00133                                                                  $linea[\textcolor{stringliteral}{'value'}
+      ]);
+00134       \}
+00135     \}
+00136   \}
+00137 
+00138   \textcolor{keyword}{function} javascript()
+00139   \{
+00140     echo \textcolor{stringliteral}{"<script type=\(\backslash\)"text/javascript\(\backslash\)" language=\(\backslash\)"JavaScript\(\backslash\)">\(\backslash\)n"};
+00141     echo \textcolor{stringliteral}{"<!--\(\backslash\)n"};
+00142     echo \textcolor{stringliteral}{"var ids=["};
+00143     $tam=count($this->datos);
+00144     $cnt=0;
+00145     \textcolor{keywordflow}{foreach}($this->datos as $id=>$d)
+00146     \{
+00147       $cnt++;
+00148       echo $id;
+00149       \textcolor{keywordflow}{if}($cnt<$tam)\{echo \textcolor{stringliteral}{","};\}
+00150     \}    
+00151     echo \textcolor{stringliteral}{"];\(\backslash\)n"};
+00152     echo \textcolor{stringliteral}{"function minimoJS(id)\(\backslash\)n"};
+00153     echo \textcolor{stringliteral}{"\{\(\backslash\)n"};
+00154     echo \textcolor{stringliteral}{"  switch(id)\(\backslash\)n"};
+00155     echo \textcolor{stringliteral}{"  \{\(\backslash\)n"};
+00156     \textcolor{keywordflow}{foreach}($this->datos as $id=>$d)
+00157     \{
+00158       echo \textcolor{stringliteral}{"    case "}.$id.\textcolor{stringliteral}{" : return "}.$d[\textcolor{stringliteral}{'min'}].\textcolor{stringliteral}{";\(\backslash\)n"};
+00159     \}
+00160     echo \textcolor{stringliteral}{"  \}\(\backslash\)n"};
+00161     echo \textcolor{stringliteral}{"  return 0;\(\backslash\)n"};
+00162     echo \textcolor{stringliteral}{"\}\(\backslash\)n"};
+00163     echo \textcolor{stringliteral}{"function maximoJS(id)\(\backslash\)n"};
+00164     echo \textcolor{stringliteral}{"\{\(\backslash\)n"};
+00165     echo \textcolor{stringliteral}{"  switch(id)\(\backslash\)n"};
+00166     echo \textcolor{stringliteral}{"  \{\(\backslash\)n"};
+00167     \textcolor{keywordflow}{foreach}($this->datos as $id=>$d)
+00168     \{
+00169       echo \textcolor{stringliteral}{"    case "}.$id.\textcolor{stringliteral}{" : return "}.$d[\textcolor{stringliteral}{'max'}].\textcolor{stringliteral}{";\(\backslash\)n"};
+00170     \}
+00171     echo \textcolor{stringliteral}{"  \}\(\backslash\)n"};
+00172     echo \textcolor{stringliteral}{"  return 0;\(\backslash\)n"};
+00173     echo \textcolor{stringliteral}{"\}\(\backslash\)n"};
+00174     echo \textcolor{stringliteral}{"function inicialJS(id)\(\backslash\)n"};
+00175     echo \textcolor{stringliteral}{"\{\(\backslash\)n"};
+00176     echo \textcolor{stringliteral}{"  switch(id)\(\backslash\)n"};
+00177     echo \textcolor{stringliteral}{"  \{\(\backslash\)n"};
+00178     \textcolor{keywordflow}{foreach}($this->datos as $id=>$d)
+00179     \{
+00180       echo \textcolor{stringliteral}{"    case "}.$id.\textcolor{stringliteral}{" : return "}.$d[\textcolor{stringliteral}{'value'}].\textcolor{stringliteral}{";\(\backslash\)n"};
+00181     \}
+00182     echo \textcolor{stringliteral}{"  \}\(\backslash\)n"};
+00183     echo \textcolor{stringliteral}{"  return 0;\(\backslash\)n"};
+00184     echo \textcolor{stringliteral}{"\}\(\backslash\)n"};
+00185     echo \textcolor{stringliteral}{"function step(id)\(\backslash\)n"};
+00186     echo \textcolor{stringliteral}{"\{\(\backslash\)n"};
+00187     echo \textcolor{stringliteral}{"  switch(id)\(\backslash\)n"};
+00188     echo \textcolor{stringliteral}{"  \{\(\backslash\)n"};
+00189     \textcolor{keywordflow}{foreach}($this->datos as $id=>$d)
+00190     \{
+00191       echo \textcolor{stringliteral}{"    case "}.$id.\textcolor{stringliteral}{" : return "}.$d[\textcolor{stringliteral}{'step'}].\textcolor{stringliteral}{";\(\backslash\)n"};
+00192     \}
+00193     echo \textcolor{stringliteral}{"  \}\(\backslash\)n"};
+00194     echo \textcolor{stringliteral}{"  return 0;\(\backslash\)n"};
+00195     echo \textcolor{stringliteral}{"\}\(\backslash\)n"};
+00196     echo \textcolor{stringliteral}{"function inicialJJ()\(\backslash\)n"};
+00197     echo \textcolor{stringliteral}{"\{\(\backslash\)n"};
+00198     echo \textcolor{stringliteral}{"  for(var i=0;i<ids.length;i++)\(\backslash\)n"};
+00199     echo \textcolor{stringliteral}{"  \{\(\backslash\)n"};
+00200     echo \textcolor{stringliteral}{"    var v=document.getElementsByName(\(\backslash\)"parameter\_id\_\(\backslash\)"+ids[i]);\(\backslash\)n"};
+00201     echo \textcolor{stringliteral}{"    v[0].value=inicialJS(ids[i]);\(\backslash\)n"};
+00202     echo \textcolor{stringliteral}{"  \}\(\backslash\)n"};
+00203     echo \textcolor{stringliteral}{"\}\(\backslash\)n"};
+00204     echo \textcolor{stringliteral}{"function cambio(id,sgn)\(\backslash\)n"};
+00205     echo \textcolor{stringliteral}{"\{\(\backslash\)n"};
+00206     echo \textcolor{stringliteral}{"  var mini=minimoJS(parseInt(id));\(\backslash\)n"};
+00207     echo \textcolor{stringliteral}{"  var maxi=maximoJS(parseInt(id));\(\backslash\)n"};
+00208     echo \textcolor{stringliteral}{"  var v=document.getElementsByName(\(\backslash\)"parameter\_id\_\(\backslash\)"+id);\(\backslash\)n"};
+00209     echo \textcolor{stringliteral}{"  var x=parseFloat(v[0].value);\(\backslash\)n"};
+00210     echo \textcolor{stringliteral}{"  x=x+sgn*step(parseInt(id));\(\backslash\)n"};
+00211     echo \textcolor{stringliteral}{"  if(x < mini)\{x=mini\}\(\backslash\)n"};
+00212     echo \textcolor{stringliteral}{"  if(x > maxi)\{x=maxi\}\(\backslash\)n"};
+00213     echo \textcolor{stringliteral}{"  v[0].value=x.toString();\(\backslash\)n"};
+00214     echo \textcolor{stringliteral}{"  moverBarra(id,(x-inicialJS(id))/(maxi-mini));\(\backslash\)n"};
+00215     echo \textcolor{stringliteral}{"\}\(\backslash\)n"};
+00216     echo \textcolor{stringliteral}{"function cambia(id)\(\backslash\)n"};
+00217     echo \textcolor{stringliteral}{"\{\(\backslash\)n"};
+00218     echo \textcolor{stringliteral}{"  var mini=minimoJS(parseInt(id));\(\backslash\)n"};
+00219     echo \textcolor{stringliteral}{"  var maxi=maximoJS(parseInt(id));\(\backslash\)n"};
+00220     echo \textcolor{stringliteral}{"  var v=document.getElementsByName(\(\backslash\)"parameter\_id\_\(\backslash\)"+id);\(\backslash\)n"};
+00221     echo \textcolor{stringliteral}{"  var x=parseFloat(v[0].value);\(\backslash\)n"};
+00222     echo \textcolor{stringliteral}{"  if(x < mini)\{x=mini;\}\(\backslash\)n"};
+00223     echo \textcolor{stringliteral}{"  if(x > maxi)\{x=maxi;\}\(\backslash\)n"};
+00224     echo \textcolor{stringliteral}{"  v[0].value=x.toString();\(\backslash\)n"};
+00225     echo \textcolor{stringliteral}{"  moverBarra(id,(x-inicialJS(id))/(maxi-mini));\(\backslash\)n"};
+00226     echo \textcolor{stringliteral}{"\}\(\backslash\)n"};
+00227     echo \textcolor{stringliteral}{"function moverBarra(id,xn)\(\backslash\)n"};
+00228     echo \textcolor{stringliteral}{"\{\(\backslash\)n"};
+00229     echo \textcolor{stringliteral}{"  var b=document.getElementById(\(\backslash\)"B\(\backslash\)"+id);\(\backslash\)n"};
+00230     echo \textcolor{stringliteral}{"  var v=document.getElementById(\(\backslash\)"C\(\backslash\)"+id);\(\backslash\)n"};
+00231     echo \textcolor{stringliteral}{"  var l=v.getBBox().width;\(\backslash\)n"};
+00232     echo \textcolor{stringliteral}{"  b.setAttributeNS(null, 'transform', 'translate(' + xn*l  + ',0)');
+      \(\backslash\)n"};
+00233     echo \textcolor{stringliteral}{"\}\(\backslash\)n"};
+00234     echo \textcolor{stringliteral}{"//-->\(\backslash\)n"};
+00235     echo \textcolor{stringliteral}{"</script>\(\backslash\)n"};
+00236   \}
+00237 
+00238   \textcolor{keyword}{function} ecmascript()
+00239   \{
+00240     echo \textcolor{stringliteral}{"    <script type=\(\backslash\)"text/ecmascript\(\backslash\)">\(\backslash\)n"};
+00241     echo \textcolor{stringliteral}{"   <![CDATA[\(\backslash\)n"};
+00242     echo \textcolor{stringliteral}{"        var SVGDocument = null;\(\backslash\)n"};
+00243     echo \textcolor{stringliteral}{"        var SVGRoot = null;\(\backslash\)n"};
+00244     echo \textcolor{stringliteral}{"        var TrueCoords = null;\(\backslash\)n"};
+00245     echo \textcolor{stringliteral}{"        var GrabPoint = null;\(\backslash\)n"};
+00246     echo \textcolor{stringliteral}{"        var DragTarget = null;\(\backslash\)n"};
+00247     echo \textcolor{stringliteral}{"        var TextTarget = null;\(\backslash\)n"};
+00248     echo \textcolor{stringliteral}{"        var DragBack = null;\(\backslash\)n"};
+00249     echo \textcolor{stringliteral}{"        var id = null;\(\backslash\)n"};
+00250     echo \textcolor{stringliteral}{"        function Init(evt)\(\backslash\)n"};
+00251     echo \textcolor{stringliteral}{"        \{\(\backslash\)n"};
+00252     echo \textcolor{stringliteral}{"           SVGDocument = evt.target.ownerDocument;\(\backslash\)n"};
+00253     echo \textcolor{stringliteral}{"           SVGRoot=evt.target;\(\backslash\)n"};
+00254     echo \textcolor{stringliteral}{"           TrueCoords = SVGRoot.createSVGPoint();\(\backslash\)n"};
+00255     echo \textcolor{stringliteral}{"           GrabPoint = SVGRoot.createSVGPoint();\(\backslash\)n"};
+00256     echo \textcolor{stringliteral}{"           inicialJJ();\(\backslash\)n"};
+00257     echo \textcolor{stringliteral}{"        \};\(\backslash\)n"};
+00258     echo \textcolor{stringliteral}{"        function Grab(evt,idl)\(\backslash\)n"};
+00259     echo \textcolor{stringliteral}{"        \{\(\backslash\)n"};
+00260     echo \textcolor{stringliteral}{"           var targetElement = evt.target;\(\backslash\)n"};
+00261     echo \textcolor{stringliteral}{"           if ( targetElement.id == 'B'+idl )\(\backslash\)n"};
+00262     echo \textcolor{stringliteral}{"           \{\(\backslash\)n"};
+00263     echo \textcolor{stringliteral}{"             id=idl;\(\backslash\)n"};
+00264     echo \textcolor{stringliteral}{"             DragTarget = targetElement;\(\backslash\)n"};
+00265     echo \textcolor{stringliteral}{"             DragTarget.setAttributeNS(null, 'pointer-events',
+       'none');\(\backslash\)n"};
+00266     echo \textcolor{stringliteral}{"             DragBack=SVGDocument.getElementById('C'+id);\(\backslash\)n"};
+00267     echo \textcolor{stringliteral}{"             var T=SVGDocument.getElementsByName('parameter\_id\_'+id);
+      \(\backslash\)n"};
+00268     echo \textcolor{stringliteral}{"             TextTarget=T[0];\(\backslash\)n"};
+00269     echo \textcolor{stringliteral}{"             var transMatrix = DragTarget.getCTM();\(\backslash\)n"};
+00270     echo \textcolor{stringliteral}{"             GrabPoint.x = TrueCoords.x - Number(transMatrix.e);\(\backslash\)n"};
+00271     echo \textcolor{stringliteral}{"             GrabPoint.y = TrueCoords.y - Number(transMatrix.f);\(\backslash\)n"};
+00272     echo \textcolor{stringliteral}{"           \}else\(\backslash\)n"};
+00273     echo \textcolor{stringliteral}{"           \{\(\backslash\)n"};
+00274     echo \textcolor{stringliteral}{"             DragTarget = null;\(\backslash\)n"};
+00275     echo \textcolor{stringliteral}{"             DragBack = null;\(\backslash\)n"};
+00276     echo \textcolor{stringliteral}{"             TextTarget = null;\(\backslash\)n"};
+00277     echo \textcolor{stringliteral}{"             id = null;\(\backslash\)n"};
+00278     echo \textcolor{stringliteral}{"           \}\(\backslash\)n"};
+00279     echo \textcolor{stringliteral}{"        \}\(\backslash\)n"};
+00280     echo \textcolor{stringliteral}{"        function Drag(evt)\(\backslash\)n"};
+00281     echo \textcolor{stringliteral}{"        \{\(\backslash\)n"};
+00282     echo \textcolor{stringliteral}{"           GetTrueCoords(evt);\(\backslash\)n"};
+00283     echo \textcolor{stringliteral}{"           if (DragTarget && TextTarget)\(\backslash\)n"};
+00284     echo \textcolor{stringliteral}{"           \{\(\backslash\)n"};
+00285     echo \textcolor{stringliteral}{"             var newX = TrueCoords.x - GrabPoint.x;\(\backslash\)n"};
+00286     echo \textcolor{stringliteral}{"             var mini = minimoJS(id);\(\backslash\)n"};
+00287     echo \textcolor{stringliteral}{"             var maxi = maximoJS(id);\(\backslash\)n"};
+00288     echo \textcolor{stringliteral}{"             var prop = (maxi-mini)/Number(DragBack.getBBox().width);
+      \(\backslash\)n"};
+00289     echo \textcolor{stringliteral}{"             var posIni= (inicialJS(id)-mini)/prop;\(\backslash\)n"};
+00290     echo \textcolor{stringliteral}{"             var newVal = mini + (posIni + newX)*prop;\(\backslash\)n"};
+00291     echo \textcolor{stringliteral}{"             if(newVal < mini)\{newVal=mini;\}\(\backslash\)n"};
+00292     echo \textcolor{stringliteral}{"             if(newVal > maxi)\{newVal=maxi;\}\(\backslash\)n"};
+00293     echo \textcolor{stringliteral}{"             DragTarget.setAttributeNS(null, 'transform',
+       'translate(' + newX + ')');\(\backslash\)n"};
+00294     echo \textcolor{stringliteral}{"             TextTarget.value=newVal;\(\backslash\)n"};
+00295     echo \textcolor{stringliteral}{"           \}\(\backslash\)n"};
+00296     echo \textcolor{stringliteral}{"        \}\(\backslash\)n"};
+00297     echo \textcolor{stringliteral}{"        function Drop(evt)\(\backslash\)n"};
+00298     echo \textcolor{stringliteral}{"        \{\(\backslash\)n"};
+00299     echo \textcolor{stringliteral}{"           if ( DragTarget )\(\backslash\)n"};
+00300     echo \textcolor{stringliteral}{"           \{\(\backslash\)n"};
+00301     echo \textcolor{stringliteral}{"             DragTarget.setAttributeNS(null, 'pointer-events',
+       'all');\(\backslash\)n"};
+00302     echo \textcolor{stringliteral}{"             DragTarget = null;\(\backslash\)n"};
+00303     echo \textcolor{stringliteral}{"             TextTarget = null;\(\backslash\)n"};
+00304     echo \textcolor{stringliteral}{"             DragBack = null;\(\backslash\)n"};
+00305     echo \textcolor{stringliteral}{"           \}\(\backslash\)n"};
+00306     echo \textcolor{stringliteral}{"        \}\(\backslash\)n"};
+00307     echo \textcolor{stringliteral}{"        function GetTrueCoords(evt)\(\backslash\)n"};
+00308     echo \textcolor{stringliteral}{"        \{\(\backslash\)n"};
+00309     echo \textcolor{stringliteral}{"           var newScale = SVGRoot.currentScale;\(\backslash\)n"};
+00310     echo \textcolor{stringliteral}{"           var translation = SVGRoot.currentTranslate;\(\backslash\)n"};
+00311     echo \textcolor{stringliteral}{"           TrueCoords.x = (evt.clientX - translation.x)/newScale;\(\backslash\)n"};
+00312     echo \textcolor{stringliteral}{"           TrueCoords.y = (evt.clientY - translation.y)/newScale;\(\backslash\)n"};
+00313     echo \textcolor{stringliteral}{"        \}\(\backslash\)n"};
+00314     echo \textcolor{stringliteral}{"    ]]>\(\backslash\)n"};
+00315     echo \textcolor{stringliteral}{"    </script>\(\backslash\)n"};
+00316   \}
+00317 
+00318   \textcolor{keyword}{function} display()
+00319   \{
+00320     $model\_id=$this->model\_id();
+00321     $this->datos($model\_id);
+00322     \textcolor{keywordflow}{if}($model\_id==0)
+00323     \{
+00324       \textcolor{keywordflow}{return};
+00325     \}
+00326     $this->javascript($model\_id);
+00327     $sql=\textcolor{stringliteral}{"SELECT * FROM control\_groups WHERE model\_id='"}.$model\_id.\textcolor{stringliteral}{"'"};
+00328     $sql.=$this->enabled(\textcolor{stringliteral}{"control\_groups"});
+00329     $sql.=\textcolor{stringliteral}{" ORDER BY name"};
+00330     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00331     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00332     \{
+00333       echo \textcolor{stringliteral}{"  <form method=post>\(\backslash\)n"};
+00334       echo \textcolor{stringliteral}{"   <div class='controls\_buttons'>\(\backslash\)n"};
+00335       echo \textcolor{stringliteral}{"    <input type=hidden name='modelid' value='"}.$model\_id.\textcolor{stringliteral}{"'>\(\backslash\)n"};
+00336       echo \textcolor{stringliteral}{"    <input type=submit class='controls\_button' name='simulate'
+       value='"}.$this->text(\textcolor{stringliteral}{'controls\_Simulate'}).\textcolor{stringliteral}{"'>\(\backslash\)n"};
+00337       echo \textcolor{stringliteral}{"    <input type=submit class='controls\_button' name='reset' value='
+      "}.$this->text(\textcolor{stringliteral}{'controls\_Reset'}).\textcolor{stringliteral}{"'>\(\backslash\)n"};
+00338       echo \textcolor{stringliteral}{"   </div>\(\backslash\)n"};
+00339       
+00340       echo \textcolor{stringliteral}{"   <svg width=\(\backslash\)"0px\(\backslash\)" height=\(\backslash\)"0px\(\backslash\)" xmlns=\(\backslash\)"
+      http://www.w3.org/2000/svg\(\backslash\)" version=\(\backslash\)"1.1\(\backslash\)" x=\(\backslash\)"0\(\backslash\)" y=\(\backslash\)"0\(\backslash\)">\(\backslash\)n"};
+00341       $this->ecmascript($model\_id);
+00342       echo \textcolor{stringliteral}{"   </svg>\(\backslash\)n"};
+00343       
+00344       echo \textcolor{stringliteral}{"   <table class=\(\backslash\)"controls\(\backslash\)">\(\backslash\)n"};
+00345       \textcolor{keywordflow}{while}($linea=mysql\_fetch\_array($result,MYSQL\_ASSOC))
+00346       \{
+00347         echo \textcolor{stringliteral}{"    <thead>\(\backslash\)n"};
+00348         echo \textcolor{stringliteral}{"     <tr>\(\backslash\)n"};
+00349         echo \textcolor{stringliteral}{"      <th colspan=2 class='controls' title='"}.$linea[\textcolor{stringliteral}{'description
+      '}].\textcolor{stringliteral}{"'>"}.$linea[\textcolor{stringliteral}{'name'}].\textcolor{stringliteral}{"</th>\(\backslash\)n"};
+00350         echo \textcolor{stringliteral}{"     </tr>\(\backslash\)n"};
+00351         echo \textcolor{stringliteral}{"    </thead>\(\backslash\)n"};
+00352         echo \textcolor{stringliteral}{"    <tbody>\(\backslash\)n"};
+00353         $this->displayControls($linea[\textcolor{stringliteral}{'id'}]);
+00354         echo \textcolor{stringliteral}{"    <tbody>\(\backslash\)n"};
+00355       \}
+00356       echo \textcolor{stringliteral}{"   </table>\(\backslash\)n"};
+00357       echo \textcolor{stringliteral}{"  </form>\(\backslash\)n"};
+00358     \}
+00359   \}
+00360 \}
+00361 \textcolor{comment}{/*}
+00362 \textcolor{comment}{$M=new controls();}
+00363 \textcolor{comment}{if($M->connect())}
+00364 \textcolor{comment}{\{}
+00365 \textcolor{comment}{  $M->display();}
+00366 \textcolor{comment}{\}else}
+00367 \textcolor{comment}{\{}
+00368 \textcolor{comment}{  echo "error en la conexión\(\backslash\)n";}
+00369 \textcolor{comment}{\}}
+00370 \textcolor{comment}{*/}
+00371 ?>
+\end{DoxyCode}

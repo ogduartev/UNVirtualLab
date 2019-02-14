@@ -1,0 +1,19 @@
+<block id="unvl" type="body" class="unvl">
+  <block id="body" type="div" class="body">
+    <block id="logo" type="div" class="logodiv" action="logo"></block>
+    <block id="menu" type="div" class="menu" action="menu"></block>
+    <block id="title_frame" type="div" class="title_frame">
+      <block id="title" type="div" class="title" action="title"></block>
+      <block id="credits" type="div" class="credits" action="credits"></block>
+    </block>
+    <block id="documentation" type="div" class="documentation" action="documentation"></block>
+    <block id="controls" type="div" class="controls" action="controls"></block>
+    <block id="outputs" type="div" class="outputs" action="outputs">
+      <block id="plots" type="div" class="plots" action="plots"></block>
+      <block id="anim2d" type="div" class="anim2d" action="anim2d"></block>
+      <block id="tables" type="div" class="tables" action="tables"></block>
+    </block>
+    <block id="erase" type="div" class="erase" action="erase"></block>
+  </block>
+</block>
+

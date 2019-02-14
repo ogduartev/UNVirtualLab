@@ -1,0 +1,231 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc} 
+%\usepackage{ucs}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+%% comentar para edición tipo libro
+\usepackage[letterpaper,top=1.0cm,left=1.5cm,right=1.5cm,bottom=2.5cm]{geometry}
+\usepackage{pstricks,pst-all,pst-circ}
+\usepackage{listings}
+\usepackage[colorlinks=true,linkcolor=red]{hyperref}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{framed}
+\usepackage[hyperref,framed]{ntheorem}
+\usepackage{array}
+\usepackage{verbatim}
+\usepackage{chapterbib}
+\usepackage{multicol}
+\usepackage{subfigure}
+\usepackage{enumerate}
+\usepackage{rotating}
+
+\DeclareMathOperator{\Var}{Var}
+
+\newcommand{\dirdoc}{}
+
+\newcommand{\titulo}[2]
+{
+\begin{center}
+{\large \sc #1}\\
+{#2}
+\end{center}
+}
+
+\definecolor{darkBlue}{rgb}{0.1,0,0.55} 
+\definecolor{verylightgray}{rgb}{0.9,0.9,0.9} 
+
+\newcommand{\dirmodels}{/home/ogduartev/Proyectos/simula/}
+\newcommand{\modelica}[3]{\lstinputlisting[caption={#2},label={#3lst:#2}]{\dirmodels#1#2}}
+\newcommand{\archivo}[2]{\hyperref[#2lst:#1]{#1}}
+
+\renewcommand{\lstlistingname}{Archivo}
+%\renewcommand{\lstlistlistingname}{Listado de archivos}
+\renewcommand{\lstlistlistingname}{\subsection{Listado de archivos}}
+\lstdefinelanguage{modelica}
+{
+  morekeywords=
+  {
+    within, final, encapsulated, partial, class, model, record, block,connector, type, package, function,
+    end, enumeration, public, protected, external, replaceable, import, extends,flow, discrete,
+    parameter, constant, input, output, each, redeclare, initial, equation,algorithm, if, then, else, elseif,
+    for, loop, while, elsewhen, connect, or, and, not,  Real, Boolean, Integer, partial, pre, der, reinit
+  },
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]``
+}
+
+\lstset
+{
+  language=modelica,
+  frameround=tttt,
+  frame=single,
+  breaklines=true,
+  basicstyle=\footnotesize,
+  keywordstyle=\color{darkBlue},
+  extendedchars=\true,
+  inputencoding=utf8x,
+  backgroundcolor=\color{lightgray},
+  literate={á}{{\'a}}1
+           {é}{{\'e}}1
+           {í}{{\'i}}1
+           {ó}{{\'o}}1
+           {ú}{{\'u}}1
+           {Á}{{\'A}}1
+           {É}{{\'E}}1
+           {Í}{{\'I}}1
+           {Ó}{{\'O}}1
+           {Ú}{{\'U}}1
+           {ñ}{{\~n}}1
+           {Ñ}{{\~N}}1
+}
+
+\newenvironment{tablaArchivos}[2]
+{
+\subsection{Listado de Archivos}
+El cuadro \ref{#2tab:archivos#1} Muestra el listado de los archivos fuente de la implementación del modelo. 
+\small
+  \begin{longtable}{|p{3cm}|p{6cm}|}
+  \caption{Archivos del modelo}
+  \label{#2tab:archivos#1}\\ \hline
+  \textbf{Número} & \textbf{Archivo} \\ \hline
+  \endhead
+}
+{
+  \end{longtable}
+}
+
+\definecolor{expBorder}{rgb}{0,0,0} 
+\definecolor{expBackground}{rgb}{0.75,0.75,0.75} 
+
+\newcommand{\resumen}[1]
+{
+ \begin{center}
+ 
+\psframebox[linewidth=2pt,linecolor=expBorder,fillstyle=solid,
+fillcolor=expBackground]
+  {
+   \parbox{0.8\textwidth}
+   {
+    \it
+     #1
+   }
+  }
+ \end{center}
+}
+
+\newcommand{\minitab}[1]{\begin{tabular}{p{5cm}}#1\end{tabular}}
+
+\newcommand{\expTabTitle}[2]
+{
+\textbf{Título:} & \multicolumn{3}{|p{9cm}|}{#1} \\ \hline
+\textbf{Descripción:} & \multicolumn{3}{|p{9cm}|}{\textit{#2}} \\ \hline
+}
+
+\newcommand{\expTabCredits}[2]
+{
+\multirow{3}{*}{\textbf{Créditos}}
+& \textbf{Implementación} & \multicolumn{2}{|p{6cm}|}{#1} \\ \cline{2-4}
+& \textbf{e-mail} & \multicolumn{2}{|p{6cm}|}{#2} \\ \hline
+}
+
+\newcommand{\expTabParGr}[3]
+{\hline\multirow{#3}{*}{\minitab{\textbf{#2}}}}
+
+\newcommand{\expTabPar}[3]
+{& $#1$ & #2 & #3\\ \cline{2-4}}
+
+\newcommand{\expTabPlotFig}[1]
+{\fbox{\includegraphics[width=5cm]{\dirdoc #1}} & }
+
+\newcommand{\expTabPlotTitle}[1]
+{\textbf{#1}}
+
+\newcommand{\expTabPlotDesc}[1]
+{\textit{#1}}
+
+\newcommand{\expTabPlotLeg}[1]
+{\textbf{#1}}
+
+\newcommand{\expTabPlotData}[4]
+{#1 & #2 & #3 & #4\\ \hline}
+
+\newcommand{\expTabAniFig}[1]
+{\fbox{\includegraphics[width=5cm]{\dirdoc #1}} & }
+
+\newcommand{\expTabAniTitle}[1]
+{\textbf{#1}}
+
+\newcommand{\expTabAniDesc}[1]
+{\textit{#1}}
+
+\newcommand{\expTabAniData}[4]
+{\textit{#1} & #2 & #3 & #4 \\ \hline}
+
+\newcommand{\expTabAniDataTit}[4]
+{\textit{#1} & \textit{#2} & \textit{#3} & \textit{#4} \\ \hline}
+
+\newcommand{\expTabTabTitle}[1]
+{\textbf{#1}}
+
+% experimentos y prácticas
+
+\newtheorem{Ex}{Planta de experimentación}%[section]
+\theoremclass{Ex}
+\theoremstyle{break}
+\shadecolor{verylightgray}
+\theoremheaderfont{\sffamily\bfseries}
+\theorembodyfont{\sffamily}
+\def\theoremframecommand
+{\psframebox[fillstyle=solid,fillcolor=verylightgray,linecolor=black]}
+\newshadedtheorem{experimento}[Ex]{Planta de experimentación}
+
+\newtheorem{Pra}{Experimento}[Ex]
+\theoremclass{Pra}
+\theoremstyle{break}
+\shadecolor{lightgray}
+\theoremheaderfont{\itshape\sffamily\bfseries}
+\theorembodyfont{\itshape\sffamily}
+\def\theoremframecommand
+{\psshadowbox[fillstyle=solid,fillcolor=lightgray,linecolor=black]}
+\newshadedtheorem{practica}[Pra]{Experimento}
+
+%\def\imagetop#1{\vtop{\null\hbox{#1}\null}}
+
+\newcommand{\bibfile}{../bib/referencias}
+\newcommand{\unvlbibliografia}{\bibliography{\bibfile}}
+
+\newcommand{\listadoexperimentos}
+{
+  \theoremlisttype{allname}
+  \listtheorems{experimento,practica}
+}
+
+%% NOTA: para documento electrónico con enlaces descomentar las 
+%% dos líneas siguientes y comentar la tercera
+\usepackage{hyperref}
+\makeatletter
+\newcommand*{\MyUrl}{\begingroup\@makeother\#\@MyUrl}
+\newcommand*{\@MyUrl}[1]{%
+  \href{#1}{$\circlearrowright$}%
+  \endgroup}
+\makeatother
+%\newcommand{\MyUrl}[1]{\href{#1}{enlace: $\circlearrowright$}}
+%\newcommand{\MyUrl}[1]{\url{#1}}
+
+\newcommand{\unvl}{UNVirtualLab}
+\newcommand{\om}{OpenModelica}
+\newcommand{\msl}{\textit{Modelica Standard Library}}
+\newcommand{\Modelica}{Modelica}
+
+
+\begin{document}
+\bibliographystyle{plain}

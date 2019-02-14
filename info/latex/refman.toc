@@ -1,0 +1,88 @@
+\select@language {spanish}
+\contentsline {chapter}{\numberline {1}\IeC {\'I}ndice de clases}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}\discretionary {-}{}{}Jerarqu\IeC {\'\i }a de la clase}{1}{section.1.1}
+\contentsline {chapter}{\numberline {2}\IeC {\'I}ndice de clases}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}\discretionary {-}{}{}Lista de clases}{3}{section.2.1}
+\contentsline {chapter}{\numberline {3}\discretionary {-}{}{}Documentaci\IeC {\'o}n de las clases}{5}{chapter.3}
+\contentsline {section}{\numberline {3.1}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase abouttable}{5}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{5}{subsection.3.1.1}
+\contentsline {section}{\numberline {3.2}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase admin2danim}{6}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{6}{subsection.3.2.1}
+\contentsline {section}{\numberline {3.3}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase admin2deffect}{6}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{7}{subsection.3.3.1}
+\contentsline {section}{\numberline {3.4}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase adminblock}{7}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{9}{subsection.3.4.1}
+\contentsline {section}{\numberline {3.5}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase admincontrol}{9}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{10}{subsection.3.5.1}
+\contentsline {section}{\numberline {3.6}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase adminlogin}{10}{section.3.6}
+\contentsline {subsection}{\numberline {3.6.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{10}{subsection.3.6.1}
+\contentsline {section}{\numberline {3.7}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase adminlogout}{11}{section.3.7}
+\contentsline {subsection}{\numberline {3.7.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{11}{subsection.3.7.1}
+\contentsline {section}{\numberline {3.8}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase adminmodel}{11}{section.3.8}
+\contentsline {subsection}{\numberline {3.8.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{12}{subsection.3.8.1}
+\contentsline {section}{\numberline {3.9}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase adminmodelfiles}{12}{section.3.9}
+\contentsline {subsection}{\numberline {3.9.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{13}{subsection.3.9.1}
+\contentsline {section}{\numberline {3.10}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase adminplot}{13}{section.3.10}
+\contentsline {subsection}{\numberline {3.10.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{13}{subsection.3.10.1}
+\contentsline {section}{\numberline {3.11}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase adminpractice}{13}{section.3.11}
+\contentsline {subsection}{\numberline {3.11.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{14}{subsection.3.11.1}
+\contentsline {section}{\numberline {3.12}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase adminsection}{14}{section.3.12}
+\contentsline {subsection}{\numberline {3.12.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{14}{subsection.3.12.1}
+\contentsline {section}{\numberline {3.13}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase anim2d}{15}{section.3.13}
+\contentsline {subsection}{\numberline {3.13.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{15}{subsection.3.13.1}
+\contentsline {section}{\numberline {3.14}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase animation2d\discretionary {-}{}{}S\discretionary {-}{}{}V\discretionary {-}{}{}G}{15}{section.3.14}
+\contentsline {subsection}{\numberline {3.14.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{16}{subsection.3.14.1}
+\contentsline {section}{\numberline {3.15}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase block}{16}{section.3.15}
+\contentsline {subsection}{\numberline {3.15.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{18}{subsection.3.15.1}
+\contentsline {section}{\numberline {3.16}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase configuration}{18}{section.3.16}
+\contentsline {subsection}{\numberline {3.16.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{18}{subsection.3.16.1}
+\contentsline {section}{\numberline {3.17}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase controls}{18}{section.3.17}
+\contentsline {subsection}{\numberline {3.17.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{19}{subsection.3.17.1}
+\contentsline {section}{\numberline {3.18}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase credits}{19}{section.3.18}
+\contentsline {subsection}{\numberline {3.18.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{20}{subsection.3.18.1}
+\contentsline {section}{\numberline {3.19}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase csvreader}{20}{section.3.19}
+\contentsline {subsection}{\numberline {3.19.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{20}{subsection.3.19.1}
+\contentsline {section}{\numberline {3.20}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase databasemanager}{20}{section.3.20}
+\contentsline {subsection}{\numberline {3.20.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{21}{subsection.3.20.1}
+\contentsline {section}{\numberline {3.21}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase documentation}{21}{section.3.21}
+\contentsline {subsection}{\numberline {3.21.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{21}{subsection.3.21.1}
+\contentsline {section}{\numberline {3.22}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase erase}{21}{section.3.22}
+\contentsline {subsection}{\numberline {3.22.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{22}{subsection.3.22.1}
+\contentsline {section}{\numberline {3.23}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase export}{22}{section.3.23}
+\contentsline {subsection}{\numberline {3.23.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{22}{subsection.3.23.1}
+\contentsline {section}{\numberline {3.24}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase import}{22}{section.3.24}
+\contentsline {subsection}{\numberline {3.24.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{23}{subsection.3.24.1}
+\contentsline {section}{\numberline {3.25}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase logo}{23}{section.3.25}
+\contentsline {subsection}{\numberline {3.25.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{23}{subsection.3.25.1}
+\contentsline {section}{\numberline {3.26}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase menu}{23}{section.3.26}
+\contentsline {subsection}{\numberline {3.26.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{24}{subsection.3.26.1}
+\contentsline {section}{\numberline {3.27}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase menuadmin}{24}{section.3.27}
+\contentsline {subsection}{\numberline {3.27.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{24}{subsection.3.27.1}
+\contentsline {section}{\numberline {3.28}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase \discretionary {-}{}{}My\discretionary {-}{}{}Xml}{25}{section.3.28}
+\contentsline {subsection}{\numberline {3.28.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{25}{subsection.3.28.1}
+\contentsline {section}{\numberline {3.29}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase outputs}{25}{section.3.29}
+\contentsline {subsection}{\numberline {3.29.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{26}{subsection.3.29.1}
+\contentsline {section}{\numberline {3.30}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase plots}{26}{section.3.30}
+\contentsline {subsection}{\numberline {3.30.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{26}{subsection.3.30.1}
+\contentsline {section}{\numberline {3.31}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase session\discretionary {-}{}{}Manager}{27}{section.3.31}
+\contentsline {subsection}{\numberline {3.31.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{27}{subsection.3.31.1}
+\contentsline {section}{\numberline {3.32}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase simulator}{27}{section.3.32}
+\contentsline {subsection}{\numberline {3.32.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{28}{subsection.3.32.1}
+\contentsline {section}{\numberline {3.33}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase \discretionary {-}{}{}S\discretionary {-}{}{}V\discretionary {-}{}{}Gplot}{28}{section.3.33}
+\contentsline {subsection}{\numberline {3.33.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{29}{subsection.3.33.1}
+\contentsline {section}{\numberline {3.34}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase tables}{30}{section.3.34}
+\contentsline {subsection}{\numberline {3.34.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{30}{subsection.3.34.1}
+\contentsline {section}{\numberline {3.35}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase title}{30}{section.3.35}
+\contentsline {subsection}{\numberline {3.35.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{30}{subsection.3.35.1}
+\contentsline {section}{\numberline {3.36}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase tlistemysql}{31}{section.3.36}
+\contentsline {subsection}{\numberline {3.36.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{31}{subsection.3.36.1}
+\contentsline {subsection}{\numberline {3.36.2}\discretionary {-}{}{}Documentaci\IeC {\'o}n de las funciones miembro}{31}{subsection.3.36.2}
+\contentsline {subsubsection}{\numberline {3.36.2.1}restore\discretionary {-}{}{}Node}{31}{subsubsection.3.36.2.1}
+\contentsline {subsubsection}{\numberline {3.36.2.2}save\discretionary {-}{}{}Node}{32}{subsubsection.3.36.2.2}
+\contentsline {section}{\numberline {3.37}\discretionary {-}{}{}Referencia de la \discretionary {-}{}{}Clase \discretionary {-}{}{}X\discretionary {-}{}{}M\discretionary {-}{}{}L\discretionary {-}{}{}Thing}{32}{section.3.37}
+\contentsline {subsection}{\numberline {3.37.1}\discretionary {-}{}{}Descripci\IeC {\'o}n detallada}{33}{subsection.3.37.1}
+\contentsline {subsection}{\numberline {3.37.2}\discretionary {-}{}{}Documentaci\IeC {\'o}n de las funciones miembro}{33}{subsection.3.37.2}
+\contentsline {subsubsection}{\numberline {3.37.2.1}parse}{33}{subsubsection.3.37.2.1}
+\contentsline {subsubsection}{\numberline {3.37.2.2}parse\discretionary {-}{}{}\_\discretionary {-}{}{}init}{34}{subsubsection.3.37.2.2}
+\contentsline {subsubsection}{\numberline {3.37.2.3}parse\discretionary {-}{}{}\_\discretionary {-}{}{}recurse}{35}{subsubsection.3.37.2.3}
+\contentsline {subsubsection}{\numberline {3.37.2.4}\discretionary {-}{}{}X\discretionary {-}{}{}M\discretionary {-}{}{}L\discretionary {-}{}{}Thing}{37}{subsubsection.3.37.2.4}

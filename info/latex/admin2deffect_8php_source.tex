@@ -1,0 +1,106 @@
+\hypertarget{admin2deffect_8php_source}{\section{admin/admin2deffect.php}
+}
+
+\begin{DoxyCode}
+00001 <?php
+00002 require\_once(\textcolor{stringliteral}{"admin/adminblock.php"});
+00003 require\_once(\textcolor{stringliteral}{'svganim2d.php'});
+00004 
+\hypertarget{admin2deffect_8php_source_l00005}{}\hyperlink{classadmin2deffect}{00005} \textcolor{keyword}{class }\hyperlink{classadmin2deffect}{admin2deffect} \textcolor{keyword}{extends} \hyperlink{classadminblock}{adminblock}
+00006 \{  
+00007 
+00008   \textcolor{keyword}{function} createFields()
+00009   \{
+00010     $this->varpar=\textcolor{stringliteral}{"variable"};
+00011     $this->blockname=$this->text(\textcolor{stringliteral}{"admin2deffect\_2D\_effect"});
+00012     $this->table=\textcolor{stringliteral}{"2deffects"};
+00013     $this->sectionidname=\textcolor{stringliteral}{"2deffectid"};
+00014     $this->idname=\textcolor{stringliteral}{"id"};
+00015     $this->idvalue=$this->c2deffect\_id();
+00016     $this->fields=array();
+00017     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"id"},
+00018                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"admin2deffect\_Identifier"}),
+00019                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"fixed"});
+00020     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"2danimation\_id"},
+00021                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"
+      admin2deffect\_Animation\_identifier"}),
+00022                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"fixed"});
+00023     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"name"},
+00024                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"admin2deffect\_Name"}),
+00025                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"text"});
+00026     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"description"},
+00027                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"admin2deffect\_Description"}),
+00028                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"longtext"});
+00029     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"enabled"},
+00030                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"admin2deffect\_Enabled"}),
+00031                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"bool"});
+00032     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"type"},
+00033                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"admin2deffect\_Type"}),
+00034                           \textcolor{stringliteral}{"options"}=>array(\textcolor{stringliteral}{"single"}=>\textcolor{stringliteral}{"single"},\textcolor{stringliteral}{"double"}=>\textcolor{stringliteral}{"double
+      "},\textcolor{stringliteral}{"path"}=>\textcolor{stringliteral}{"path"},\textcolor{stringliteral}{"color"}=>\textcolor{stringliteral}{"color"}), \textcolor{comment}{//"text"=>"text",}
+00035                           \textcolor{stringliteral}{"table"}=>\textcolor{stringliteral}{"2deffects"},
+00036                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"select options"});
+00037     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"svganimation\_id"},
+00038                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"
+      admin2deffect\_SVG\_animation\_id"}),
+00039                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"text"});
+00040     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"variable\_id"},
+00041                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"
+      admin2deffect\_Control\_variable"}),
+00042                           \textcolor{stringliteral}{"model\_id"}=>$this->findModelId(),
+00043                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"select variable"});
+00044     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"variable\_aux\_id"},
+00045                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"
+      admin2deffect\_Auxiliar\_variable"}),
+00046                           \textcolor{stringliteral}{"model\_id"}=>$this->findModelId(),
+00047                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"select variable"});
+00048     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"offset"},
+00049                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"admin2deffect\_Offset"}),
+00050                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"float"});
+00051     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"scale"},
+00052                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"admin2deffect\_Scale"}),
+00053                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"float"});
+00054     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"colorRGBmin"},
+00055                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"
+      admin2deffect\_RGB\_minimum\_color"}),
+00056                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"color"});
+00057     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"colorRGBmax"},
+00058                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"
+      admin2deffect\_RGB\_maximum\_color"}),
+00059                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"color"});
+00060     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"colorMin"},
+00061                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"
+      admin2deffect\_Minimum\_color\_value"}),
+00062                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"float"});
+00063     $this->fields[]=array(\textcolor{stringliteral}{"dbname"}=>\textcolor{stringliteral}{"colorMax"},
+00064                           \textcolor{stringliteral}{"showname"}=>$this->text(\textcolor{stringliteral}{"
+      admin2deffect\_Maximum\_color\_value"}),
+00065                           \textcolor{stringliteral}{"type"}=>\textcolor{stringliteral}{"float"});
+00066   \}  
+00067   
+00068   \textcolor{keyword}{function} createRelations1N()
+00069   \{
+00070     $this->Relations1N=array();
+00071   \}  
+00072   
+00073   \textcolor{keyword}{function} createRelations1N1N()
+00074   \{
+00075     $this->Relations1N1N=array();
+00076   \}  
+00077     
+00078   \textcolor{keyword}{function} findModelId()
+00079   \{
+00080     $sql=\textcolor{stringliteral}{"SELECT model\_id FROM 2danimations INNER JOIN 2deffects ON
+       2deffects.2danimation\_id=2danimations.id WHERE 2deffects.id="}.$this->c2deffect\_id();
+00081     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00082     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00083     \{
+00084       $linea=mysql\_fetch\_array($result,MYSQL\_ASSOC);
+00085       \textcolor{keywordflow}{return}($linea[\textcolor{stringliteral}{'model\_id'}]);
+00086     \}
+00087     \textcolor{keywordflow}{return} 0;
+00088   \}
+00089 \}
+00090 
+00091 ?>
+\end{DoxyCode}

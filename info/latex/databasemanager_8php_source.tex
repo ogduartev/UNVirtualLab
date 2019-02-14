@@ -1,0 +1,164 @@
+\hypertarget{databasemanager_8php_source}{\section{admin/databasemanager.php}
+}
+
+\begin{DoxyCode}
+00001 <?php
+00002 require\_once(\textcolor{stringliteral}{"block.php"});
+00003 
+\hypertarget{databasemanager_8php_source_l00004}{}\hyperlink{classdatabasemanager}{00004} \textcolor{keyword}{class }\hyperlink{classdatabasemanager}{databasemanager} \textcolor{keyword}{extends} \hyperlink{classblock}{block}
+00005 \{
+00006   \textcolor{keyword}{function} update($table,$idname,$idvalue)
+00007   \{
+00008     $this->connect();
+00009     \textcolor{keywordflow}{foreach}($\_POST as $K=>$V)
+00010     \{
+00011       \textcolor{keywordflow}{if}(substr($K,0,3)==\textcolor{stringliteral}{"db\_"})
+00012       \{
+00013         $col=substr($K,3);
+00014         $sql=\textcolor{stringliteral}{"UPDATE "}.$table.\textcolor{stringliteral}{" SET "}.$col.\textcolor{stringliteral}{"='"}.str\_replace(\textcolor{stringliteral}{"'"},\textcolor{stringliteral}{"\(\backslash\)'"},$V).\textcolor{stringliteral}{"'
+       WHERE "}.$idname.\textcolor{stringliteral}{"='"}.$idvalue.\textcolor{stringliteral}{"'"};
+00015         mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{" :"}.$sql);
+00016       \}
+00017     \}
+00018   \}
+00019   
+00020   \textcolor{keyword}{function} update1NN1($idvalue)
+00021   \{
+00022     $this->connect();
+00023     \textcolor{keywordflow}{if}(isset($\_POST[\textcolor{stringliteral}{'db\_'}.$\_POST[\textcolor{stringliteral}{'idLink2'}]]))
+00024     \{
+00025       $sql=\textcolor{stringliteral}{"SELECT * FROM "}.$\_POST[\textcolor{stringliteral}{'tableLink'}].\textcolor{stringliteral}{" WHERE "}.$\_POST[\textcolor{stringliteral}{'idLink1'}].\textcolor{stringliteral}{"="}
+      .$idvalue.\textcolor{stringliteral}{" AND "}.$\_POST[\textcolor{stringliteral}{'idLink2'}].\textcolor{stringliteral}{"="}.$\_POST[\textcolor{stringliteral}{'id2Value'}];
+00026       $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{" :"}.$sql);
+00027       \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00028       \{
+00029       \}\textcolor{keywordflow}{else}
+00030       \{
+00031         $sql=\textcolor{stringliteral}{"INSERT INTO "}.$\_POST[\textcolor{stringliteral}{'tableLink'}].\textcolor{stringliteral}{"("}.$\_POST[\textcolor{stringliteral}{'idLink1'}].\textcolor{stringliteral}{","}.
+      $\_POST[\textcolor{stringliteral}{'idLink2'}].\textcolor{stringliteral}{") VALUES("}.$idvalue.\textcolor{stringliteral}{","}.$\_POST[\textcolor{stringliteral}{'id2Value'}].\textcolor{stringliteral}{")"};
+00032         mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{" :"}.$sql);
+00033       \}
+00034       
+00035     \}\textcolor{keywordflow}{else}
+00036     \{
+00037       $sql=\textcolor{stringliteral}{"DELETE FROM "}.$\_POST[\textcolor{stringliteral}{'tableLink'}].\textcolor{stringliteral}{" WHERE "}.$\_POST[\textcolor{stringliteral}{'idLink1'}].\textcolor{stringliteral}{"="}.
+      $idvalue.\textcolor{stringliteral}{" AND "}.$\_POST[\textcolor{stringliteral}{'idLink2'}].\textcolor{stringliteral}{"="}.$\_POST[\textcolor{stringliteral}{'id2Value'}];
+00038       mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{" :"}.$sql);
+00039     \}
+00040     \textcolor{keywordflow}{foreach}($\_POST as $K=>$V)
+00041     \{
+00042       \textcolor{keywordflow}{if}(substr($K,0,3)==\textcolor{stringliteral}{"db\_"} and $K!=\textcolor{stringliteral}{'db\_'}.$\_POST[\textcolor{stringliteral}{'idLink2'}])
+00043       \{
+00044         $col=substr($K,3);
+00045         $sql=\textcolor{stringliteral}{"UPDATE "}.$\_POST[\textcolor{stringliteral}{'table2'}].\textcolor{stringliteral}{" SET "}.$col.\textcolor{stringliteral}{"='"}.str\_replace(\textcolor{stringliteral}{"'"},\textcolor{stringliteral}{"\(\backslash\)'"},
+      $V).\textcolor{stringliteral}{"' WHERE "}.$\_POST[\textcolor{stringliteral}{'id2'}].\textcolor{stringliteral}{"='"}.$\_POST[\textcolor{stringliteral}{'id2Value'}].\textcolor{stringliteral}{"'"};
+00046         mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{" :"}.$sql);
+00047       \}
+00048     \}
+00049   \}
+00050   
+00051   \textcolor{keyword}{function} insert()
+00052   \{
+00053     $this->connect();
+00054     $cols=\textcolor{stringliteral}{""};
+00055     $values=\textcolor{stringliteral}{""};
+00056     \textcolor{keywordflow}{foreach}($\_POST as $K=>$V)
+00057     \{
+00058       \textcolor{keywordflow}{if}(substr($K,0,3)==\textcolor{stringliteral}{"db\_"})
+00059       \{
+00060         $cols.=substr($K,3).\textcolor{stringliteral}{","};
+00061         $values.=\textcolor{stringliteral}{"'"}.str\_replace(\textcolor{stringliteral}{"'"},\textcolor{stringliteral}{"\(\backslash\)'"},$V).\textcolor{stringliteral}{"',"};
+00062       \}
+00063     \}
+00064     $cols=substr($cols,0,strlen($cols)-1);
+00065     $values=substr($values,0,strlen($values)-1);
+00066     $sql=\textcolor{stringliteral}{"INSERT INTO "}.$\_POST[\textcolor{stringliteral}{'insert\_table'}].\textcolor{stringliteral}{"("}.$cols.\textcolor{stringliteral}{") VALUES("}.$values.\textcolor{stringliteral}{")
+      "};
+00067     mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{" :"}.$sql);
+00068     \textcolor{keywordflow}{return} mysql\_insert\_id();
+00069   \}
+00070   
+00071   \textcolor{keyword}{function} insert1NN1($idvalue)
+00072   \{
+00073     $this->connect();
+00074     $cols=\textcolor{stringliteral}{""};
+00075     $values=\textcolor{stringliteral}{""};
+00076     \textcolor{keywordflow}{foreach}($\_POST as $K=>$V)
+00077     \{
+00078       \textcolor{keywordflow}{if}(substr($K,0,3)==\textcolor{stringliteral}{"db\_"})
+00079       \{
+00080         $cols.=substr($K,3).\textcolor{stringliteral}{","};
+00081         $values.=\textcolor{stringliteral}{"'"}.str\_replace(\textcolor{stringliteral}{"'"},\textcolor{stringliteral}{"\(\backslash\)'"},$V).\textcolor{stringliteral}{"',"};
+00082       \}
+00083     \}
+00084     $cols=substr($cols,0,strlen($cols)-1);
+00085     $values=substr($values,0,strlen($values)-1);
+00086     $sql=\textcolor{stringliteral}{"INSERT INTO "}.$\_POST[\textcolor{stringliteral}{'table2'}].\textcolor{stringliteral}{"("}.$cols.\textcolor{stringliteral}{") VALUES("}.$values.\textcolor{stringliteral}{")"};
+00087     mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{" :"}.$sql);
+00088     $id2=mysql\_insert\_id();
+00089     $sql=\textcolor{stringliteral}{"INSERT INTO "}.$\_POST[\textcolor{stringliteral}{'tableLink'}].\textcolor{stringliteral}{"("}.$\_POST[\textcolor{stringliteral}{'idLink1'}].\textcolor{stringliteral}{","}.$\_POST[\textcolor{stringliteral}{'
+      idLink2'}].\textcolor{stringliteral}{") VALUES("}.$idvalue.\textcolor{stringliteral}{","}.$id2.\textcolor{stringliteral}{")"};
+00090     mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{" :"}.$sql);
+00091     $id2=mysql\_insert\_id();
+00092     \textcolor{keywordflow}{return} $id2;
+00093   \}
+00094   
+00095   \textcolor{keyword}{function} \textcolor{keyword}{delete}()
+00096   \{
+00097     $this->connect();
+00098     $sql=\textcolor{stringliteral}{"DELETE FROM "}.$\_POST[\textcolor{stringliteral}{'delete\_table'}].\textcolor{stringliteral}{" WHERE "}.$\_POST[\textcolor{stringliteral}{'delete\_colid'}]
+      .\textcolor{stringliteral}{"='"}.$\_POST[\textcolor{stringliteral}{'delete\_id'}].\textcolor{stringliteral}{"'"};
+00099 \textcolor{comment}{//    echo $sql;}
+00100     mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{" :"}.$sql);
+00101     \textcolor{keywordflow}{return};
+00102   \}
+00103 
+00104   \textcolor{keyword}{function} delete1NN1($idvalue)
+00105   \{
+00106     $this->connect();
+00107     $sql=\textcolor{stringliteral}{"DELETE FROM "}.$\_POST[\textcolor{stringliteral}{'tableLink'}].\textcolor{stringliteral}{" WHERE "}.$\_POST[\textcolor{stringliteral}{'idLink2'}].\textcolor{stringliteral}{"='"}.
+      $\_POST[\textcolor{stringliteral}{'id2Value'}].\textcolor{stringliteral}{"'"};
+00108     mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{" :"}.$sql);
+00109     $sql=\textcolor{stringliteral}{"DELETE FROM "}.$\_POST[\textcolor{stringliteral}{'table2'}].\textcolor{stringliteral}{" WHERE "}.$\_POST[\textcolor{stringliteral}{'id2'}].\textcolor{stringliteral}{"='"}.$\_POST[\textcolor{stringliteral}{'
+      id2Value'}].\textcolor{stringliteral}{"'"};
+00110     mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{" :"}.$sql);
+00111     \textcolor{keywordflow}{return};
+00112   \}
+00113 
+00114   \textcolor{keyword}{function} createDirectories($id)
+00115   \{
+00116     mkdir(\textcolor{stringliteral}{"files/"}.$id,0777,\textcolor{keyword}{true});
+00117     mkdir(\textcolor{stringliteral}{"files/"}.$id.\textcolor{stringliteral}{"/bin"},0777,\textcolor{keyword}{true});
+00118     mkdir(\textcolor{stringliteral}{"files/"}.$id.\textcolor{stringliteral}{"/doc"},0777,\textcolor{keyword}{true});
+00119     mkdir(\textcolor{stringliteral}{"files/"}.$id.\textcolor{stringliteral}{"/graphics"},0777,\textcolor{keyword}{true});
+00120     mkdir(\textcolor{stringliteral}{"files/"}.$id.\textcolor{stringliteral}{"/modelica"},0777,\textcolor{keyword}{true});
+00121   \}
+00122   
+00123   \textcolor{keyword}{function} deleteDir($dir)
+00124   \{
+00125     $iterator = \textcolor{keyword}{new} RecursiveDirectoryIterator($dir);
+00126     \textcolor{keywordflow}{foreach} (\textcolor{keyword}{new} RecursiveIteratorIterator($iterator, 
+      RecursiveIteratorIterator::CHILD\_FIRST) as $file) 
+00127     \{
+00128       \textcolor{keywordflow}{if} ($file->isDir())
+00129       \{
+00130         rmdir($file->getPathname());
+00131       \}\textcolor{keywordflow}{else}
+00132       \{
+00133         unlink($file->getPathname());
+00134       \}
+00135     \}
+00136     rmdir($dir);
+00137   \}
+00138 
+00139   \textcolor{keyword}{function} deleteDirectories($id)
+00140   \{
+00141     $this->deleteDir(\textcolor{stringliteral}{"files/"}.$id);
+00142   \}
+00143   
+00144   \textcolor{keyword}{function} display()
+00145   \{
+00146   \}
+00147 \}
+00148 ?>
+\end{DoxyCode}

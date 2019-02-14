@@ -1,0 +1,271 @@
+\hypertarget{svganim2d_8php_source}{\section{svganim2d.\-php}
+}
+
+\begin{DoxyCode}
+00001 <?php
+00002 require\_once(\textcolor{stringliteral}{'MyXml.php'});
+00003 require\_once(\textcolor{stringliteral}{'csvreader.php'});
+00004 
+\hypertarget{svganim2d_8php_source_l00005}{}\hyperlink{classanimation2dSVG}{00005} \textcolor{keyword}{class }\hyperlink{classanimation2dSVG}{animation2dSVG} \textcolor{keyword}{extends} \hyperlink{classMyXml}{MyXml}
+00006 \{
+00007   var $Modifications;
+00008   var $Data;
+00009   
+00010   \textcolor{keyword}{function} \hyperlink{classanimation2dSVG}{animation2dSVG}()
+00011   \{
+00012     $this->Modifications=array();
+00013   \}
+00014 
+00015   \textcolor{keyword}{function} insertAnimation(&$node,$subtype,$modification,$subnode,$number)
+00016   \{
+00017     \textcolor{keywordflow}{if}($number<0)
+00018     \{
+00019       \textcolor{keywordflow}{foreach}($modification as $K=>$V)
+00020       \{
+00021         \textcolor{keywordflow}{if}($K!==\textcolor{stringliteral}{"svg\_id"})
+00022         \{
+00023           $node[$subtype][\textcolor{stringliteral}{'attributes'}][$K]=$V;
+00024         \}
+00025       \}
+00026       unset($node[$subtype][\textcolor{stringliteral}{'attributes'}][\textcolor{stringliteral}{'from'}]);
+00027       unset($node[$subtype][\textcolor{stringliteral}{'attributes'}][\textcolor{stringliteral}{'to'}]);
+00028     \}\textcolor{keywordflow}{else}
+00029     \{
+00030       \textcolor{keywordflow}{foreach}($modification as $K=>$V)
+00031       \{
+00032         \textcolor{keywordflow}{if}($K!==\textcolor{stringliteral}{"svg\_id"})
+00033         \{
+00034           $node[$subtype][$number][\textcolor{stringliteral}{'attributes'}][$K]=$V;
+00035         \}
+00036       \}
+00037       unset($node[$subtype][$number][\textcolor{stringliteral}{'attributes'}][\textcolor{stringliteral}{'from'}]);
+00038       unset($node[$subtype][$number][\textcolor{stringliteral}{'attributes'}][\textcolor{stringliteral}{'to'}]);
+00039     \}
+00040   \}
+00041    
+00042   \textcolor{keyword}{function} modifyXml(&$node,$modification)
+00043   \{
+00044     \textcolor{keywordflow}{if}(!is\_array($node))\{\textcolor{keywordflow}{return} \textcolor{keyword}{false};\}
+00045     \textcolor{keywordflow}{if}(isset($node[\textcolor{stringliteral}{'attributes'}][\textcolor{stringliteral}{'id'}]) and $node[\textcolor{stringliteral}{'attributes'}][\textcolor{stringliteral}{'id'}]==
+      $modification[\textcolor{stringliteral}{'svg\_id'}])
+00046     \{
+00047       \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+00048     \}
+00049     \textcolor{keywordflow}{foreach}($node as $subtype=>$subnode)
+00050     \{
+00051       \textcolor{keywordflow}{if}(is\_array($subnode) and array\_key\_exists(0,$subnode))
+00052       \{
+00053         \textcolor{keywordflow}{foreach}($subnode as $number=>$subsubnode)
+00054         \{
+00055           \textcolor{keywordflow}{if}($this->modifyXml($node[$subtype][$number],$modification))
+00056           \{
+00057             $this->insertAnimation($node,$subtype,$modification,$subsubnode,
+      $number);
+00058             \textcolor{keywordflow}{return};
+00059           \}
+00060         \}
+00061       \}\textcolor{keywordflow}{else}
+00062       \{
+00063         \textcolor{keywordflow}{if}($this->modifyXml($node[$subtype],$modification))
+00064         \{
+00065           $this->insertAnimation($node,$subtype,$modification,$subnode,-100000)
+      ;
+00066           \textcolor{keywordflow}{return};
+00067         \}
+00068       \}
+00069     \}
+00070     \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+00071   \}
+00072   
+00073   \textcolor{keyword}{function} colorScale($value,$effect)
+00074   \{
+00075     $value=$effect[\textcolor{stringliteral}{'offset'}]+$effect[\textcolor{stringliteral}{'scale'}]*$value;
+00076     $Ro=hexdec(substr($effect[\textcolor{stringliteral}{'colorRGBmin'}],0,2));
+00077     $Go=hexdec(substr($effect[\textcolor{stringliteral}{'colorRGBmin'}],2,2));
+00078     $Bo=hexdec(substr($effect[\textcolor{stringliteral}{'colorRGBmin'}],4,2));
+00079     $Rf=hexdec(substr($effect[\textcolor{stringliteral}{'colorRGBmax'}],0,2));
+00080     $Gf=hexdec(substr($effect[\textcolor{stringliteral}{'colorRGBmax'}],2,2));
+00081     $Bf=hexdec(substr($effect[\textcolor{stringliteral}{'colorRGBmax'}],4,2));
+00082     $min=$effect[\textcolor{stringliteral}{'colorMin'}];
+00083     $max=$effect[\textcolor{stringliteral}{'colorMax'}];
+00084     $factor=($value-$min)/($max-$min);
+00085     $R=$Ro+$factor*($Rf-$Ro);
+00086     $G=$Go+$factor*($Gf-$Go);
+00087     $B=$Bo+$factor*($Bf-$Bo);
+00088     \textcolor{keywordflow}{if}($R>255)\{$R=255;\}
+00089     \textcolor{keywordflow}{if}($G>255)\{$G=255;\}
+00090     \textcolor{keywordflow}{if}($B>255)\{$B=255;\}
+00091     \textcolor{keywordflow}{if}($R<0)\{$R=0;\}
+00092     \textcolor{keywordflow}{if}($G<0)\{$G=0;\}
+00093     \textcolor{keywordflow}{if}($B<0)\{$B=0;\}
+00094     $strR=dechex($R);\textcolor{keywordflow}{if}(strlen($strR)<2)\{$strR=\textcolor{stringliteral}{"0"}.$strR;\}
+00095     $strG=dechex($G);\textcolor{keywordflow}{if}(strlen($strG)<2)\{$strG=\textcolor{stringliteral}{"0"}.$strG;\}
+00096     $strB=dechex($B);\textcolor{keywordflow}{if}(strlen($strB)<2)\{$strB=\textcolor{stringliteral}{"0"}.$strB;\}
+00097     $strR=substr($strR,0,2);
+00098     $strG=substr($strG,0,2);
+00099     $strB=substr($strB,0,2);
+00100     \textcolor{keywordflow}{return} \textcolor{stringliteral}{"#"}.$strR.$strG.$strB;
+00101   \}
+00102   
+00103   \textcolor{keyword}{function} sync($effect,$animation)
+00104   \{
+00105     $M=array();
+00106     $modelica\_name1=$effect[\textcolor{stringliteral}{'modelicaname1'}];
+00107     $modelica\_name2=$effect[\textcolor{stringliteral}{'modelicaname2'}];
+00108     $duration=$animation[\textcolor{stringliteral}{'duration'}];
+00109     \textcolor{keywordflow}{if}($duration==0)
+00110     \{
+00111       \textcolor{keywordflow}{foreach}($this->Data[$modelica\_name1] as $time=>$value)
+00112       \{
+00113         $duration=$this->Data[\textcolor{stringliteral}{'time'}][$time];
+00114       \}                
+00115     \}
+00116     $sample\_time=$animation[\textcolor{stringliteral}{'sample\_time'}];
+00117     $offset=$effect[\textcolor{stringliteral}{'offset'}];
+00118     $scale=$effect[\textcolor{stringliteral}{'scale'}];
+00119     $maxTime=count($this->Data[$modelica\_name1])+1;
+00120     $timeStr=\textcolor{stringliteral}{""};
+00121     $valueStr=\textcolor{stringliteral}{""};
+00122     $timeStr.=\textcolor{stringliteral}{"0.0; "};
+00123     \textcolor{keywordflow}{switch}($effect[\textcolor{stringliteral}{'type'}])
+00124     \{
+00125       \textcolor{keywordflow}{case} \textcolor{stringliteral}{'single'} :
+00126                       $valueStr.=str\_replace(\textcolor{stringliteral}{","},\textcolor{stringliteral}{"."},$offset+$scale*$this->Data
+      [$modelica\_name1][0]).\textcolor{stringliteral}{"; "};
+00127                       $cntTime=0.0;
+00128                       \textcolor{keywordflow}{foreach}($this->Data[$modelica\_name1] as $time=>$value)
+00129                       \{
+00130                         \textcolor{keywordflow}{if}(($this->Data[\textcolor{stringliteral}{'time'}][$time] - $cntTime)>=
+      $sample\_time)
+00131                         \{
+00132                           $timeStr.=str\_replace(\textcolor{stringliteral}{","},\textcolor{stringliteral}{"."},($time/$maxTime)).\textcolor{stringliteral}{"; "};
+00133                           $valueStr.=str\_replace(\textcolor{stringliteral}{","},\textcolor{stringliteral}{"."},$offset+$scale*$value)
+      .\textcolor{stringliteral}{"; "};
+00134                           $cntTime=$this->Data[\textcolor{stringliteral}{'time'}][$time];
+00135                         \}
+00136                       \}
+00137                       $timeStr.=\textcolor{stringliteral}{"1.0"};
+00138                       $valueStr.=str\_replace(\textcolor{stringliteral}{","},\textcolor{stringliteral}{"."},$offset+$scale*$this->Data
+      [$modelica\_name1][$maxTime-2]);
+00139                       \textcolor{keywordflow}{break};
+00140       \textcolor{keywordflow}{case} \textcolor{stringliteral}{'path'} :
+00141       \textcolor{keywordflow}{case} \textcolor{stringliteral}{'double'} :
+00142                       $valueStr.=str\_replace(\textcolor{stringliteral}{","},\textcolor{stringliteral}{"."},$offset+$scale*$this->Data
+      [$modelica\_name1][0]).\textcolor{stringliteral}{","};
+00143                       $valueStr.=str\_replace(\textcolor{stringliteral}{","},\textcolor{stringliteral}{"."},$offset+$scale*$this->Data
+      [$modelica\_name2][0]).\textcolor{stringliteral}{"; "};
+00144                       $cntTime=0.0;
+00145                       \textcolor{keywordflow}{foreach}($this->Data[$modelica\_name1] as $time=>$value)
+00146                       \{
+00147                         \textcolor{keywordflow}{if}(($this->Data[\textcolor{stringliteral}{'time'}][$time] - $cntTime)>=
+      $sample\_time)
+00148                         \{
+00149                           $timeStr.=str\_replace(\textcolor{stringliteral}{","},\textcolor{stringliteral}{"."},($time/$maxTime)).\textcolor{stringliteral}{"; "};
+00150                           $valueStr.=str\_replace(\textcolor{stringliteral}{","},\textcolor{stringliteral}{"."},$offset+$scale*$value)
+      .\textcolor{stringliteral}{","};
+00151                           $valueStr.=str\_replace(\textcolor{stringliteral}{","},\textcolor{stringliteral}{"."},$offset+$scale*$this->
+      Data[$modelica\_name2][$time]).\textcolor{stringliteral}{"; "};
+00152                           $cntTime=$this->Data[\textcolor{stringliteral}{'time'}][$time];
+00153                         \}
+00154                       \}
+00155                       $timeStr.=\textcolor{stringliteral}{"1.0"};
+00156                       $valueStr.=str\_replace(\textcolor{stringliteral}{","},\textcolor{stringliteral}{"."},$offset+$scale*$this->Data
+      [$modelica\_name1][$maxTime-2]).\textcolor{stringliteral}{","};
+00157                       $valueStr.=str\_replace(\textcolor{stringliteral}{","},\textcolor{stringliteral}{"."},$offset+$scale*$this->Data
+      [$modelica\_name2][$maxTime-2]);
+00158                       \textcolor{keywordflow}{break};
+00159       \textcolor{keywordflow}{case} \textcolor{stringliteral}{'color'} :
+00160                       $valueStr.=str\_replace(\textcolor{stringliteral}{","},\textcolor{stringliteral}{"."},$this->colorScale($this->
+      Data[$modelica\_name1][0],$effect)).\textcolor{stringliteral}{"; "};
+00161                       $cntTime=0.0;
+00162                       \textcolor{keywordflow}{foreach}($this->Data[$modelica\_name1] as $time=>$value)
+00163                       \{
+00164                         \textcolor{keywordflow}{if}(($this->Data[\textcolor{stringliteral}{'time'}][$time] - $cntTime)>=
+      $sample\_time)
+00165                         \{
+00166                           $timeStr.=str\_replace(\textcolor{stringliteral}{","},\textcolor{stringliteral}{"."},($time/$maxTime)).\textcolor{stringliteral}{"; "};
+00167                           $valueStr.=str\_replace(\textcolor{stringliteral}{","},\textcolor{stringliteral}{"."},$this->colorScale(
+      $value,$effect)).\textcolor{stringliteral}{"; "};
+00168                           $cntTime=$this->Data[\textcolor{stringliteral}{'time'}][$time];
+00169                         \}
+00170                       \}
+00171                       $timeStr.=\textcolor{stringliteral}{"1.0"};
+00172                       $valueStr.=str\_replace(\textcolor{stringliteral}{","},\textcolor{stringliteral}{"."},$this->colorScale($this->
+      Data[$modelica\_name1][$maxTime-2],$effect));
+00173                       \textcolor{keywordflow}{break};
+00174       \textcolor{keywordflow}{case} \textcolor{stringliteral}{'text'} : \textcolor{keywordflow}{break};
+00175     \}
+00176     $M[\textcolor{stringliteral}{'svg\_id'}]=$effect[\textcolor{stringliteral}{'svganimation\_id'}];
+00177     $M[\textcolor{stringliteral}{'begin'}]=\textcolor{stringliteral}{"0"};
+00178     $M[\textcolor{stringliteral}{'dur'}]=$duration;
+00179     $M[\textcolor{stringliteral}{'values'}]=$valueStr;
+00180     $M[\textcolor{stringliteral}{'keyTimes'}]=$timeStr;
+00181     \textcolor{keywordflow}{return} $M;
+00182   \}
+00183 
+00184   \textcolor{keyword}{function} readModifications($animation)
+00185   \{
+00186     $animation\_id=$animation[\textcolor{stringliteral}{'id'}];
+00187     $this->Modifications=array();
+00188     $sql=\textcolor{stringliteral}{"SELECT 2deffects.* FROM 2deffects WHERE 2danimation\_id='"}.
+      $animation\_id.\textcolor{stringliteral}{"' AND enabled=TRUE"};
+00189     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql.\textcolor{stringliteral}{"\(\backslash\)n"});
+00190     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00191     \{
+00192       \textcolor{keywordflow}{while}($linea=mysql\_fetch\_array($result,MYSQL\_ASSOC))
+00193       \{
+00194         $sql2=\textcolor{stringliteral}{"SELECT modelicaname FROM variables WHERE id='"}.$linea[\textcolor{stringliteral}{'
+      variable\_id'}].\textcolor{stringliteral}{"'"};
+00195         $result2=mysql\_query($sql2) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql2.\textcolor{stringliteral}{"\(\backslash\)n"});
+00196         \textcolor{keywordflow}{if}($result2 and mysql\_num\_rows($result2)>0)
+00197         \{
+00198           $linea2=mysql\_fetch\_array($result2,MYSQL\_ASSOC);
+00199           $linea[\textcolor{stringliteral}{'modelicaname1'}]=$linea2[\textcolor{stringliteral}{'modelicaname'}];
+00200         \}
+00201         $sql2=\textcolor{stringliteral}{"SELECT modelicaname FROM variables WHERE id='"}.$linea[\textcolor{stringliteral}{'
+      variable\_aux\_id'}].\textcolor{stringliteral}{"'"};
+00202         $result2=mysql\_query($sql2) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql2.\textcolor{stringliteral}{"\(\backslash\)n"});
+00203         \textcolor{keywordflow}{if}($result2 and mysql\_num\_rows($result2)>0)
+00204         \{
+00205           $linea2=mysql\_fetch\_array($result2,MYSQL\_ASSOC);
+00206           $linea[\textcolor{stringliteral}{'modelicaname2'}]=$linea2[\textcolor{stringliteral}{'modelicaname'}];
+00207         \}
+00208         $M=$this->sync($linea,$animation);
+00209         $this->Modifications[]=$M;
+00210       \}
+00211     \}    
+00212   \}
+00213 
+00214   \textcolor{keyword}{function} modify()
+00215   \{
+00216     \textcolor{keywordflow}{foreach}($this->Modifications as $M)
+00217     \{
+00218       \textcolor{keywordflow}{foreach}($this->tree as $type=>$node)
+00219       \{
+00220         $this->modifyXml($this->tree[$type],$M);
+00221         \textcolor{keywordflow}{continue};
+00222       \}
+00223     \}  
+00224   \}
+00225 
+00226   \textcolor{keyword}{function} animateObject($animation,$results\_file)
+00227   \{
+00228     $resFile=$results\_file;
+00229     $C=\textcolor{keyword}{new} \hyperlink{classcsvreader}{csvreader}();
+00230     $this->Data=$C->readCsv($resFile);
+00231     $svgSource=\textcolor{stringliteral}{"files/"}.$animation[\textcolor{stringliteral}{'model\_id'}].\textcolor{stringliteral}{"/graphics/"}.$animation[\textcolor{stringliteral}{'
+      svg\_file'}];
+00232     $this->tree=array();
+00233     $this->readXmlFile($svgSource);
+00234     $this->readModifications($animation);
+00235     $this->modify();
+00236 \textcolor{comment}{//    print\_r($this->tree);}
+00237   \}
+00238 
+00239 \}
+00240 
+00241 ?>
+00242 
+00243 
+00244 
+\end{DoxyCode}

@@ -1,0 +1,42 @@
+\hypertarget{plots_8php_source}{\section{plots.\-php}
+}
+
+\begin{DoxyCode}
+00001 <?php
+00002 require\_once(\textcolor{stringliteral}{'block.php'});
+00003 require\_once(\textcolor{stringliteral}{'svgplot.php'});
+00004 require\_once(\textcolor{stringliteral}{'csvreader.php'});
+00005 
+\hypertarget{plots_8php_source_l00006}{}\hyperlink{classplots}{00006} \textcolor{keyword}{class }\hyperlink{classplots}{plots} \textcolor{keyword}{extends} \hyperlink{classblock}{block}
+00007 \{
+00008 
+00009   \textcolor{keyword}{function} displayPlot($plot)
+00010   \{  
+00011     $graph = \textcolor{keyword}{new} \hyperlink{classSVGplot}{SVGplot}();
+00012     $graph->settings($plot);
+00013     $graph->data($plot,$\_POST[\textcolor{stringliteral}{'res\_file'}]);
+00014     $graph->display(); 
+00015   \}
+00016 
+00017   \textcolor{keyword}{function} display()
+00018   \{
+00019     $sql=\textcolor{stringliteral}{"SELECT plots.*,variables.modelicaname AS MN FROM plots INNER JOIN
+       variables ON plots.variable\_id=variables.id WHERE plots.model\_id='"}.$\_POST[\textcolor{stringliteral}{'modelid
+      '}].\textcolor{stringliteral}{"'"};
+00020     $sql.=$this->enabled(\textcolor{stringliteral}{"plots"});
+00021     $result=mysql\_query($sql) or die(mysql\_error().\textcolor{stringliteral}{": "}.$sql);
+00022     \textcolor{keywordflow}{if}($result and mysql\_num\_rows($result)>0)
+00023     \{
+00024       \textcolor{keywordflow}{while}($linea=mysql\_fetch\_array($result,MYSQL\_ASSOC))
+00025       \{
+00026         $this->displayPlot($linea);
+00027       \}
+00028     \}
+00029   \}
+00030 
+00031 \}
+00032 
+00033 ?>
+00034 
+00035 
+\end{DoxyCode}

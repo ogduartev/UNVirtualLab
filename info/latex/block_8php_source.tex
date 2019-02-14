@@ -1,0 +1,252 @@
+\hypertarget{block_8php_source}{\section{block.\-php}
+}
+
+\begin{DoxyCode}
+00001 <?php
+00002 require\_once(\textcolor{stringliteral}{'xmlthing.class.php'});
+00003 require\_once(\textcolor{stringliteral}{"config/config.class.php"});
+00004 
+\hypertarget{block_8php_source_l00005}{}\hyperlink{classblock}{00005} \textcolor{keyword}{class }\hyperlink{classblock}{block}
+00006 \{
+00007   var $Xml;
+00008   var $strings;
+00009   var $configurationSettings;
+00010 
+00011   \textcolor{keyword}{function} \hyperlink{classblock}{block}()
+00012   \{
+00013     session\_start();
+00014     $conf = \textcolor{keyword}{new} \hyperlink{classconfiguration}{configuration}();
+00015     $this->configurationSettings=$conf->readconfig(\textcolor{stringliteral}{'unvlconfig.txt'});
+00016     require\_once(\textcolor{stringliteral}{"locale/"}.$this->configurationSettings[\textcolor{stringliteral}{'locale'}].\textcolor{stringliteral}{".inc"});
+00017     $this->strings=strings();
+00018   \}
+00019 
+00020   \textcolor{keyword}{function} connect()
+00021   \{
+00022     $username=\textcolor{stringliteral}{""};
+00023     $userpass=\textcolor{stringliteral}{""};
+00024     \textcolor{keywordflow}{if}(isset($\_SESSION) and $\_SESSION[\textcolor{stringliteral}{'UNVL\_SESSION\_UNVL'}])
+00025     \{
+00026       $username=$this->configurationSettings[\textcolor{stringliteral}{'DBadmin'}];
+00027       $userpass=$this->configurationSettings[\textcolor{stringliteral}{'DBadminpass'}];
+00028     \}\textcolor{keywordflow}{else}
+00029     \{
+00030       $username=$this->configurationSettings[\textcolor{stringliteral}{'DBuser'}];
+00031       $userpass=$this->configurationSettings[\textcolor{stringliteral}{'DBuserpass'}];
+00032     \}
+00033    \textcolor{keywordflow}{if}($link=mysql\_connect($this->configurationSettings[\textcolor{stringliteral}{'DBserver'}],$username,
+      $userpass))
+00034     \{
+00035       $sql=\textcolor{stringliteral}{"USE "}.$this->configurationSettings[\textcolor{stringliteral}{'DBname'}];
+00036       \textcolor{keywordflow}{if}(!mysql\_query($sql))
+00037       \{
+00038         echo $this->text(\textcolor{stringliteral}{'about\_No\_Database\_connection'});
+00039         \textcolor{keywordflow}{return} FALSE;
+00040       \}
+00041     \}\textcolor{keywordflow}{else}
+00042     \{
+00043       \textcolor{keywordflow}{return} FALSE;
+00044     \}
+00045     \textcolor{keywordflow}{return} $link;
+00046   \}
+00047   
+00048   \textcolor{keyword}{function} text($str)
+00049   \{
+00050     \textcolor{keywordflow}{if}(isset($this->strings[$str]))
+00051     \{
+00052       \textcolor{keywordflow}{return} $this->strings[$str];
+00053     \}\textcolor{keywordflow}{else}
+00054     \{
+00055       \textcolor{keywordflow}{return} $str;
+00056     \}
+00057   \}
+00058 
+00059   \textcolor{keyword}{function} validateValue($type,$par\_id,$new\_value,$default\_value)
+00060   \{
+00061     \textcolor{keywordflow}{if}(isset($\_POST[\textcolor{stringliteral}{'reset'}]))\{\textcolor{keywordflow}{return} $default\_value;\}
+00062     \textcolor{keywordflow}{switch}($type)
+00063     \{
+00064       \textcolor{keywordflow}{case} \textcolor{stringliteral}{'Integer'}:
+00065                     \textcolor{keywordflow}{if}(is\_numeric($new\_value) and strpos($new\_value,\textcolor{stringliteral}{"."})===\textcolor{keyword}{
+      false} and strpos($new\_value,\textcolor{stringliteral}{","})===\textcolor{keyword}{false} )
+00066                     \{
+00067                       \textcolor{keywordflow}{return} $new\_value;
+00068                     \}\textcolor{keywordflow}{else}
+00069                     \{
+00070                       \textcolor{keywordflow}{return} $default\_value;
+00071                     \}
+00072                     \textcolor{keywordflow}{break};
+00073       \textcolor{keywordflow}{case} \textcolor{stringliteral}{'Real'}   :
+00074                     \textcolor{keywordflow}{if}(is\_numeric($new\_value))
+00075                     \{
+00076                       \textcolor{keywordflow}{return} $new\_value;
+00077                     \}\textcolor{keywordflow}{else}
+00078                     \{
+00079                       \textcolor{keywordflow}{return} $default\_value;
+00080                     \}
+00081                     \textcolor{keywordflow}{break};
+00082       \textcolor{keywordflow}{case} \textcolor{stringliteral}{'Boolean'}:
+00083                     \textcolor{keywordflow}{if}($new\_value==\textcolor{stringliteral}{'true'} or $new\_value==\textcolor{stringliteral}{'false'})
+00084                     \{
+00085                       \textcolor{keywordflow}{return} $new\_value;
+00086                     \}\textcolor{keywordflow}{else}
+00087                     \{
+00088                       \textcolor{keywordflow}{return} $default\_value;
+00089                     \}
+00090                     \textcolor{keywordflow}{break};
+00091       \textcolor{keywordflow}{default}: \textcolor{keywordflow}{return} $new\_value;
+00092     \}
+00093   \}
+00094   
+00095   \textcolor{keyword}{function} opener()
+00096   \{
+00097     echo \textcolor{stringliteral}{"<html>\(\backslash\)n"};
+00098     echo \textcolor{stringliteral}{" <header>\(\backslash\)n"};
+00099     echo \textcolor{stringliteral}{"  <title>\(\backslash\)n"};
+00100     echo \textcolor{stringliteral}{"  </title>\(\backslash\)n"};
+00101     echo \textcolor{stringliteral}{"  <meta HTTP-EQUIV=\(\backslash\)"Content-Type\(\backslash\)" CONTENT=\(\backslash\)"text/html;
+       charset=utf-8\(\backslash\)" />\(\backslash\)n"};
+00102     echo \textcolor{stringliteral}{"  <link rel=\(\backslash\)"stylesheet\(\backslash\)" type=\(\backslash\)"text/css\(\backslash\)" href=\(\backslash\)"themes/"}.$this->
+      configurationSettings[\textcolor{stringliteral}{'theme'}].\textcolor{stringliteral}{"/style.css\(\backslash\)" />\(\backslash\)n"};
+00103     echo \textcolor{stringliteral}{"  <link rel=\(\backslash\)"stylesheet\(\backslash\)" type=\(\backslash\)"text/css\(\backslash\)" href=\(\backslash\)"themes/"}.$this->
+      configurationSettings[\textcolor{stringliteral}{'theme'}].\textcolor{stringliteral}{"/styleSVG.css\(\backslash\)" />\(\backslash\)n"};
+00104     echo \textcolor{stringliteral}{"  <link rel=\(\backslash\)"shortcut icon\(\backslash\)" href=\(\backslash\)"themes/"}.$this->
+      configurationSettings[\textcolor{stringliteral}{'theme'}].\textcolor{stringliteral}{"/img/favicon.gif\(\backslash\)" />\(\backslash\)n"};
+00105     echo \textcolor{stringliteral}{"  <script type=\(\backslash\)"text/javascript\(\backslash\)" src=\(\backslash\)"jscolor/jscolor.js\(\backslash\)"
+      ></script>\(\backslash\)n"};
+00106     echo \textcolor{stringliteral}{" </header>\(\backslash\)n"};
+00107   \}
+00108 
+00109   \textcolor{keyword}{function} closer()
+00110   \{
+00111     echo \textcolor{stringliteral}{"</html>\(\backslash\)n"};
+00112   \}
+00113 
+00114   \textcolor{keyword}{function} htmlSimpleOpen($Xml,$nivel)
+00115   \{
+00116     \textcolor{keywordflow}{for}($i=0;$i<$nivel;$i++)\{echo \textcolor{stringliteral}{"  "};\}
+00117     echo \textcolor{stringliteral}{"<"}.$Xml[\textcolor{stringliteral}{'type'}].\textcolor{stringliteral}{" id='"}.$Xml[\textcolor{stringliteral}{'id'}].\textcolor{stringliteral}{"' class='"}.$Xml[\textcolor{stringliteral}{'class'}].\textcolor{stringliteral}{"'>\(\backslash\)n"};
+00118     \textcolor{keywordflow}{if}(isset($Xml[\textcolor{stringliteral}{'action'}]))
+00119     \{
+00120       $X=\textcolor{keyword}{new} $Xml[\textcolor{stringliteral}{'action'}]();
+00121       $X->display();
+00122     \}
+00123     \textcolor{keywordflow}{return};    
+00124   \}
+00125 
+00126   \textcolor{keyword}{function} htmlSimpleClose($Xml,$nivel)
+00127   \{
+00128     \textcolor{keywordflow}{for}($i=0;$i<$nivel;$i++)\{echo \textcolor{stringliteral}{"  "};\}
+00129     echo \textcolor{stringliteral}{"</"}.$Xml[\textcolor{stringliteral}{'type'}].\textcolor{stringliteral}{">\(\backslash\)n"};
+00130     \textcolor{keywordflow}{return};    
+00131   \}
+00132 
+00133   \textcolor{keyword}{function} htmlBlock($Xml,$nivel)
+00134   \{
+00135     \textcolor{keywordflow}{if}(!is\_array($Xml))\{\textcolor{keywordflow}{return};\}
+00136     \textcolor{keywordflow}{if}(isset($Xml[\textcolor{stringliteral}{'attributes'}]))\{$this->htmlSimpleOpen($Xml[\textcolor{stringliteral}{'attributes'}],
+      $nivel);\}
+00137     \textcolor{keywordflow}{foreach}($Xml as $K=>$bl)
+00138     \{
+00139       $this->htmlBlock($bl,$nivel+1);
+00140     \}
+00141     \textcolor{keywordflow}{if}(isset($Xml[\textcolor{stringliteral}{'attributes'}]))\{$this->htmlSimpleClose($Xml[\textcolor{stringliteral}{'attributes'}],
+      $nivel);\}
+00142   \}
+00143 
+00144   \textcolor{keyword}{function} html($xmlFN)
+00145   \{
+00146     $this->readXml($xmlFN);
+00147     $this->opener();
+00148     $this->htmlBlock($this->Xml[\textcolor{stringliteral}{'block'}],0);
+00149     $this->closer();
+00150   \}
+00151   
+00152   \textcolor{keyword}{function} readXml($fn)
+00153   \{
+00154     $xmlstr=file\_get\_contents($fn,FILE\_TEXT);
+00155     $xml = \textcolor{keyword}{new} \hyperlink{classXMLThing}{XMLThing}($xmlstr);
+00156     $this->Xml = $xml->parse(); 
+00157   \}
+00158   
+00159   \textcolor{keyword}{function} enabled($table)
+00160   \{
+00161     $str=\textcolor{stringliteral}{""};
+00162     session\_start();
+00163     \textcolor{keywordflow}{if}(!isset($\_SESSION[\textcolor{stringliteral}{'UNVL\_SESSION\_UNVL'}]))
+00164     \{
+00165       $str.=\textcolor{stringliteral}{" AND "}.$table.\textcolor{stringliteral}{".enabled=1"};
+00166     \}
+00167     \textcolor{keywordflow}{return} $str;
+00168   \}
+00169   
+00170   \textcolor{keyword}{function} x\_id($key)
+00171   \{
+00172     \textcolor{keywordflow}{if}(isset($\_GET[$key]))
+00173     \{
+00174       \textcolor{keywordflow}{return} $\_GET[$key];
+00175     \}elseif(isset($\_POST[$key]))
+00176     \{
+00177       \textcolor{keywordflow}{return} $\_POST[$key];
+00178     \}
+00179     \textcolor{keywordflow}{return} 0;
+00180   \}
+00181   
+00182   \textcolor{keyword}{function} modeller\_id()
+00183   \{
+00184     \textcolor{keywordflow}{return} $this->x\_id(\textcolor{stringliteral}{'modellerid'});
+00185   \}
+00186   
+00187   \textcolor{keyword}{function} c2deffect\_id()
+00188   \{
+00189     \textcolor{keywordflow}{return} $this->x\_id(\textcolor{stringliteral}{'2deffectid'});
+00190   \}
+00191   
+00192   \textcolor{keyword}{function} c2danimation\_id()
+00193   \{
+00194     \textcolor{keywordflow}{return} $this->x\_id(\textcolor{stringliteral}{'2danimationid'});
+00195   \}
+00196   
+00197   \textcolor{keyword}{function} control\_id()
+00198   \{
+00199     \textcolor{keywordflow}{return} $this->x\_id(\textcolor{stringliteral}{'controlid'});
+00200   \}
+00201   
+00202   \textcolor{keyword}{function} practice\_id()
+00203   \{
+00204     \textcolor{keywordflow}{return} $this->x\_id(\textcolor{stringliteral}{'practiceid'});
+00205   \}
+00206   
+00207   \textcolor{keyword}{function} control\_group\_id()
+00208   \{
+00209     \textcolor{keywordflow}{return} $this->x\_id(\textcolor{stringliteral}{'controlgroupid'});
+00210   \}
+00211   
+00212   \textcolor{keyword}{function} curve\_id()
+00213   \{
+00214     \textcolor{keywordflow}{return} $this->x\_id(\textcolor{stringliteral}{'curveid'});
+00215   \}
+00216   
+00217   \textcolor{keyword}{function} plot\_id()
+00218   \{
+00219     \textcolor{keywordflow}{return} $this->x\_id(\textcolor{stringliteral}{'plotid'});
+00220   \}
+00221   
+00222   \textcolor{keyword}{function} model\_id()
+00223   \{
+00224     \textcolor{keywordflow}{return} $this->x\_id(\textcolor{stringliteral}{'modelid'});
+00225   \}
+00226   
+00227   \textcolor{keyword}{function} section\_id()
+00228   \{
+00229     \textcolor{keywordflow}{return} $this->x\_id(\textcolor{stringliteral}{'sectionid'});
+00230   \}
+00231   
+00232   \textcolor{keyword}{function} display()
+00233   \{
+00234     $model\_id=$this->model\_id();
+00235     echo $model\_id;
+00236   \}
+00237 \}
+00238 ?>
+\end{DoxyCode}
