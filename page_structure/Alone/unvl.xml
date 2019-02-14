@@ -1,4 +1,5 @@
 <block id="unvl" type="body" class="unvl">
+  <block id="header" type="div" class="header" action="header"> </block>
   <block id="body" type="div" class="body">
     <block id="logo" type="div" class="logo" action="logo"></block>
     <block id="menu" type="div" class="menuAlone" action="menu"></block>
@@ -10,5 +11,6 @@
     <block id="documentation" type="div" class="documentationAlone" action="documentation"></block>
     <block id="erase" type="div" class="erase" action="erase"></block>
   </block>
+  <block id="footer" type="div" class="footer" action="footer"> </block>
 </block>
 

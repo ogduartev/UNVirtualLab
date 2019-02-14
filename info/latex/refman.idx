@@ -3,47 +3,48 @@
 \indexentry{admin2deffect@{admin2deffect}|hyperpage}{6}
 \indexentry{adminblock@{adminblock}|hyperpage}{7}
 \indexentry{admincontrol@{admincontrol}|hyperpage}{9}
-\indexentry{adminlogin@{adminlogin}|hyperpage}{10}
-\indexentry{adminlogout@{adminlogout}|hyperpage}{11}
-\indexentry{adminmodel@{adminmodel}|hyperpage}{11}
-\indexentry{adminmodelfiles@{adminmodelfiles}|hyperpage}{12}
-\indexentry{adminplot@{adminplot}|hyperpage}{13}
-\indexentry{adminpractice@{adminpractice}|hyperpage}{13}
-\indexentry{adminsection@{adminsection}|hyperpage}{14}
-\indexentry{anim2d@{anim2d}|hyperpage}{15}
-\indexentry{animation2d\discretionary {-}{}{}S\discretionary {-}{}{}V\discretionary {-}{}{}G@{animation2d\discretionary {-}{}{}S\discretionary {-}{}{}V\discretionary {-}{}{}G}|hyperpage}{15}
-\indexentry{block@{block}|hyperpage}{16}
-\indexentry{configuration@{configuration}|hyperpage}{18}
-\indexentry{controls@{controls}|hyperpage}{18}
-\indexentry{credits@{credits}|hyperpage}{19}
-\indexentry{csvreader@{csvreader}|hyperpage}{20}
-\indexentry{databasemanager@{databasemanager}|hyperpage}{20}
-\indexentry{documentation@{documentation}|hyperpage}{21}
-\indexentry{erase@{erase}|hyperpage}{21}
-\indexentry{export@{export}|hyperpage}{22}
-\indexentry{import@{import}|hyperpage}{22}
-\indexentry{logo@{logo}|hyperpage}{23}
-\indexentry{menu@{menu}|hyperpage}{23}
-\indexentry{menuadmin@{menuadmin}|hyperpage}{24}
-\indexentry{\discretionary {-}{}{}My\discretionary {-}{}{}Xml@{\discretionary {-}{}{}My\discretionary {-}{}{}Xml}|hyperpage}{25}
-\indexentry{outputs@{outputs}|hyperpage}{25}
-\indexentry{plots@{plots}|hyperpage}{26}
-\indexentry{session\discretionary {-}{}{}Manager@{session\discretionary {-}{}{}Manager}|hyperpage}{27}
-\indexentry{simulator@{simulator}|hyperpage}{27}
-\indexentry{\discretionary {-}{}{}S\discretionary {-}{}{}V\discretionary {-}{}{}Gplot@{\discretionary {-}{}{}S\discretionary {-}{}{}V\discretionary {-}{}{}Gplot}|hyperpage}{28}
-\indexentry{tables@{tables}|hyperpage}{30}
-\indexentry{title@{title}|hyperpage}{30}
-\indexentry{tlistemysql@{tlistemysql}|hyperpage}{31}
-\indexentry{tlistemysql@{tlistemysql}!restore\discretionary {-}{}{}Node@{restore\discretionary {-}{}{}Node}|hyperpage}{31}
-\indexentry{restore\discretionary {-}{}{}Node@{restore\discretionary {-}{}{}Node}!tlistemysql@{tlistemysql}|hyperpage}{31}
-\indexentry{tlistemysql@{tlistemysql}!save\discretionary {-}{}{}Node@{save\discretionary {-}{}{}Node}|hyperpage}{32}
-\indexentry{save\discretionary {-}{}{}Node@{save\discretionary {-}{}{}Node}!tlistemysql@{tlistemysql}|hyperpage}{32}
-\indexentry{\discretionary {-}{}{}X\discretionary {-}{}{}M\discretionary {-}{}{}L\discretionary {-}{}{}Thing@{\discretionary {-}{}{}X\discretionary {-}{}{}M\discretionary {-}{}{}L\discretionary {-}{}{}Thing}|hyperpage}{32}
-\indexentry{\discretionary {-}{}{}X\discretionary {-}{}{}M\discretionary {-}{}{}L\discretionary {-}{}{}Thing@{\discretionary {-}{}{}X\discretionary {-}{}{}M\discretionary {-}{}{}L\discretionary {-}{}{}Thing}!parse@{parse}|hyperpage}{33}
-\indexentry{parse@{parse}!XMLThing@{\discretionary {-}{}{}X\discretionary {-}{}{}M\discretionary {-}{}{}L\discretionary {-}{}{}Thing}|hyperpage}{33}
-\indexentry{\discretionary {-}{}{}X\discretionary {-}{}{}M\discretionary {-}{}{}L\discretionary {-}{}{}Thing@{\discretionary {-}{}{}X\discretionary {-}{}{}M\discretionary {-}{}{}L\discretionary {-}{}{}Thing}!parse\discretionary {-}{}{}\_\discretionary {-}{}{}init@{parse\discretionary {-}{}{}\_\discretionary {-}{}{}init}|hyperpage}{34}
-\indexentry{parse\discretionary {-}{}{}\_\discretionary {-}{}{}init@{parse\discretionary {-}{}{}\_\discretionary {-}{}{}init}!XMLThing@{\discretionary {-}{}{}X\discretionary {-}{}{}M\discretionary {-}{}{}L\discretionary {-}{}{}Thing}|hyperpage}{34}
-\indexentry{\discretionary {-}{}{}X\discretionary {-}{}{}M\discretionary {-}{}{}L\discretionary {-}{}{}Thing@{\discretionary {-}{}{}X\discretionary {-}{}{}M\discretionary {-}{}{}L\discretionary {-}{}{}Thing}!parse\discretionary {-}{}{}\_\discretionary {-}{}{}recurse@{parse\discretionary {-}{}{}\_\discretionary {-}{}{}recurse}|hyperpage}{34}
-\indexentry{parse\discretionary {-}{}{}\_\discretionary {-}{}{}recurse@{parse\discretionary {-}{}{}\_\discretionary {-}{}{}recurse}!XMLThing@{\discretionary {-}{}{}X\discretionary {-}{}{}M\discretionary {-}{}{}L\discretionary {-}{}{}Thing}|hyperpage}{34}
-\indexentry{\discretionary {-}{}{}X\discretionary {-}{}{}M\discretionary {-}{}{}L\discretionary {-}{}{}Thing@{\discretionary {-}{}{}X\discretionary {-}{}{}M\discretionary {-}{}{}L\discretionary {-}{}{}Thing}!\discretionary {-}{}{}X\discretionary {-}{}{}M\discretionary {-}{}{}L\discretionary {-}{}{}Thing@{\discretionary {-}{}{}X\discretionary {-}{}{}M\discretionary {-}{}{}L\discretionary {-}{}{}Thing}|hyperpage}{36}
-\indexentry{\discretionary {-}{}{}X\discretionary {-}{}{}M\discretionary {-}{}{}L\discretionary {-}{}{}Thing@{\discretionary {-}{}{}X\discretionary {-}{}{}M\discretionary {-}{}{}L\discretionary {-}{}{}Thing}!XMLThing@{\discretionary {-}{}{}X\discretionary {-}{}{}M\discretionary {-}{}{}L\discretionary {-}{}{}Thing}|hyperpage}{36}
+\indexentry{adminlogin@{adminlogin}|hyperpage}{9}
+\indexentry{adminlogout@{adminlogout}|hyperpage}{10}
+\indexentry{adminmodel@{adminmodel}|hyperpage}{10}
+\indexentry{adminmodelfiles@{adminmodelfiles}|hyperpage}{11}
+\indexentry{adminplot@{adminplot}|hyperpage}{12}
+\indexentry{adminpractice@{adminpractice}|hyperpage}{12}
+\indexentry{adminsection@{adminsection}|hyperpage}{13}
+\indexentry{anim2d@{anim2d}|hyperpage}{14}
+\indexentry{animation2d\+S\+VG@{animation2d\+S\+VG}|hyperpage}{14}
+\indexentry{block@{block}|hyperpage}{15}
+\indexentry{configuration@{configuration}|hyperpage}{16}
+\indexentry{controls@{controls}|hyperpage}{17}
+\indexentry{credits@{credits}|hyperpage}{17}
+\indexentry{csvreader@{csvreader}|hyperpage}{18}
+\indexentry{databasemanager@{databasemanager}|hyperpage}{18}
+\indexentry{documentation@{documentation}|hyperpage}{19}
+\indexentry{erase@{erase}|hyperpage}{20}
+\indexentry{export@{export}|hyperpage}{20}
+\indexentry{import@{import}|hyperpage}{21}
+\indexentry{launch@{launch}|hyperpage}{21}
+\indexentry{logo@{logo}|hyperpage}{22}
+\indexentry{menu@{menu}|hyperpage}{22}
+\indexentry{menuadmin@{menuadmin}|hyperpage}{23}
+\indexentry{My\+Xml@{My\+Xml}|hyperpage}{23}
+\indexentry{outputs@{outputs}|hyperpage}{24}
+\indexentry{plots@{plots}|hyperpage}{25}
+\indexentry{session\+Manager@{session\+Manager}|hyperpage}{25}
+\indexentry{simulator@{simulator}|hyperpage}{26}
+\indexentry{S\+V\+Gplot@{S\+V\+Gplot}|hyperpage}{27}
+\indexentry{tables@{tables}|hyperpage}{28}
+\indexentry{title@{title}|hyperpage}{29}
+\indexentry{tlistemysql@{tlistemysql}|hyperpage}{29}
+\indexentry{tlistemysql@{tlistemysql}!restore\+Node@{restore\+Node}|hyperpage}{30}
+\indexentry{restore\+Node@{restore\+Node}!tlistemysql@{tlistemysql}|hyperpage}{30}
+\indexentry{tlistemysql@{tlistemysql}!save\+Node@{save\+Node}|hyperpage}{30}
+\indexentry{save\+Node@{save\+Node}!tlistemysql@{tlistemysql}|hyperpage}{30}
+\indexentry{X\+M\+L\+Thing@{X\+M\+L\+Thing}|hyperpage}{31}
+\indexentry{X\+M\+L\+Thing@{X\+M\+L\+Thing}!parse@{parse}|hyperpage}{31}
+\indexentry{parse@{parse}!X\+M\+L\+Thing@{X\+M\+L\+Thing}|hyperpage}{31}
+\indexentry{X\+M\+L\+Thing@{X\+M\+L\+Thing}!parse\+\_\+init@{parse\+\_\+init}|hyperpage}{32}
+\indexentry{parse\+\_\+init@{parse\+\_\+init}!X\+M\+L\+Thing@{X\+M\+L\+Thing}|hyperpage}{32}
+\indexentry{X\+M\+L\+Thing@{X\+M\+L\+Thing}!parse\+\_\+recurse@{parse\+\_\+recurse}|hyperpage}{32}
+\indexentry{parse\+\_\+recurse@{parse\+\_\+recurse}!X\+M\+L\+Thing@{X\+M\+L\+Thing}|hyperpage}{32}
+\indexentry{X\+M\+L\+Thing@{X\+M\+L\+Thing}!X\+M\+L\+Thing@{X\+M\+L\+Thing}|hyperpage}{34}
+\indexentry{X\+M\+L\+Thing@{X\+M\+L\+Thing}!X\+M\+L\+Thing@{X\+M\+L\+Thing}|hyperpage}{34}

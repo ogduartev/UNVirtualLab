@@ -20,7 +20,7 @@ $B->connect();
 if($B->link)
 {
   $pageStructure = trim($B->configurationSettings['PageStructure']);
-  $xmlFN="page_structure_".$pageStructure."/admin.xml";
+  $xmlFN="page_structure/".$pageStructure."/admin.xml";
   
   $section_id=$B->section_id();
   $model_id=$B->model_id();
@@ -42,44 +42,44 @@ if($B->link)
     {
       if(isset($_POST['loginsubmit']) and $SM->verify())
       {
-        $xmlFN="page_structure_".$pageStructure."/admin.xml";
+        $xmlFN="page_structure/".$pageStructure."/admin.xml";
       }else
       {
-        $xmlFN="page_structure_".$pageStructure."/login.xml";
+        $xmlFN="page_structure/".$pageStructure."/login.xml";
       }
       $SM->disconnect();
     }
   }elseif(isset($_POST['exitsubmit']))
   {
-    $xmlFN="page_structure_".$pageStructure."/login.xml";
+    $xmlFN="page_structure/".$pageStructure."/login.xml";
     session_unset();
   }elseif($section_id > 0)
   {
-    $xmlFN="page_structure_".$pageStructure."/adminsection.xml";
+    $xmlFN="page_structure/".$pageStructure."/adminsection.xml";
   }elseif($model_id > 0)
   {
-    $xmlFN="page_structure_".$pageStructure."/adminmodel.xml";
+    $xmlFN="page_structure/".$pageStructure."/adminmodel.xml";
   }elseif($plot_id > 0 )
   {
-    $xmlFN="page_structure_".$pageStructure."/adminplot.xml";
+    $xmlFN="page_structure/".$pageStructure."/adminplot.xml";
   }elseif($curve_id > 0)
   {
-    $xmlFN="page_structure_".$pageStructure."/adminplot.xml";
+    $xmlFN="page_structure/".$pageStructure."/adminplot.xml";
   }elseif($control_group_id > 0)
   {
-    $xmlFN="page_structure_".$pageStructure."/admincontrol.xml";
+    $xmlFN="page_structure/".$pageStructure."/admincontrol.xml";
   }elseif($control_id > 0)
   {
-    $xmlFN="page_structure_".$pageStructure."/admincontrol.xml";
+    $xmlFN="page_structure/".$pageStructure."/admincontrol.xml";
   }elseif($practice_id > 0)
   {
-    $xmlFN="page_structure_".$pageStructure."/adminpractice.xml";
+    $xmlFN="page_structure/".$pageStructure."/adminpractice.xml";
   }elseif($c2danim_id > 0)
   {
-    $xmlFN="page_structure_".$pageStructure."/admin2danim.xml";
+    $xmlFN="page_structure/".$pageStructure."/admin2danim.xml";
   }elseif($c2deffect_id > 0)
   {
-    $xmlFN="page_structure_".$pageStructure."/admin2deffect.xml";
+    $xmlFN="page_structure/".$pageStructure."/admin2deffect.xml";
   }
   
   $B->html($xmlFN);

@@ -3,245 +3,53 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>UNVirtualLab: Fichero Fuente xmlthing.class.php</title>
-
+<meta name="generator" content="Doxygen 1.8.13"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>UNVirtualLab: Fichero Fuente /home/ogduartev/public_html/unvl-GitHub/UNVirtualLab/xmlthing.class.php</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen.css" rel="stylesheet" type="text/css" />
-
-<link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
-<script type="text/javascript">
-  $(document).ready(function() { searchBox.OnSelectItem(0); });
-</script>
-
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<div id="top"><!-- do not remove this div! -->
-
-
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  
-  
-  <td style="padding-left: 0.5em;">
+  <td id="projectlogo"><img alt="Logo" src="logo.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">UNVirtualLab
-   
    </div>
    <div id="projectbrief">Laboratorio virtual de sistemas dinámicos</div>
   </td>
-  
-  
-  
  </tr>
  </tbody>
 </table>
 </div>
-
-<!-- Generado por Doxygen 1.7.6.1 -->
+<!-- end header part -->
+<!-- Generado por Doxygen 1.8.13 -->
 <script type="text/javascript">
 var searchBox = new SearchBox("searchBox", "search",false,'Buscar');
 </script>
-  <div id="navrow1" class="tabs">
-    <ul class="tablist">
-      <li><a href="index.html"><span>Página&#160;principal</span></a></li>
-      <li><a href="annotated.html"><span>Clases</span></a></li>
-      <li class="current"><a href="files.html"><span>Archivos</span></a></li>
-      <li>
-        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
-          <img id="MSearchSelect" src="search/mag_sel.png"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
-               alt=""/>
-          <input type="text" id="MSearchField" value="Buscar" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
-          </span>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <div id="navrow2" class="tabs2">
-    <ul class="tablist">
-      <li><a href="files.html"><span>Lista&#160;de&#160;archivos</span></a></li>
-    </ul>
-  </div>
-</div>
-<div class="header">
-  <div class="headertitle">
-<div class="title">xmlthing.class.php</div>  </div>
-</div><!--header-->
-<div class="contents">
-<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 &lt;?php
-<a name="l00017"></a><a class="code" href="classXMLThing.html">00017</a> <span class="keyword">class </span><a class="code" href="classXMLThing.html">XMLThing</a>
-<a name="l00018"></a>00018 {
-<a name="l00020"></a>00020     var $rawXML;
-<a name="l00022"></a>00022     var $valueArray = array();
-<a name="l00024"></a>00024     var $keyArray = array();
-<a name="l00025"></a>00025 
-<a name="l00027"></a>00027     var $parsed = array();
-<a name="l00029"></a>00029         var $index = 0;
-<a name="l00030"></a>00030 
-<a name="l00032"></a>00032         var $attribKey = <span class="stringliteral">&#39;attributes&#39;</span>;
-<a name="l00034"></a>00034         var $valueKey = <span class="stringliteral">&#39;value&#39;</span>;
-<a name="l00036"></a>00036         var $cdataKey = <span class="stringliteral">&#39;cdata&#39;</span>;
-<a name="l00037"></a>00037 
-<a name="l00039"></a>00039         var $isError = <span class="keyword">false</span>;
-<a name="l00041"></a>00041         var $error = <span class="stringliteral">&#39;&#39;</span>;
-<a name="l00042"></a>00042 
-<a name="l00043"></a>00043 
-<a name="l00049"></a><a class="code" href="classXMLThing.html#a1c153caf15cb3b1a2159d5e879a3f6ca">00049</a>     <span class="keyword">function</span> <a class="code" href="classXMLThing.html#a1c153caf15cb3b1a2159d5e879a3f6ca">XMLThing</a>($xml = NULL)
-<a name="l00050"></a>00050         {
-<a name="l00051"></a>00051         $this-&gt;rawXML = $xml;
-<a name="l00052"></a>00052     }
-<a name="l00053"></a>00053 
-<a name="l00054"></a>00054 
-<a name="l00061"></a><a class="code" href="classXMLThing.html#a8d408058141c8a030b433b2deb822baf">00061</a>         <span class="keyword">function</span> <a class="code" href="classXMLThing.html#a8d408058141c8a030b433b2deb822baf">parse</a>($xml = NULL)
-<a name="l00062"></a>00062         {
-<a name="l00063"></a>00063                 <span class="keywordflow">if</span> (!is_null($xml))
-<a name="l00064"></a>00064                 {
-<a name="l00065"></a>00065                         $this-&gt;rawXML = $xml;
-<a name="l00066"></a>00066                 }
-<a name="l00067"></a>00067 
-<a name="l00068"></a>00068                 $this-&gt;isError = <span class="keyword">false</span>;
-<a name="l00069"></a>00069                         <span class="comment">// setup</span>
-<a name="l00070"></a>00070                 <span class="keywordflow">if</span> (!$this-&gt;<a class="code" href="classXMLThing.html#aa5d425088bd74ca4f3f9c1a9bc9ac453">parse_init</a>())
-<a name="l00071"></a>00071                 {
-<a name="l00072"></a>00072                         <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00073"></a>00073                 }
-<a name="l00074"></a>00074 
-<a name="l00075"></a>00075                 $this-&gt;index = 0;
-<a name="l00076"></a>00076                 $this-&gt;parsed = $this-&gt;<a class="code" href="classXMLThing.html#ae18a74c5d5979c699b42b1f9a8fedbba">parse_recurse</a>();
-<a name="l00077"></a>00077                 $this-&gt;status = <span class="stringliteral">&#39;parsing complete&#39;</span>;
-<a name="l00078"></a>00078 
-<a name="l00079"></a>00079                 <span class="keywordflow">return</span> $this-&gt;parsed;
-<a name="l00080"></a>00080         }
-<a name="l00081"></a>00081 
-<a name="l00082"></a>00082 
-<a name="l00088"></a><a class="code" href="classXMLThing.html#ae18a74c5d5979c699b42b1f9a8fedbba">00088</a>         <span class="keyword">function</span> <a class="code" href="classXMLThing.html#ae18a74c5d5979c699b42b1f9a8fedbba">parse_recurse</a>()
-<a name="l00089"></a>00089         {               <span class="comment">// data found at this level</span>
-<a name="l00090"></a>00090                 $found = array();
-<a name="l00091"></a>00091                         <span class="comment">// count of the number of times a tag has been found at this level</span>
-<a name="l00092"></a>00092                 $tagCount = array();
-<a name="l00093"></a>00093 
-<a name="l00094"></a>00094                         <span class="comment">// loop through the tags - I use a lazy referencing thing for where data should go</span>
-<a name="l00095"></a>00095 
-<a name="l00096"></a>00096                 <span class="keywordflow">while</span> (isset($this-&gt;valueArray[$this-&gt;index]))
-<a name="l00097"></a>00097                 {
-<a name="l00098"></a>00098                         $tag = $this-&gt;valueArray[$this-&gt;index];
-<a name="l00099"></a>00099                         $this-&gt;index++;
-<a name="l00100"></a>00100 
-<a name="l00101"></a>00101                                 <span class="comment">// if it&#39;s a close then return straight away</span>
-<a name="l00102"></a>00102 
-<a name="l00103"></a>00103                         <span class="keywordflow">if</span> ($tag[<span class="stringliteral">&#39;type&#39;</span>] == <span class="stringliteral">&#39;close&#39;</span>)
-<a name="l00104"></a>00104                         {
-<a name="l00105"></a>00105                                 <span class="keywordflow">return</span> $found;
-<a name="l00106"></a>00106                         }
-<a name="l00107"></a>00107                                 <span class="comment">// if it&#39;s cdata translate it as a complete tag named $this-&gt;cdataKey</span>
-<a name="l00108"></a>00108                         <span class="keywordflow">if</span> ($tag[<span class="stringliteral">&#39;type&#39;</span>] == <span class="stringliteral">&#39;cdata&#39;</span>)
-<a name="l00109"></a>00109                         {
-<a name="l00110"></a>00110                                 $tag[<span class="stringliteral">&#39;tag&#39;</span>] = $this-&gt;cdataKey;
-<a name="l00111"></a>00111                                 $tag[<span class="stringliteral">&#39;type&#39;</span>] = <span class="stringliteral">&#39;complete&#39;</span>;
-<a name="l00112"></a>00112                         }
-<a name="l00113"></a>00113 
-<a name="l00114"></a>00114                         $tagName = $tag[<span class="stringliteral">&#39;tag&#39;</span>];
-<a name="l00115"></a>00115 
-<a name="l00116"></a>00116                                 <span class="comment">// this bit below creates a reference to where the data should be going, </span>
-<a name="l00117"></a>00117                                 <span class="comment">// it saves on some conditions in the switch, but it probably annoyingly obfuscating</span>
-<a name="l00118"></a>00118                                 <span class="comment">// has this tag already appeared at this level ?  If so we need mods</span>
-<a name="l00119"></a>00119 
-<a name="l00120"></a>00120                         <span class="keywordflow">if</span> (isset($tagCount[$tagName]))
-<a name="l00121"></a>00121                         {               <span class="comment">// transform to an array IF only one of the tags been before</span>
-<a name="l00122"></a>00122                                 <span class="keywordflow">if</span> ($tagCount[$tagName] == 1)
-<a name="l00123"></a>00123                                 {
-<a name="l00124"></a>00124                                         $found[$tagName] = array($found[$tagName]);
-<a name="l00125"></a>00125                                 }
-<a name="l00126"></a>00126                                         <span class="comment">//$found[$tagName][$tagCount[$tagName]] = &#39;&#39;;   // doesn&#39;t need to happen, the reference below is enough</span>
-<a name="l00127"></a>00127                                 $tagRef =&amp; $found[$tagName][$tagCount[$tagName]];
-<a name="l00128"></a>00128                                 $tagCount[$tagName]++;
-<a name="l00129"></a>00129                         }
-<a name="l00130"></a>00130                         <span class="keywordflow">else</span>    <span class="comment">// just use the variable</span>
-<a name="l00131"></a>00131                         {
-<a name="l00132"></a>00132                                 $tagCount[$tagName] = 1;
-<a name="l00133"></a>00133                                 $tagRef =&amp; $found[$tagName];
-<a name="l00134"></a>00134                         }
-<a name="l00135"></a>00135 
-<a name="l00136"></a>00136                                 <span class="comment">// now do the work</span>
-<a name="l00137"></a>00137 
-<a name="l00138"></a>00138                         <span class="keywordflow">switch</span> ($tag[<span class="stringliteral">&#39;type&#39;</span>])
-<a name="l00139"></a>00139                         {
-<a name="l00140"></a>00140                                 <span class="keywordflow">case</span> <span class="stringliteral">&#39;open&#39;</span>:
-<a name="l00141"></a>00141                                         $tagRef = $this-&gt;<a class="code" href="classXMLThing.html#ae18a74c5d5979c699b42b1f9a8fedbba">parse_recurse</a>();
-<a name="l00142"></a>00142 
-<a name="l00143"></a>00143                                         <span class="keywordflow">if</span> (isset($tag[<span class="stringliteral">&#39;attributes&#39;</span>]))
-<a name="l00144"></a>00144                                         {
-<a name="l00145"></a>00145                                                 $tagRef[$this-&gt;attribKey] = $tag[<span class="stringliteral">&#39;attributes&#39;</span>];
-<a name="l00146"></a>00146                                         }
-<a name="l00147"></a>00147                                                 <span class="comment">// open CAN have a value - it makes sense to include it as cdata</span>
-<a name="l00148"></a>00148                                         <span class="keywordflow">if</span> (isset($tag[<span class="stringliteral">&#39;value&#39;</span>]))
-<a name="l00149"></a>00149                                         {
-<a name="l00150"></a>00150                                                 <span class="keywordflow">if</span> (isset($tagRef[$this-&gt;cdataKey]))    <span class="comment">// push it to the start of the cdata array if it&#39;s present</span>
-<a name="l00151"></a>00151                                                 {
-<a name="l00152"></a>00152                                                         $tagRef[$this-&gt;cdataKey] = (array)$tagRef[$this-&gt;cdataKey];     <span class="comment">// &lt;-- needed for php5 compatibility];</span>
-<a name="l00153"></a>00153                                                         array_unshift($tagRef[$this-&gt;cdataKey], $tag[<span class="stringliteral">&#39;value&#39;</span>]);
-<a name="l00154"></a>00154                                                 }
-<a name="l00155"></a>00155                                                 <span class="keywordflow">else</span>
-<a name="l00156"></a>00156                                                 {
-<a name="l00157"></a>00157                                                         $tagRef[$this-&gt;cdataKey] = $tag[<span class="stringliteral">&#39;value&#39;</span>];
-<a name="l00158"></a>00158                                                 }
-<a name="l00159"></a>00159                                         }
-<a name="l00160"></a>00160                                         <span class="keywordflow">break</span>;
-<a name="l00161"></a>00161 
-<a name="l00162"></a>00162                                 <span class="keywordflow">case</span> <span class="stringliteral">&#39;complete&#39;</span>:
-<a name="l00163"></a>00163                                         <span class="keywordflow">if</span> (isset($tag[<span class="stringliteral">&#39;attributes&#39;</span>]))
-<a name="l00164"></a>00164                                         {
-<a name="l00165"></a>00165                                                 $tagRef[$this-&gt;attribKey] = $tag[<span class="stringliteral">&#39;attributes&#39;</span>];
-<a name="l00166"></a>00166                                                 $tagRef =&amp; $tagRef[$this-&gt;valueKey];
-<a name="l00167"></a>00167                                         }
-<a name="l00168"></a>00168 
-<a name="l00169"></a>00169                                         <span class="keywordflow">if</span> (isset($tag[<span class="stringliteral">&#39;value&#39;</span>]))
-<a name="l00170"></a>00170                                         {
-<a name="l00171"></a>00171                                                 $tagRef = $tag[<span class="stringliteral">&#39;value&#39;</span>];
-<a name="l00172"></a>00172                                         }
-<a name="l00173"></a>00173                                         <span class="keywordflow">break</span>;
-<a name="l00174"></a>00174                         }                       
-<a name="l00175"></a>00175                 }
-<a name="l00176"></a>00176 
-<a name="l00177"></a>00177                 <span class="keywordflow">return</span> $found;
-<a name="l00178"></a>00178         }
-<a name="l00179"></a>00179 
-<a name="l00180"></a>00180 
-<a name="l00186"></a><a class="code" href="classXMLThing.html#aa5d425088bd74ca4f3f9c1a9bc9ac453">00186</a>         <span class="keyword">function</span> <a class="code" href="classXMLThing.html#aa5d425088bd74ca4f3f9c1a9bc9ac453">parse_init</a>()
-<a name="l00187"></a>00187         {
-<a name="l00188"></a>00188         $this-&gt;parser = xml_parser_create();
-<a name="l00189"></a>00189 
-<a name="l00190"></a>00190         $parser = $this-&gt;parser;
-<a name="l00191"></a>00191         xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);     <span class="comment">// Dont mess with my cAsE sEtTings</span>
-<a name="l00192"></a>00192         xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);               <span class="comment">// Dont bother with empty info</span>
-<a name="l00193"></a>00193         <span class="keywordflow">if</span> (!$res = (<span class="keywordtype">bool</span>)xml_parse_into_struct($parser, $this-&gt;rawXML, $this-&gt;valueArray, $this-&gt;keyArray))
-<a name="l00194"></a>00194                 {
-<a name="l00195"></a>00195                         $this-&gt;isError = <span class="keyword">true</span>;
-<a name="l00196"></a>00196             $this-&gt;error = <span class="stringliteral">&#39;error: &#39;</span>.xml_error_string(xml_get_error_code($parser)).<span class="stringliteral">&#39; at line &#39;</span>.xml_get_current_line_number($parser);
-<a name="l00197"></a>00197         }
-<a name="l00198"></a>00198         xml_parser_free($parser);
-<a name="l00199"></a>00199 
-<a name="l00200"></a>00200                 <span class="keywordflow">return</span> $res;
-<a name="l00201"></a>00201         }
-<a name="l00202"></a>00202 }       <span class="comment">// *** CLASS ENDS *** //</span>
-<a name="l00203"></a>00203 ?&gt;
-</pre></div></div><!-- contents -->
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Buscar');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Todo</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Clases</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Funciones</a></div>
+</div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -250,13 +58,27 @@ var searchBox = new SearchBox("searchBox", "search",false,'Buscar');
 </iframe>
 </div>
 
-
-
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_6c1c819baceecd12853314f9c38904da.html">unvl-GitHub</a></li><li class="navelem"><a class="el" href="dir_8fcd298cc71b3e88bfca21735df8e829.html">UNVirtualLab</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">xmlthing.class.php</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&lt;?php</div><div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="classXMLThing.html">   17</a></span>&#160;<span class="keyword">class </span><a class="code" href="classXMLThing.html">XMLThing</a></div><div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;{</div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    var $rawXML;</div><div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    var $valueArray = array();</div><div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    var $keyArray = array();</div><div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div><div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    var $parsed = array();</div><div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        var $index = 0;</div><div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div><div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        var $attribKey = <span class="stringliteral">&#39;attributes&#39;</span>;</div><div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        var $valueKey = <span class="stringliteral">&#39;value&#39;</span>;</div><div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        var $cdataKey = <span class="stringliteral">&#39;cdata&#39;</span>;</div><div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div><div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        var $isError = <span class="keyword">false</span>;</div><div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        var $error = <span class="stringliteral">&#39;&#39;</span>;</div><div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div><div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div><div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="classXMLThing.html#a1c153caf15cb3b1a2159d5e879a3f6ca">   49</a></span>&#160;    <span class="keyword">function</span> <a class="code" href="classXMLThing.html#a1c153caf15cb3b1a2159d5e879a3f6ca">XMLThing</a>($xml = NULL)</div><div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        {</div><div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        $this-&gt;rawXML = $xml;</div><div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    }</div><div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div><div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div><div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="classXMLThing.html#a8d408058141c8a030b433b2deb822baf">   61</a></span>&#160;        <span class="keyword">function</span> <a class="code" href="classXMLThing.html#a8d408058141c8a030b433b2deb822baf">parse</a>($xml = NULL)</div><div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        {</div><div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;                <span class="keywordflow">if</span> (!is_null($xml))</div><div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                {</div><div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                        $this-&gt;rawXML = $xml;</div><div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                }</div><div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div><div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;                $this-&gt;isError = <span class="keyword">false</span>;</div><div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                        <span class="comment">// setup</span></div><div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                <span class="keywordflow">if</span> (!$this-&gt;<a class="code" href="classXMLThing.html#aa5d425088bd74ca4f3f9c1a9bc9ac453">parse_init</a>())</div><div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                {</div><div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div><div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                }</div><div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div><div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                $this-&gt;index = 0;</div><div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                $this-&gt;parsed = $this-&gt;<a class="code" href="classXMLThing.html#ae18a74c5d5979c699b42b1f9a8fedbba">parse_recurse</a>();</div><div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;                $this-&gt;status = <span class="stringliteral">&#39;parsing complete&#39;</span>;</div><div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div><div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;                <span class="keywordflow">return</span> $this-&gt;parsed;</div><div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        }</div><div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div><div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div><div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="classXMLThing.html#ae18a74c5d5979c699b42b1f9a8fedbba">   88</a></span>&#160;        <span class="keyword">function</span> <a class="code" href="classXMLThing.html#ae18a74c5d5979c699b42b1f9a8fedbba">parse_recurse</a>()</div><div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        {               <span class="comment">// data found at this level</span></div><div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;                $found = array();</div><div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;                        <span class="comment">// count of the number of times a tag has been found at this level</span></div><div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;                $tagCount = array();</div><div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div><div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;                        <span class="comment">// loop through the tags - I use a lazy referencing thing for where data should go</span></div><div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div><div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;                <span class="keywordflow">while</span> (isset($this-&gt;valueArray[$this-&gt;index]))</div><div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;                {</div><div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;                        $tag = $this-&gt;valueArray[$this-&gt;index];</div><div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;                        $this-&gt;index++;</div><div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div><div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;                                <span class="comment">// if it&#39;s a close then return straight away</span></div><div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div><div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;                        <span class="keywordflow">if</span> ($tag[<span class="stringliteral">&#39;type&#39;</span>] == <span class="stringliteral">&#39;close&#39;</span>)</div><div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;                        {</div><div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;                                <span class="keywordflow">return</span> $found;</div><div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;                        }</div><div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;                                <span class="comment">// if it&#39;s cdata translate it as a complete tag named $this-&gt;cdataKey</span></div><div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;                        <span class="keywordflow">if</span> ($tag[<span class="stringliteral">&#39;type&#39;</span>] == <span class="stringliteral">&#39;cdata&#39;</span>)</div><div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;                        {</div><div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;                                $tag[<span class="stringliteral">&#39;tag&#39;</span>] = $this-&gt;cdataKey;</div><div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;                                $tag[<span class="stringliteral">&#39;type&#39;</span>] = <span class="stringliteral">&#39;complete&#39;</span>;</div><div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;                        }</div><div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div><div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;                        $tagName = $tag[<span class="stringliteral">&#39;tag&#39;</span>];</div><div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div><div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;                                <span class="comment">// this bit below creates a reference to where the data should be going, </span></div><div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;                                <span class="comment">// it saves on some conditions in the switch, but it probably annoyingly obfuscating</span></div><div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;                                <span class="comment">// has this tag already appeared at this level ?  If so we need mods</span></div><div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div><div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;                        <span class="keywordflow">if</span> (isset($tagCount[$tagName]))</div><div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;                        {               <span class="comment">// transform to an array IF only one of the tags been before</span></div><div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;                                <span class="keywordflow">if</span> ($tagCount[$tagName] == 1)</div><div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;                                {</div><div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;                                        $found[$tagName] = array($found[$tagName]);</div><div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;                                }</div><div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;                                        <span class="comment">//$found[$tagName][$tagCount[$tagName]] = &#39;&#39;;   // doesn&#39;t need to happen, the reference below is enough</span></div><div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;                                $tagRef =&amp; $found[$tagName][$tagCount[$tagName]];</div><div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;                                $tagCount[$tagName]++;</div><div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;                        }</div><div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;                        <span class="keywordflow">else</span>    <span class="comment">// just use the variable</span></div><div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;                        {</div><div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;                                $tagCount[$tagName] = 1;</div><div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;                                $tagRef =&amp; $found[$tagName];</div><div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;                        }</div><div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;</div><div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;                                <span class="comment">// now do the work</span></div><div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;</div><div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;                        <span class="keywordflow">switch</span> ($tag[<span class="stringliteral">&#39;type&#39;</span>])</div><div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;                        {</div><div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;                                <span class="keywordflow">case</span> <span class="stringliteral">&#39;open&#39;</span>:</div><div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;                                        $tagRef = $this-&gt;<a class="code" href="classXMLThing.html#ae18a74c5d5979c699b42b1f9a8fedbba">parse_recurse</a>();</div><div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;</div><div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;                                        <span class="keywordflow">if</span> (isset($tag[<span class="stringliteral">&#39;attributes&#39;</span>]))</div><div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;                                        {</div><div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;                                                $tagRef[$this-&gt;attribKey] = $tag[<span class="stringliteral">&#39;attributes&#39;</span>];</div><div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;                                        }</div><div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;                                                <span class="comment">// open CAN have a value - it makes sense to include it as cdata</span></div><div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;                                        <span class="keywordflow">if</span> (isset($tag[<span class="stringliteral">&#39;value&#39;</span>]))</div><div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;                                        {</div><div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;                                                <span class="keywordflow">if</span> (isset($tagRef[$this-&gt;cdataKey]))    <span class="comment">// push it to the start of the cdata array if it&#39;s present</span></div><div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;                                                {</div><div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;                                                        $tagRef[$this-&gt;cdataKey] = (array)$tagRef[$this-&gt;cdataKey];     <span class="comment">// &lt;-- needed for php5 compatibility];</span></div><div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;                                                        array_unshift($tagRef[$this-&gt;cdataKey], $tag[<span class="stringliteral">&#39;value&#39;</span>]);</div><div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;                                                }</div><div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;                                                <span class="keywordflow">else</span></div><div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;                                                {</div><div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;                                                        $tagRef[$this-&gt;cdataKey] = $tag[<span class="stringliteral">&#39;value&#39;</span>];</div><div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;                                                }</div><div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;                                        }</div><div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;                                        <span class="keywordflow">break</span>;</div><div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;</div><div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;                                <span class="keywordflow">case</span> <span class="stringliteral">&#39;complete&#39;</span>:</div><div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;                                        <span class="keywordflow">if</span> (isset($tag[<span class="stringliteral">&#39;attributes&#39;</span>]))</div><div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;                                        {</div><div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;                                                $tagRef[$this-&gt;attribKey] = $tag[<span class="stringliteral">&#39;attributes&#39;</span>];</div><div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;                                                $tagRef =&amp; $tagRef[$this-&gt;valueKey];</div><div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;                                        }</div><div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;</div><div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;                                        <span class="keywordflow">if</span> (isset($tag[<span class="stringliteral">&#39;value&#39;</span>]))</div><div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;                                        {</div><div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;                                                $tagRef = $tag[<span class="stringliteral">&#39;value&#39;</span>];</div><div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;                                        }</div><div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;                                        <span class="keywordflow">break</span>;</div><div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;                        }                       </div><div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;                }</div><div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;</div><div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;                <span class="keywordflow">return</span> $found;</div><div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        }</div><div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;</div><div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;</div><div class="line"><a name="l00186"></a><span class="lineno"><a class="line" href="classXMLThing.html#aa5d425088bd74ca4f3f9c1a9bc9ac453">  186</a></span>&#160;        <span class="keyword">function</span> <a class="code" href="classXMLThing.html#aa5d425088bd74ca4f3f9c1a9bc9ac453">parse_init</a>()</div><div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;        {</div><div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;        $this-&gt;parser = xml_parser_create();</div><div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;</div><div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;        $parser = $this-&gt;parser;</div><div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;        xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);     <span class="comment">// Dont mess with my cAsE sEtTings</span></div><div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;        xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);               <span class="comment">// Dont bother with empty info</span></div><div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;        <span class="keywordflow">if</span> (!$res = (<span class="keywordtype">bool</span>)xml_parse_into_struct($parser, $this-&gt;rawXML, $this-&gt;valueArray, $this-&gt;keyArray))</div><div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;                {</div><div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;                        $this-&gt;isError = <span class="keyword">true</span>;</div><div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;            $this-&gt;error = <span class="stringliteral">&#39;error: &#39;</span>.xml_error_string(xml_get_error_code($parser)).<span class="stringliteral">&#39; at line &#39;</span>.xml_get_current_line_number($parser);</div><div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;        }</div><div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;        xml_parser_free($parser);</div><div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;</div><div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;                <span class="keywordflow">return</span> $res;</div><div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;        }</div><div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;}       <span class="comment">// *** CLASS ENDS *** //</span></div><div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;?&gt;</div><div class="ttc" id="classXMLThing_html"><div class="ttname"><a href="classXMLThing.html">XMLThing</a></div><div class="ttdef"><b>Definition:</b> <a href="xmlthing_8class_8php_source.html#l00017">xmlthing.class.php:17</a></div></div>
+<div class="ttc" id="classXMLThing_html_a8d408058141c8a030b433b2deb822baf"><div class="ttname"><a href="classXMLThing.html#a8d408058141c8a030b433b2deb822baf">XMLThing\parse</a></div><div class="ttdeci">parse($xml=NULL)</div><div class="ttdef"><b>Definition:</b> <a href="xmlthing_8class_8php_source.html#l00061">xmlthing.class.php:61</a></div></div>
+<div class="ttc" id="classXMLThing_html_aa5d425088bd74ca4f3f9c1a9bc9ac453"><div class="ttname"><a href="classXMLThing.html#aa5d425088bd74ca4f3f9c1a9bc9ac453">XMLThing\parse_init</a></div><div class="ttdeci">parse_init()</div><div class="ttdef"><b>Definition:</b> <a href="xmlthing_8class_8php_source.html#l00186">xmlthing.class.php:186</a></div></div>
+<div class="ttc" id="classXMLThing_html_ae18a74c5d5979c699b42b1f9a8fedbba"><div class="ttname"><a href="classXMLThing.html#ae18a74c5d5979c699b42b1f9a8fedbba">XMLThing\parse_recurse</a></div><div class="ttdeci">parse_recurse()</div><div class="ttdef"><b>Definition:</b> <a href="xmlthing_8class_8php_source.html#l00088">xmlthing.class.php:88</a></div></div>
+<div class="ttc" id="classXMLThing_html_a1c153caf15cb3b1a2159d5e879a3f6ca"><div class="ttname"><a href="classXMLThing.html#a1c153caf15cb3b1a2159d5e879a3f6ca">XMLThing\XMLThing</a></div><div class="ttdeci">XMLThing($xml=NULL)</div><div class="ttdef"><b>Definition:</b> <a href="xmlthing_8class_8php_source.html#l00049">xmlthing.class.php:49</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generado el Sábado, 8 de Febrero de 2014 08:30:44 para UNVirtualLab por &#160;<a href="http://www.doxygen.org/index.html">
+Generado el Miércoles, 13 de Febrero de 2019 21:50:33 para UNVirtualLab por &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.7.6.1
+</a> 1.8.13
 </small></address>
-
 </body>
 </html>

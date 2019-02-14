@@ -16,7 +16,8 @@ require_once('erase.php');
 $B=new block();
 if($B->connect())
 {
-  $xmlFN="page_structure_Basic/embed.xml";
+  $pageStructure = trim($B->configurationSettings['PageStructure']);
+  $xmlFN="page_structure/".$pageStructure."/embed.xml";
 
   if(isset($_POST['simulate']))
   {

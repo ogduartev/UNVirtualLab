@@ -131,7 +131,8 @@ class abouttable extends block
 $B=new block();
 if($B->connect())
 {
-  $xmlFN="page_structure/about.xml";
+  $pageStructure = trim($B->configurationSettings['PageStructure']);
+  $xmlFN="page_structure/".$pageStructure."/about.xml";
   $B->html($xmlFN);
 }
 

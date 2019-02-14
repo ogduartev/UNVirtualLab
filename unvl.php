@@ -1,6 +1,8 @@
 <?php
 require_once('block.php');
 require_once('logo.php');
+require_once('header.php');
+require_once('footer.php');
 require_once('menu.php');
 require_once('launch.php');
 require_once('title.php');
@@ -18,7 +20,7 @@ $B=new block();
 if($B->connect())
 {
   $pageStructure = trim($B->configurationSettings['PageStructure']);
-  $xmlFN="page_structure_".$pageStructure."/unvl.xml";
+  $xmlFN="page_structure/".$pageStructure."/unvl.xml";
 
   if(isset($_POST['simulate']))
   {

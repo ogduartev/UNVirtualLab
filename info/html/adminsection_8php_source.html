@@ -3,155 +3,53 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>UNVirtualLab: Fichero Fuente admin/adminsection.php</title>
-
+<meta name="generator" content="Doxygen 1.8.13"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>UNVirtualLab: Fichero Fuente /home/ogduartev/public_html/unvl-GitHub/UNVirtualLab/admin/adminsection.php</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen.css" rel="stylesheet" type="text/css" />
-
-<link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
-<script type="text/javascript">
-  $(document).ready(function() { searchBox.OnSelectItem(0); });
-</script>
-
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<div id="top"><!-- do not remove this div! -->
-
-
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  
-  
-  <td style="padding-left: 0.5em;">
+  <td id="projectlogo"><img alt="Logo" src="logo.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">UNVirtualLab
-   
    </div>
    <div id="projectbrief">Laboratorio virtual de sistemas dinámicos</div>
   </td>
-  
-  
-  
  </tr>
  </tbody>
 </table>
 </div>
-
-<!-- Generado por Doxygen 1.7.6.1 -->
+<!-- end header part -->
+<!-- Generado por Doxygen 1.8.13 -->
 <script type="text/javascript">
 var searchBox = new SearchBox("searchBox", "search",false,'Buscar');
 </script>
-  <div id="navrow1" class="tabs">
-    <ul class="tablist">
-      <li><a href="index.html"><span>Página&#160;principal</span></a></li>
-      <li><a href="annotated.html"><span>Clases</span></a></li>
-      <li class="current"><a href="files.html"><span>Archivos</span></a></li>
-      <li>
-        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
-          <img id="MSearchSelect" src="search/mag_sel.png"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
-               alt=""/>
-          <input type="text" id="MSearchField" value="Buscar" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
-          </span>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <div id="navrow2" class="tabs2">
-    <ul class="tablist">
-      <li><a href="files.html"><span>Lista&#160;de&#160;archivos</span></a></li>
-    </ul>
-  </div>
-</div>
-<div class="header">
-  <div class="headertitle">
-<div class="title">admin/adminsection.php</div>  </div>
-</div><!--header-->
-<div class="contents">
-<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 &lt;?php
-<a name="l00002"></a>00002 require_once(<span class="stringliteral">&quot;admin/adminblock.php&quot;</span>);
-<a name="l00003"></a>00003 
-<a name="l00004"></a><a class="code" href="classadminsection.html">00004</a> <span class="keyword">class </span><a class="code" href="classadminsection.html">adminsection</a> <span class="keyword">extends</span> <a class="code" href="classadminblock.html">adminblock</a>
-<a name="l00005"></a>00005 {  
-<a name="l00006"></a>00006 
-<a name="l00007"></a>00007   <span class="keyword">function</span> createFields()
-<a name="l00008"></a>00008   {
-<a name="l00009"></a>00009     $this-&gt;blockname=$this-&gt;text(<span class="stringliteral">&quot;adminsection_Section&quot;</span>);
-<a name="l00010"></a>00010     $this-&gt;table=<span class="stringliteral">&quot;sections&quot;</span>;
-<a name="l00011"></a>00011     $this-&gt;sectionidname=<span class="stringliteral">&quot;sectionid&quot;</span>;
-<a name="l00012"></a>00012     $this-&gt;idname=<span class="stringliteral">&quot;id&quot;</span>;
-<a name="l00013"></a>00013     $this-&gt;idvalue=$this-&gt;section_id();
-<a name="l00014"></a>00014     $this-&gt;fields=array();
-<a name="l00015"></a>00015     $this-&gt;fields[]=array(<span class="stringliteral">&quot;dbname&quot;</span>=&gt;<span class="stringliteral">&quot;id&quot;</span>,
-<a name="l00016"></a>00016                           <span class="stringliteral">&quot;showname&quot;</span>=&gt;$this-&gt;text(<span class="stringliteral">&quot;adminsection_Identifier&quot;</span>),
-<a name="l00017"></a>00017                           <span class="stringliteral">&quot;type&quot;</span>=&gt;<span class="stringliteral">&quot;fixed&quot;</span>);
-<a name="l00018"></a>00018     $this-&gt;fields[]=array(<span class="stringliteral">&quot;dbname&quot;</span>=&gt;<span class="stringliteral">&quot;name&quot;</span>,
-<a name="l00019"></a>00019                           <span class="stringliteral">&quot;showname&quot;</span>=&gt;$this-&gt;text(<span class="stringliteral">&quot;adminsection_Section_name&quot;</span>),
-<a name="l00020"></a>00020                           <span class="stringliteral">&quot;type&quot;</span>=&gt;<span class="stringliteral">&quot;text&quot;</span>);
-<a name="l00021"></a>00021     $this-&gt;fields[]=array(<span class="stringliteral">&quot;dbname&quot;</span>=&gt;<span class="stringliteral">&quot;description&quot;</span>,
-<a name="l00022"></a>00022                           <span class="stringliteral">&quot;showname&quot;</span>=&gt;$this-&gt;text(<span class="stringliteral">&quot;adminsection_Description&quot;</span>),
-<a name="l00023"></a>00023                           <span class="stringliteral">&quot;type&quot;</span>=&gt;<span class="stringliteral">&quot;longtext&quot;</span>);
-<a name="l00024"></a>00024     $this-&gt;fields[]=array(<span class="stringliteral">&quot;dbname&quot;</span>=&gt;<span class="stringliteral">&quot;enabled&quot;</span>,
-<a name="l00025"></a>00025                           <span class="stringliteral">&quot;showname&quot;</span>=&gt;$this-&gt;text(<span class="stringliteral">&quot;adminsection_Enabled&quot;</span>),
-<a name="l00026"></a>00026                           <span class="stringliteral">&quot;type&quot;</span>=&gt;<span class="stringliteral">&quot;bool&quot;</span>);
-<a name="l00027"></a>00027     $this-&gt;fields[]=array(<span class="stringliteral">&quot;dbname&quot;</span>=&gt;<span class="stringliteral">&quot;section_id&quot;</span>,
-<a name="l00028"></a>00028                           <span class="stringliteral">&quot;showname&quot;</span>=&gt;$this-&gt;text(<span class="stringliteral">&quot;adminsection_Father_section&quot;</span>),
-<a name="l00029"></a>00029                           <span class="stringliteral">&quot;type&quot;</span>=&gt;<span class="stringliteral">&quot;select section&quot;</span>);
-<a name="l00030"></a>00030   }  
-<a name="l00031"></a>00031   
-<a name="l00032"></a>00032   <span class="keyword">function</span> createRelations1N()
-<a name="l00033"></a>00033   {
-<a name="l00034"></a>00034     $this-&gt;Relations1N=array();
-<a name="l00035"></a>00035     $R=array(
-<a name="l00036"></a>00036              <span class="stringliteral">&quot;title&quot;</span>=&gt;$this-&gt;text(<span class="stringliteral">&quot;adminsection_Daugther_sections&quot;</span>),
-<a name="l00037"></a>00037              <span class="stringliteral">&quot;table&quot;</span>=&gt;<span class="stringliteral">&quot;sections&quot;</span>,
-<a name="l00038"></a>00038              <span class="stringliteral">&quot;linkname&quot;</span>=&gt;<span class="stringliteral">&quot;sectionid&quot;</span>,
-<a name="l00039"></a>00039              <span class="stringliteral">&quot;id1&quot;</span>=&gt;<span class="stringliteral">&quot;id&quot;</span>,
-<a name="l00040"></a>00040              <span class="stringliteral">&quot;id2&quot;</span>=&gt;<span class="stringliteral">&quot;section_id&quot;</span>,
-<a name="l00041"></a>00041              <span class="stringliteral">&quot;idvalue&quot;</span>=&gt;$this-&gt;section_id(),
-<a name="l00042"></a>00042              <span class="stringliteral">&quot;showdbname&quot;</span>=&gt;<span class="stringliteral">&quot;name&quot;</span>,
-<a name="l00043"></a>00043              <span class="stringliteral">&quot;show&quot;</span>=&gt;$this-&gt;text(<span class="stringliteral">&quot;adminsection_Section_name&quot;</span>));
-<a name="l00044"></a>00044     $this-&gt;Relations1N[]=$R;
-<a name="l00045"></a>00045     $R=array(
-<a name="l00046"></a>00046              <span class="stringliteral">&quot;title&quot;</span>=&gt;$this-&gt;text(<span class="stringliteral">&quot;adminsection_Models&quot;</span>),
-<a name="l00047"></a>00047              <span class="stringliteral">&quot;table&quot;</span>=&gt;<span class="stringliteral">&quot;models&quot;</span>,
-<a name="l00048"></a>00048              <span class="stringliteral">&quot;linkname&quot;</span>=&gt;<span class="stringliteral">&quot;modelid&quot;</span>,
-<a name="l00049"></a>00049              <span class="stringliteral">&quot;id1&quot;</span>=&gt;<span class="stringliteral">&quot;id&quot;</span>,
-<a name="l00050"></a>00050              <span class="stringliteral">&quot;id2&quot;</span>=&gt;<span class="stringliteral">&quot;section_id&quot;</span>,
-<a name="l00051"></a>00051              <span class="stringliteral">&quot;idvalue&quot;</span>=&gt;$this-&gt;section_id(),
-<a name="l00052"></a>00052              <span class="stringliteral">&quot;showdbname&quot;</span>=&gt;<span class="stringliteral">&quot;name&quot;</span>,
-<a name="l00053"></a>00053              <span class="stringliteral">&quot;show&quot;</span>=&gt;$this-&gt;text(<span class="stringliteral">&quot;adminsection_Model_name&quot;</span>));
-<a name="l00054"></a>00054     $this-&gt;Relations1N[]=$R;
-<a name="l00055"></a>00055   }
-<a name="l00056"></a>00056 }
-<a name="l00057"></a>00057 <span class="comment">/*</span>
-<a name="l00058"></a>00058 <span class="comment">$M=new model();</span>
-<a name="l00059"></a>00059 <span class="comment">if($M-&gt;connect())</span>
-<a name="l00060"></a>00060 <span class="comment">{</span>
-<a name="l00061"></a>00061 <span class="comment">  $M-&gt;display();</span>
-<a name="l00062"></a>00062 <span class="comment">}else</span>
-<a name="l00063"></a>00063 <span class="comment">{</span>
-<a name="l00064"></a>00064 <span class="comment">  echo &quot;error en la conexión\n&quot;;</span>
-<a name="l00065"></a>00065 <span class="comment">}</span>
-<a name="l00066"></a>00066 <span class="comment">*/</span>
-<a name="l00067"></a>00067 ?&gt;
-</pre></div></div><!-- contents -->
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Buscar');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Todo</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Clases</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Funciones</a></div>
+</div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -160,13 +58,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Buscar');
 </iframe>
 </div>
 
-
-
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_6c1c819baceecd12853314f9c38904da.html">unvl-GitHub</a></li><li class="navelem"><a class="el" href="dir_8fcd298cc71b3e88bfca21735df8e829.html">UNVirtualLab</a></li><li class="navelem"><a class="el" href="dir_24235d1bf6427bf65cfe69fc73f3ee14.html">admin</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">adminsection.php</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&lt;?php</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;require_once(<span class="stringliteral">&quot;admin/adminblock.php&quot;</span>);</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div><div class="line"><a name="l00004"></a><span class="lineno"><a class="line" href="classadminsection.html">    4</a></span>&#160;<span class="keyword">class </span><a class="code" href="classadminsection.html">adminsection</a> <span class="keyword">extends</span> <a class="code" href="classadminblock.html">adminblock</a></div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;{  </div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;  <span class="keyword">function</span> createFields()</div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;  {</div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    $this-&gt;blockname=$this-&gt;text(<span class="stringliteral">&quot;adminsection_Section&quot;</span>);</div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    $this-&gt;table=<span class="stringliteral">&quot;sections&quot;</span>;</div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    $this-&gt;sectionidname=<span class="stringliteral">&quot;sectionid&quot;</span>;</div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    $this-&gt;idname=<span class="stringliteral">&quot;id&quot;</span>;</div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    $this-&gt;idvalue=$this-&gt;section_id();</div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    $this-&gt;fields=array();</div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    $this-&gt;fields[]=array(<span class="stringliteral">&quot;dbname&quot;</span>=&gt;<span class="stringliteral">&quot;id&quot;</span>,</div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;                          <span class="stringliteral">&quot;showname&quot;</span>=&gt;$this-&gt;text(<span class="stringliteral">&quot;adminsection_Identifier&quot;</span>),</div><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                          <span class="stringliteral">&quot;type&quot;</span>=&gt;<span class="stringliteral">&quot;fixed&quot;</span>);</div><div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    $this-&gt;fields[]=array(<span class="stringliteral">&quot;dbname&quot;</span>=&gt;<span class="stringliteral">&quot;name&quot;</span>,</div><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;                          <span class="stringliteral">&quot;showname&quot;</span>=&gt;$this-&gt;text(<span class="stringliteral">&quot;adminsection_Section_name&quot;</span>),</div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;                          <span class="stringliteral">&quot;type&quot;</span>=&gt;<span class="stringliteral">&quot;text&quot;</span>);</div><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    $this-&gt;fields[]=array(<span class="stringliteral">&quot;dbname&quot;</span>=&gt;<span class="stringliteral">&quot;description&quot;</span>,</div><div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;                          <span class="stringliteral">&quot;showname&quot;</span>=&gt;$this-&gt;text(<span class="stringliteral">&quot;adminsection_Description&quot;</span>),</div><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;                          <span class="stringliteral">&quot;type&quot;</span>=&gt;<span class="stringliteral">&quot;longtext&quot;</span>);</div><div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    $this-&gt;fields[]=array(<span class="stringliteral">&quot;dbname&quot;</span>=&gt;<span class="stringliteral">&quot;enabled&quot;</span>,</div><div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;                          <span class="stringliteral">&quot;showname&quot;</span>=&gt;$this-&gt;text(<span class="stringliteral">&quot;adminsection_Enabled&quot;</span>),</div><div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;                          <span class="stringliteral">&quot;type&quot;</span>=&gt;<span class="stringliteral">&quot;bool&quot;</span>);</div><div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    $this-&gt;fields[]=array(<span class="stringliteral">&quot;dbname&quot;</span>=&gt;<span class="stringliteral">&quot;section_id&quot;</span>,</div><div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;                          <span class="stringliteral">&quot;showname&quot;</span>=&gt;$this-&gt;text(<span class="stringliteral">&quot;adminsection_Father_section&quot;</span>),</div><div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;                          <span class="stringliteral">&quot;type&quot;</span>=&gt;<span class="stringliteral">&quot;select section&quot;</span>);</div><div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  }  </div><div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  </div><div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keyword">function</span> createRelations1N()</div><div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  {</div><div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    $this-&gt;Relations1N=array();</div><div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    $R=array(</div><div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;             <span class="stringliteral">&quot;title&quot;</span>=&gt;$this-&gt;text(<span class="stringliteral">&quot;adminsection_Daugther_sections&quot;</span>),</div><div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;             <span class="stringliteral">&quot;table&quot;</span>=&gt;<span class="stringliteral">&quot;sections&quot;</span>,</div><div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;             <span class="stringliteral">&quot;linkname&quot;</span>=&gt;<span class="stringliteral">&quot;sectionid&quot;</span>,</div><div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;             <span class="stringliteral">&quot;id1&quot;</span>=&gt;<span class="stringliteral">&quot;id&quot;</span>,</div><div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;             <span class="stringliteral">&quot;id2&quot;</span>=&gt;<span class="stringliteral">&quot;section_id&quot;</span>,</div><div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;             <span class="stringliteral">&quot;idvalue&quot;</span>=&gt;$this-&gt;section_id(),</div><div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;             <span class="stringliteral">&quot;showdbname&quot;</span>=&gt;<span class="stringliteral">&quot;name&quot;</span>,</div><div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;             <span class="stringliteral">&quot;show&quot;</span>=&gt;$this-&gt;text(<span class="stringliteral">&quot;adminsection_Section_name&quot;</span>));</div><div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    $this-&gt;Relations1N[]=$R;</div><div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    $R=array(</div><div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;             <span class="stringliteral">&quot;title&quot;</span>=&gt;$this-&gt;text(<span class="stringliteral">&quot;adminsection_Models&quot;</span>),</div><div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;             <span class="stringliteral">&quot;table&quot;</span>=&gt;<span class="stringliteral">&quot;models&quot;</span>,</div><div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;             <span class="stringliteral">&quot;linkname&quot;</span>=&gt;<span class="stringliteral">&quot;modelid&quot;</span>,</div><div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;             <span class="stringliteral">&quot;id1&quot;</span>=&gt;<span class="stringliteral">&quot;id&quot;</span>,</div><div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;             <span class="stringliteral">&quot;id2&quot;</span>=&gt;<span class="stringliteral">&quot;section_id&quot;</span>,</div><div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;             <span class="stringliteral">&quot;idvalue&quot;</span>=&gt;$this-&gt;section_id(),</div><div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;             <span class="stringliteral">&quot;showdbname&quot;</span>=&gt;<span class="stringliteral">&quot;name&quot;</span>,</div><div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;             <span class="stringliteral">&quot;show&quot;</span>=&gt;$this-&gt;text(<span class="stringliteral">&quot;adminsection_Model_name&quot;</span>));</div><div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    $this-&gt;Relations1N[]=$R;</div><div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  }</div><div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;}</div><div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="comment">/*</span></div><div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="comment">$M=new model();</span></div><div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="comment">if($M-&gt;connect())</span></div><div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="comment">{</span></div><div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="comment">  $M-&gt;display();</span></div><div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="comment">}else</span></div><div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="comment">{</span></div><div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="comment">  echo &quot;error en la conexión\n&quot;;</span></div><div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="comment">}</span></div><div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="comment">*/</span></div><div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;?&gt;</div><div class="ttc" id="classadminsection_html"><div class="ttname"><a href="classadminsection.html">adminsection</a></div><div class="ttdef"><b>Definition:</b> <a href="adminsection_8php_source.html#l00004">adminsection.php:4</a></div></div>
+<div class="ttc" id="classadminblock_html"><div class="ttname"><a href="classadminblock.html">adminblock</a></div><div class="ttdef"><b>Definition:</b> <a href="adminblock_8php_source.html#l00005">adminblock.php:5</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generado el Sábado, 8 de Febrero de 2014 08:30:44 para UNVirtualLab por &#160;<a href="http://www.doxygen.org/index.html">
+Generado el Miércoles, 13 de Febrero de 2019 21:50:33 para UNVirtualLab por &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.7.6.1
+</a> 1.8.13
 </small></address>
-
 </body>
 </html>

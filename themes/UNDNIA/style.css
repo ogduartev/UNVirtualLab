@@ -7,20 +7,56 @@ body.unvl
   overflow-x: scroll;
   overflow-y: scroll;
   height:100%;
+  padding:0%;
+  margin: 0%;
 }
 
-div.body
+div.header
 {
-  padding:5%;
-  background-color:#c0c0ff;
+  padding:0%;
+  left:0px;
+  top:0px;
+  background-color:#404040;
   position: relative;
   float:center;
-  width:90%;
-  height: 90%;
+  width:100%;
+  height: 100px;
   border:1px solid #000000;
   color: inherit;
   margin: auto;
 }
+
+div.body
+{
+  padding:0%;
+  margin: 0%;
+  top:0px;
+  background-color:#c0c0ff;
+  position: relative;
+  float:center;
+  width:100%;
+  height: 600px;
+  border:1px solid #000000;
+  color: inherit;
+  overflow-x: scroll;
+  overflow-y: scroll;
+}
+
+div.footer
+{
+  padding:0%;
+  left:0px;
+  top:0px;
+  background-color:#404040;
+  position: relative;
+  float:center;
+  width:100%;
+  height: 100px;
+  border:1px solid #000000;
+  color: inherit;
+  margin: auto;
+}
+
 
 div.logo
 {
@@ -107,12 +143,12 @@ div.menuAlone
 {
   font-size:1.1em;
   border: solid 1px #000000;
-  position:absolute;
+  position:relative;
   left:1%;
   top:50px;
   background-color:#ffffff;
   width:19%;
-  height:90%;
+  height:500px;
   overflow-x: scroll;
   overflow-y: scroll;
 }
@@ -197,14 +233,13 @@ div.documentation
 
 div.documentationAlone
 {
-  display: table;
   padding:0px;
   background-color:#ffffff;
   position: absolute;
   top:50px;
   right:1%;
   width:78%;
-  height:90%;
+  height:500px;
   border:1px solid #000000;
   color: inherit;
 }
