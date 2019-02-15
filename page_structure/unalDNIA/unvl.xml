@@ -1,0 +1,15 @@
+<block id="unvl" type="body" class="unvl">
+  <block id="header" type="div" class="header" action="header"> </block>
+  <block id="body" type="div" class="body">
+    <block id="menu" type="div" class="menuAlone" action="menu"></block>
+    <block id="title_frame" type="div" class="title_frame">
+      <block id="title" type="div" class="title" action="title"></block>
+      <block id="logo" type="div" class="logounvl" action="logo"></block>
+      <block id="launch" type="div" class="launch" action="launch"></block>
+      <block id="credits" type="div" class="credits" action="credits"></block>
+    </block>
+    <block id="documentation" type="div" class="documentationAlone" action="documentation"></block>
+  </block>
+  <block id="footer" type="div" class="footer" action="footer"> </block>
+</block>
+

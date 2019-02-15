@@ -104,7 +104,7 @@ class block
   function opener()
   {
     echo "<html>\n";
-    echo " <header>\n";
+    echo " <head>\n";
     echo "  <title>\n";
     echo "  </title>\n";
     echo "  <meta HTTP-EQUIV=\"Content-Type\" CONTENT=\"text/html; charset=utf-8\" />\n";
@@ -112,7 +112,18 @@ class block
     echo "  <link rel=\"stylesheet\" type=\"text/css\" href=\"themes/".$this->configurationSettings['theme']."/styleSVG.css\" />\n";
     echo "  <link rel=\"shortcut icon\" href=\"themes/".$this->configurationSettings['theme']."/img/favicon.gif\" />\n";
     echo "  <script type=\"text/javascript\" src=\"jscolor/jscolor.js\"></script>\n";
-    echo " </header>\n";
+    $fHtml="themes/".$this->configurationSettings['theme']."/head.html";
+    if(file_exists($fHtml))
+    {
+       $f=file($fHtml);
+       foreach($f as $linea)
+       {
+         $linea=str_replace("href=\"","href=\"themes/".$this->configurationSettings['theme']."/",$linea);
+         $linea=str_replace("src=\"js","src=\"themes/".$this->configurationSettings['theme']."/js",$linea);
+         echo $linea;
+       }
+    }
+    echo " </head>\n";
   }
 
   function closer()

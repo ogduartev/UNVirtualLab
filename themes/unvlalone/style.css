@@ -6,22 +6,59 @@ body.unvl
   text-align:left;
   overflow-x: scroll;
   overflow-y: scroll;
-  height:2000px;
+  height:100%;
+  padding:0%;
+  margin: 0%;
+}
+
+div.header
+{
+  display:none;
+  padding:0%;
+  left:0px;
+  top:0px;
+  background-color:#404040;
+  position: relative;
+  float:center;
+  width:100%;
+  height: 100px;
+  border:1px solid #000000;
+  color: inherit;
+  margin: auto;
 }
 
 div.body
 {
-  padding:10px;
+  padding:0%;
+  margin: 0%;
+  top:0px;
   background-color:#c0c0ff;
   position: relative;
   float:center;
-  width:900px;
+  width:100%;
   height: 100%;
   border:1px solid #000000;
   color: inherit;
-  margin-left: auto;
-  margin-right: auto;
+  overflow-x: scroll;
+  overflow-y: scroll;
 }
+
+div.footer
+{
+  display:none;
+  padding:0%;
+  left:0px;
+  top:0px;
+  background-color:#404040;
+  position: relative;
+  float:center;
+  width:100%;
+  height: 100px;
+  border:1px solid #000000;
+  color: inherit;
+  margin: auto;
+}
+
 
 div.logo
 {
@@ -50,8 +87,8 @@ div.title_frame
   border:1px solid #000000;
   position: absolute;
   top: 10px;
-  right:10px;
-  width:681px;
+  right:1%;
+  width:78%;
   height:30px;
 }
 
@@ -61,7 +98,7 @@ div.title
   left:0px;
   text-align:center;
   font-size:2em;
-  width:651px;
+  width:100%;
   height:30px;
   background-color:inherit;
   overflow-x: auto;
@@ -75,6 +112,15 @@ div.credits
   width:30px;
   height:30px;
   background:url('img/info.gif');
+}
+
+div.launch
+{
+  position: absolute;
+  left:0px;
+  width:30px;
+  height:30px;
+  background:url('img/launch.gif');
 }
 
 /*----------------------
@@ -91,6 +137,20 @@ div.menu
   background-color:#ffffff;
   width:209px;
   height:260px;
+  overflow-x: scroll;
+  overflow-y: scroll;
+}
+
+div.menuAlone
+{
+  font-size:1.1em;
+  border: solid 1px #000000;
+  position:relative;
+  left:1%;
+  top:50px;
+  background-color:#ffffff;
+  width:19%;
+  height:500px;
   overflow-x: scroll;
   overflow-y: scroll;
 }
@@ -166,9 +226,22 @@ div.documentation
   background-color:#ffffff;
   position: absolute;
   top:50px;
-  right:10px;
-  width:680px;
+  right:1%;
+  width:78%;
   height:260px;
+  border:1px solid #000000;
+  color: inherit;
+}
+
+div.documentationAlone
+{
+  padding:0px;
+  background-color:#ffffff;
+  position: absolute;
+  top:50px;
+  right:1%;
+  width:78%;
+  height:500px;
   border:1px solid #000000;
   color: inherit;
 }
@@ -194,7 +267,7 @@ object.documentation
 
 div.messagenomodel
 {
-  background-color:#c0c0ff;
+  background-color:#ffffff;
   font-family: Arial, Helvetica, sans-serif;
   font-size:2em;
   text-align:center;
@@ -212,6 +285,19 @@ div.controls
   background-color:#aaaaaa;
   border: solid 1px #000000;
   width:209px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+
+div.controlsAlone
+{
+  position: absolute;
+  left:1%;
+  top: 50px;
+  background-color:#aaaaaa;
+  border: solid 1px #000000;
+  width:19%;
   margin-left:auto;
   margin-right:auto;
 }
@@ -332,8 +418,8 @@ div.outputs
   margin:0px;
   position: absolute;
   top: 320px;
-  right:10px;
-  width:682px;
+  right:1%;
+  width:78%;
   height:220px;
   color: inherit;
 }
@@ -350,6 +436,16 @@ div.outputsEmbed
   color: inherit;
 }
 
+div.outputsAlone
+{
+  position: absolute;
+  top: 50px;
+  right:1%;
+  width:78%;
+  height:220px;
+  color: inherit;
+}
+
 
 /* PLOTS */
 
@@ -362,6 +458,7 @@ div.plots
   border: solid 0px #000000;
   margin-left:10px;
   margin-right:auto;
+  display: inline;
 }
 
 /*SVG*/
@@ -376,21 +473,24 @@ div.anim2d
   border: solid 0px #000000;
   margin-left:10px;
   margin-right:auto;
+  display: inline;
 }
 
 div.animation
 {
+  position: relative;
   background-color:inherit;
   border: solid 1px #000000;
   width: 300px;
+  display: inline-block;
 }
 
 div.animationTitle
 {
   position: relative;
-  float:center;
-  text-align:center;
+  display: block;
   font-weight:bold;
+  text-align:center;
 }
 
 /*TABLES*/
@@ -398,11 +498,11 @@ div.tables
 {
   overflow: auto;
   position: relative;
-  left:10px;
-  top: 0px;
+  left:1%;
+  top: 1%;
   background-color:inherit;
-  border: solid 0px #000000;
-  width:302px;
+  border: solid 1px #000000;
+  width:98%;
   height:220px;
   margin-left:10px;
   margin-right:auto;

@@ -1,0 +1,9 @@
+<block id="unvl_admin" type="body" class="unvl_admin">
+  <block id="body_admin" type="div" class="body_admin">
+    <block id="logo" type="div" class="logo" action="logo"></block>
+    <block id="adminlogout" type="div" class="admin_logout" action="adminlogout"></block>
+    <block id="admin2danim" type="div" class="admin_general" action="admin2danim"></block>
+    <block id="menuadmin" type="div" class="menu" action="menuadmin"></block>
+  </block>
+</block>
+

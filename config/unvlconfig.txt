@@ -1,22 +1,32 @@
 # Default configuration file for UNVL
 :locale = es
-:theme = UNDNIA
+
+#:PageStructure = Basic
+#:PageStructure = Alone
+:PageStructure = unalDNIA
+
+#:theme = unvlbasic
+#:theme = unvlalone
+:theme = unalDNIA
+
 :plotWidth = 300
 :plotHeight = 200
 :aboutWidth = 400
 :aboutHeight = 400
+
 :DBserver = localhost
 :DBname = unvlab
 :DBuser = unvlabvisitor
 :DBuserpass = unvlabvisitor
 :DBadmin = unvlabadmin
 :DBadminpass = unvlabadmin
+
 :UNVLadmin = adminUNVL
 :UNVLadminpass = adminpassword
 :URLbase = localhost/unvl
 :unvlDir = /home/ogduartev/public_html/unvl
+
 :Compilation = TRUE
 :CompilationOrder = omc
 :CompilationPostOrder = > /dev/null
-:PageStructure = Alone
 

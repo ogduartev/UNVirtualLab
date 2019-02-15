@@ -2,6 +2,7 @@
 require_once('block.php');
 require_once('menu.php');
 require_once('title.php');
+require_once('launch.php');
 require_once('credits.php');
 require_once('documentation.php');
 require_once('controls.php');
@@ -15,7 +16,8 @@ require_once('erase.php');
 $B=new block();
 if($B->connect())
 {
-  $xmlFN="page_structure/doc.xml";
+  $pageStructure = trim($B->configurationSettings['PageStructure']);
+  $xmlFN="page_structure/".$pageStructure."/doc.xml";
 
   if(isset($_POST['simulate']))
   {
