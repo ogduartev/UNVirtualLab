@@ -1,0 +1,2 @@
+# binary, source, documentation and graphic files are stored outside the database.
+# A file for every model its created. Its name is equal to the model id.
