@@ -157,7 +157,7 @@ function strings()
 
   $strings["adminlogin_Wellcome_title"]                  = "UN-VirtualLab";
   $strings["adminlogin_Wellcome_subtitle"]               = "Laboratorio virtual de sistemas dinámicos";
-  $strings["adminlogin_Wellcome_explanation"]            = "Ambiente Web de simulación de sistemas dinámicos basado en el lenguaje <a href='http://www.modelica.org'>modelica</a><br><a href='http://www.unal.edu.co'>Universidad Nacional de Colombia</a>";
+  $strings["adminlogin_Wellcome_explanation"]            = "Ambiente Web de simulación de sistemas dinámicos basado en el lenguaje <a href='http://www.modelica.org' target='_new'>modelica</a><br><a href='http://www.unal.edu.co' target='_new'>Universidad Nacional de Colombia</a>";
   $strings["adminlogin_Lab"]                             = "Laboratorio";
   $strings["adminlogin_Configuration"]                   = "Configuración";
   $strings["adminlogin_User"]                            = "Usuario";

@@ -15,7 +15,8 @@ class launch extends block
     echo "  window.open('alone.php?modelid='+modelid,'_blank');";
     echo "}";
     echo "</script>";
-    echo "<a onclick='launch(\"".$model_id."\")'><img src='themes/".$this->configurationSettings['theme']."/img/launch.gif'></a>";
+//    echo "<a onclick='launch(\"".$model_id."\")'><img src='themes/".$this->configurationSettings['theme']."/img/launch.png'></a>";
+    echo "<a onclick='launch(\"".$model_id."\")'><div class='launch'></div></a>";
   }
 }
 ?>

@@ -5,7 +5,7 @@ class logo extends block
 {  
   function display()
   {
-    echo "<a href='info/info.html' target='_blank' class='logo'></a>\n";
+    echo "<a href='info.php' target='_blank' class='logo'></a>\n";
   }
 }
 
