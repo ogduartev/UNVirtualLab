@@ -9,6 +9,7 @@ class erase extends block
     unlink($tmp_file);
     unlink($_POST['res_file']);
     unset($_POST['res_file']);
+    $this->logMessage(1);
   }
 }
 

@@ -263,5 +263,40 @@ class block
     $model_id=$this->model_id();
     echo $model_id;
   }
+
+  function logMessage($flag)
+  {
+    $logEnabled=$this->configurationSettings["logEnabled"];
+    if(!(strtoupper($logEnabled)=="TRUE")){return;}
+    
+    $dirLog=$this->configurationSettings["unvlDir"]."/logs/";
+
+    $strCase="Event: ";
+    switch($flag)
+    {
+      case 0  : $strCase.=$this->text("loggin_Simulation_Starts");break;
+      case 1  : $strCase.=$this->text("loggin_Simulation_Ends");break;
+      default : $strCase.="NN";break;
+    }
+    
+    $strDate = date("Y-m-d h:m:s.ms");
+    $strModel = "Model id: ".$_POST['modelid'];
+    $strRemote= "Remote IP: ".$_SERVER['REMOTE_ADDR'];
+    
+    $sep="; ";
+    $logString=$strDate.$sep.$strCase.$sep.$strModel.$sep.$strRemote."\n";
+  
+    file_put_contents($dirLog."unvl.log",$logString,FILE_APPEND);  
+    
+    $maxSize=0+$this->configurationSettings["logMaxSize"];
+    if(filesize($dirLog."unvl.log")>$maxSize)
+    {
+      $g=glob($dirLog."unvl.log.*");
+      $n=count($g)+1;
+      $fnDest=$dirLog."unvl.log.".sprintf("%04d",$n);
+      copy($dirLog."unvl.log",$fnDest);
+      unlink($dirLog."unvl.log");
+    }
+  }
 }
 ?>

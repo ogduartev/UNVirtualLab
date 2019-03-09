@@ -152,6 +152,8 @@ function strings()
   $strings["adminlogin_User"]                            = "User";
   $strings["adminlogin_Password"]                        = "Password";
   $strings["adminlogout_Logout"]                         = "Logout";
+  $strings["loggin_Simulation_Starts"]                   = "Simulation starts";
+  $strings["loggin_Simulation_Ends"]                     = "Simulation ends  ";
 
   return $strings;
 }

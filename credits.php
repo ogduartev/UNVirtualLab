@@ -16,7 +16,7 @@ class credits extends block
     echo "}";
     echo "</script>";
 /*    echo "<a onclick='about(\"".$model_id."\")'><img src='themes/".$this->configurationSettings['theme']."/img/info.png'></a>";*/
-    echo "<a onclick='launch(\"".$model_id."\")'><div class='credits'></div></a>";
+    echo "<a onclick='about(\"".$model_id."\")'><div class='credits'></div></a>";
   }
 }
 ?>

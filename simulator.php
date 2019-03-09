@@ -259,16 +259,21 @@ class simulator extends block
     fclose($f);
   }
 
+
   function runSimulation($model_id,$exename,$tmpInitFile)
   {
+    $logEnabled=true;
     chmod($tmpInitFile,0666);
     $pos=strrpos($tmpInitFile,"/work/");
     $dir=substr($tmpInitFile,0,$pos);
-    $dir.="/files/".$model_id."/bin/";
+    $dirbin=$dir."/files/".$model_id."/bin/";
     $tmpResFile=$tmpInitFile."_res.csv";
-    chdir($dir);
-    $run=$dir.$exename." -f ".'"'.$tmpInitFile.'"'." -r ".'"'.$tmpResFile.'" > /dev/null';
+    chdir($dirbin);
+    $run=$dirbin.$exename." -f ".'"'.$tmpInitFile.'"'." -r ".'"'.$tmpResFile.'" > /dev/null';
+    $this->logMessage(0);
+    
     passthru($run);
+        
     $_POST['res_file']=$tmpResFile;
   }
 

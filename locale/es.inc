@@ -165,6 +165,9 @@ function strings()
   
   $strings["adminlogout_Logout"]                         = "Cerrar sesión";
 
+  $strings["loggin_Simulation_Starts"]                   = "Inicio de simulación";
+  $strings["loggin_Simulation_Ends"]                     = "Final de simulación ";
+
   return $strings;
 }
 

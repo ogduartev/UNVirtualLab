@@ -23,10 +23,13 @@
 
 :UNVLadmin = adminUNVL
 :UNVLadminpass = adminpassword
-:URLbase = localhost/unvl
+:URLbase = 127.0.0.1/unvl
 :unvlDir = /home/ogduartev/public_html/unvl
 
 :Compilation = TRUE
 :CompilationOrder = omc
 :CompilationPostOrder = > /dev/null
+
+:logEnabled = FALSE
+:logMaxSize = 1048576
 
