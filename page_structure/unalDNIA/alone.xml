@@ -1,21 +1,21 @@
-<block id="unvl" type="body" class="unvl">
-  <block id="header" type="div" class="header" action="header"> </block>
-  <block id="body" type="div" class="body">
-    <block id="title_frame" type="div" class="title_frame">
-      <block id="title" type="div" class="title" action="title"></block>
-      <block id="credits" type="div" class="credits" action="credits"></block>
+<block id="UNVLunvl" type="body" class="unvl">
+  <block id="UNVLheader" type="div" class="header" action="header"> </block>
+  <block id="UNVLbody" type="div" class="body">
+    <block id="UNVLtitle_frame" type="div" class="title_frame">
+      <block id="UNVLtitle" type="div" class="title" action="title"></block>
+      <block id="UNVLcredits" type="div" class="credits" action="credits"></block>
     </block>
-    <block id="left" type="div" class="left">
-      <block id="logo" type="div" class="logounvl" action="logo"></block>
-      <block id="controls" type="div" class="controlsAlone" action="controls"></block>
+    <block id="UNVLleft" type="div" class="left">
+      <block id="UNVLlogo" type="div" class="logounvl" action="logo"></block>
+      <block id="UNVLcontrols" type="div" class="controlsAlone" action="controls"></block>
     </block>
-    <block id="outputs" type="div" class="outputsAlone" action="outputs">
-      <block id="plots" type="div" class="plots" action="plots"></block>
-      <block id="anim2d" type="div" class="anim2d" action="anim2d"></block>
-      <block id="tables" type="div" class="tables" action="tables"></block>
+    <block id="UNVLoutputs" type="div" class="outputsAlone" action="outputs">
+      <block id="UNVLplots" type="div" class="plots" action="plots"></block>
+      <block id="UNVLanim2d" type="div" class="anim2d" action="anim2d"></block>
+      <block id="UNVLtables" type="div" class="tables" action="tables"></block>
     </block>
-    <block id="erase" type="div" class="erase" action="erase"></block>
+    <block id="UNVLerase" type="div" class="erase" action="erase"></block>
   </block>
-  <block id="footer" type="div" class="footer" action="footer"> </block>
+  <block id="UNVLfooter" type="div" class="footer" action="footer"> </block>
 </block>
 
