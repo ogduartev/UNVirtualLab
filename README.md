@@ -34,13 +34,12 @@ __UNVirtualLab__ es una aplicación web para gestionar laboratorios virtuales di
 				<Directory DIRUNVL/>
 					Options Indexes FollowSymLinks MultiViews
 					AllowOverride None
-					Order allow,deny
-					allow from all
+					Require all granted
 				</Directory>
 
 				<Directory DIRUNVL/config/>
 					Allow from None
-					Order allow,deny
+					Require all denied
 				</Directory>
 
 			IN.1.4.2.3. Reiniciar el servidor apache
