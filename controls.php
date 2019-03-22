@@ -13,11 +13,15 @@ class controls extends block
                                                                        $data['value']);
     $value=$_POST['parameter_id_'.$data['parameter_id']];
     echo "     <tr>\n";
-    echo "      <td class='controls' title='".$data['description']."'>".$data['name'];
+    
+    echo "      <td class='controls' title='".$data['description']."'>\n";
+    echo "        <div class='control_name'>\n";
+    echo "         ".$data['name']."\n";
     if(strlen($data['units'])>0)
     {
       echo" (".$data['units'].")";
     }
+    echo "        </div>\n";
     
     echo "      </td>\n";
     echo "      <td>\n";
@@ -32,7 +36,7 @@ class controls extends block
     echo "        </div>\n";
     echo "      </td>\n";
     echo "      <td>\n";
-    echo "        <div class=\"controls_change\" >\n";
+    echo "        <div class=\"controls_change_arrows\" >\n";
     echo "          <div onclick=\"cambio(".$data['parameter_id'].",1);\"  class=\"controls_change_plus\"></div>\n";
     echo "          <div onclick=\"cambio(".$data['parameter_id'].",-1);\" class=\"controls_change_minus\"></div>\n";
     echo "        </div>\n";
@@ -49,13 +53,17 @@ class controls extends block
                                                                        $data['value']);
     $value=$_POST['parameter_id_'.$data['parameter_id']];//echo $value;
     echo "     <tr>\n";
-    echo "      <td class='controls' title='".$data['description']."'>".$data['name'];
+
+    echo "      <td class='controls' title='".$data['description']."'>\n";
+    echo "        <div class='control_name'>\n";
+    echo "         ".$data['name']."\n";
     if(strlen($data['units'])>0)
     {
       echo" (".$data['units'].")";
     }
-    
+    echo "        </div>\n";
     echo "      </td>\n";
+
     echo "      <td>\n";
     echo "        <div class=\"controls_change\" >\n";
     echo "         <select class='controls' name='parameter_id_".$data['parameter_id']."'>\n";
@@ -67,14 +75,16 @@ class controls extends block
       $valueOp=$op[0];
       $labelOp=$op[1];
       echo "          <option";
+      echo  " value=\"".$valueOp."\"";
       if($value==$valueOp)
       {
-        echo " selected='yes'";
+        echo " selected";
       }
-      echo  " value=\"".$valueOp."\">";
+      echo ">";
       echo $labelOp;
       echo "</option>\n";
     }
+    echo "         </select>\n";
     echo "        </div>\n";
     echo "      </td>\n";
     echo "     </tr>\n";
@@ -99,6 +109,7 @@ class controls extends block
         if(count($allowed)>1)
         {
           $this->displaySelect($linea);
+          $this->datos[$linea["parameter_id"]]["Select"]=1;
         }else
         {
           $this->displayControl($linea);
@@ -177,7 +188,10 @@ class controls extends block
     echo "  {\n";
     foreach($this->datos as $id=>$d)
     {
-      echo "    case ".$id." : return ".$d['value'].";\n";
+      if(!isset($d["Select"]))
+      {
+        echo "    case ".$id." : return ".$d['value'].";\n";
+      }
     }
     echo "  }\n";
     echo "  return 0;\n";
@@ -198,7 +212,11 @@ class controls extends block
     echo "  for(var i=0;i<ids.length;i++)\n";
     echo "  {\n";
     echo "    var v=document.getElementsByName(\"parameter_id_\"+ids[i]);\n";
-    echo "    v[0].value=inicialJS(ids[i]);\n";
+    echo "    var type=v[0].type;\n";
+    echo "    if(type=='text')\n";
+    echo "    {\n";
+    echo "      v[0].value=inicialJS(ids[i]);\n";
+    echo "    }\n";
     echo "  }\n";
     echo "}\n";
     echo "function cambio(id,sgn)\n";
@@ -346,7 +364,7 @@ class controls extends block
       {
         echo "    <thead>\n";
         echo "     <tr>\n";
-        echo "      <th colspan=2 class='controls' title='".$linea['description']."'>".$linea['name']."</th>\n";
+        echo "      <th colspan=3 class='controls' title='".$linea['description']."'>".$linea['name']."</th>\n";
         echo "     </tr>\n";
         echo "    </thead>\n";
         echo "    <tbody>\n";
