@@ -1,3 +1,5 @@
+/* THEME unalDNIA */
+
 body.unvl
 {
 /*  background-color:#f0f0f0;
@@ -314,11 +316,11 @@ div.controlsAlone
 div.controlsEmbed
 {
   position: absolute;
-  left:10px;
+  left:1%;
   top: 50px;
   background-color:#aaaaaa;
   border: solid 1px #000000;
-  width:209px;
+  width:19%;
   margin-left:auto;
   margin-right:auto;
 }
@@ -363,9 +365,6 @@ input.controls_button
   height:25px;
   font-size:0.8em;
   padding:0px;
-/*  width:70px;
-  text-align:center;
-  margin-top:10px;*/
 }
 
 div.controls_name
@@ -460,8 +459,8 @@ div.outputsEmbed
   margin:0px;
   position: absolute;
   top: 50px;
-  right:10px;
-  width:682px;
+  right:1%;
+  width:78%;
   height:220px;
   color: inherit;
 }
@@ -935,4 +934,8 @@ div.buttonunvlboxmail
   background-image:url('img/xbutton.gif');
 }
 
-
+video.unvlvideo
+{
+  width: 100%;
+  height: auto;
+}

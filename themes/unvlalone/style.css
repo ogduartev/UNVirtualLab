@@ -1,3 +1,5 @@
+/*THEME unvlalone*/
+
 body.unvl
 {
   background-color:#f0f0f0;
@@ -294,7 +296,7 @@ div.controlsAlone
 {
   position: absolute;
   left:1%;
-  top: 50px;
+  top: 90px;
   background-color:#aaaaaa;
   border: solid 1px #000000;
   width:19%;
@@ -318,26 +320,27 @@ table.controls
 {
   color:#0000ff;
   font-size:1.0em;
+  line-height:14px;
+  width:98%;
+  left:1%;
 }
 
 th.controls
 {
   color:#0000ff;
-  width:200px;
   text-align:left;
 }
 
 td.controls
 {
   color:#000000;
-  width:100px;
   text-align:left;
 }
 
 input.controls
 {
   width:100%;
-  height:20px;
+  height:22px;
 }
 
 div.controls_buttons
@@ -353,24 +356,39 @@ input.controls_button
   height:25px;
   font-size:0.8em;
   padding:0px;
-/*  width:70px;
-  text-align:center;
-  margin-top:10px;*/
 }
 
-div.controls_change
+div.controls_name
 {
-  width: 90px;
+  width: 30%;
   height: 30px;
   position:relative;
   top:0px;
 }
 
+div.controls_change
+{
+  width: 100%;
+  height: 30px;
+  position:relative;
+  top:0px;
+}
+
+div.controls_change_arrows
+{
+  width: 10%;
+  height: 30px;
+  position:relative;
+  bottom:-15px;
+  left:0px;
+  background-color:#aaaaaa;
+}
+
 div.controls_change_plus
 {
   background-image:url('img/mas.gif');
-  position:absolute;
-  top:2px;
+  position:relative;
+  bottom:0px;
   left:0px;
   width:20px;
   height:10px;
@@ -379,8 +397,8 @@ div.controls_change_plus
 div.controls_change_minus
 {
   background-image:url('img/menos.gif');
-  position:absolute;
-  top:12px;
+  position:relative;
+  bottom:0px;
   left:0px;
   width:20px;
   height:10px;
@@ -388,13 +406,15 @@ div.controls_change_minus
 
 svg.controls
 {
+ position:relative;
  width:100%;
- height:8px;
+ height:12px;
+ top:-4px;
 }
 
 rect.control_bar
 {
- fill:#ff0000;
+ fill:#cc0000;
  stroke:none;
 }
 
@@ -452,11 +472,11 @@ div.outputsAlone
 div.plots
 {
   position: relative;
-  left:10px;
+  left:0px;
   top: 0px;
   background-color:inherit;
   border: solid 0px #000000;
-  margin-left:10px;
+  margin-left:0px;
   margin-right:auto;
   display: inline;
 }
@@ -467,11 +487,11 @@ div.plots
 div.anim2d
 {
   position: relative;
-  left:10px;
+  left:0px;
   top: 0px;
   background-color:inherit;
   border: solid 0px #000000;
-  margin-left:10px;
+  margin-left:0px;
   margin-right:auto;
   display: inline;
 }
@@ -502,9 +522,9 @@ div.tables
   top: 1%;
   background-color:inherit;
   border: solid 1px #000000;
-  width:98%;
+  width:100%;
   height:220px;
-  margin-left:10px;
+  margin-left:0px;
   margin-right:auto;
   text-align:center;
 }
@@ -863,5 +883,11 @@ input.logout_button
   width:150px;
   height:25px;
   font-size:1.0em;
+}
+
+video.unvlvideo
+{
+  width: 100%;
+  height: auto;
 }
 

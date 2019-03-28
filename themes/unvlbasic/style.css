@@ -1,3 +1,5 @@
+/*THEME unvlbasic*/
+
 body.unvl
 {
   background-color:#f0f0f0;
@@ -267,9 +269,14 @@ input.controls_button
   height:25px;
   font-size:0.8em;
   padding:0px;
-/*  width:70px;
-  text-align:center;
-  margin-top:10px;*/
+}
+
+div.controls_name
+{
+  width: 30%;
+  height: 30px;
+  position:relative;
+  top:0px;
 }
 
 div.controls_change
@@ -278,6 +285,16 @@ div.controls_change
   height: 30px;
   position:relative;
   top:0px;
+}
+
+div.controls_change_arrows
+{
+  width: 18px;
+  height: 30px;
+  position:relative;
+  bottom:0px;
+  left:0px;
+  background-color:#aaaaaa;
 }
 
 div.controls_change_plus
@@ -763,5 +780,11 @@ input.logout_button
   width:150px;
   height:25px;
   font-size:1.0em;
+}
+
+video.unvlvideo
+{
+  width: 100%;
+  height: auto;
 }
 
