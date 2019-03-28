@@ -18,25 +18,17 @@ class documentation extends block
       echo "  </object>\n";
     }else
     {
-      echo $this->text("description_Documentation_file_not_found")."\n";
+      echo "  <div class='messagenomodel'>\n";
+      echo $this->text("description_Select_an_experimentation_plant")."\n";
+      echo "  </div>\n";
     }
   }
   
   function displayMessage()
   {
-    echo "  <div class='messagenomodel'>\n";
-    echo $this->text("description_Select_an_experimentation_plant")."\n";
-    echo "  </div>\n";
+      echo "    <video controls=\"controls\" src=\"info/inicio.ogv\" type=\"video/ogg\" class=\"unvlvideo\" autoplay>\n";
+      echo $this->text("description_Select_an_experimentation_plant")."\n";
+      echo "    </video>\n";
   }
 }
-/*
-$M=new documentation();
-if($M->connect())
-{
-  $M->display();
-}else
-{
-  echo "error en la conexión\n";
-}
-*/
 ?>
