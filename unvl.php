@@ -6,6 +6,7 @@ require_once('footer.php');
 require_once('menu.php');
 require_once('launch.php');
 require_once('title.php');
+require_once('description.php');
 require_once('credits.php');
 require_once('documentation.php');
 require_once('controls.php');

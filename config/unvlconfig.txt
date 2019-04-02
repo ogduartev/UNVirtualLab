@@ -9,10 +9,12 @@
 #:theme = unvlalone
 :theme = unalDNIA
 
-:plotWidth = 300
-:plotHeight = 200
+:plotWidth = 320    # default is 300
+:plotHeight = 320   # default is 200
 :aboutWidth = 400
 :aboutHeight = 400
+:docWidth = 940
+:docHeight = 600
 
 :DBserver = localhost
 :DBname = unvlab
@@ -23,7 +25,7 @@
 
 :UNVLadmin = adminUNVL
 :UNVLadminpass = adminpassword
-:URLbase = 127.0.0.1/unvl
+:URLbase = localhost/unvl
 :unvlDir = /home/ogduartev/public_html/unvl
 
 :Compilation = TRUE

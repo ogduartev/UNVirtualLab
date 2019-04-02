@@ -1,10 +1,10 @@
 
 svg.plot
 {
-  width:300px;
-  height:200px;
+  width:320px;
+  height:320px;
   background-color:inherit;  
-  font-family: arial, times, serif;
+  font-family: inherit;
   font-weight: normal;
   font-style: normal;
 }
@@ -12,15 +12,15 @@ svg.plot
 rect.plot
 {
   fill:#ffffff;
-  stroke:#000000;
+  stroke:#ffffff;
   stroke-width:2px;
 }
 
 rect.frame
 {
-  fill:#eeeeee;
-  stroke:#000000;
-  stroke-width:2px;
+  fill:#FFFFFF;
+  stroke:#192C47;
+  stroke-width:7px;
 }
 
 rect.tag
@@ -32,15 +32,15 @@ rect.tag
 
 line.grid
 {
-  stroke:#333333;
-  stroke-dasharray: 3 3;
-  stroke-width:1px;
+  stroke:#CCCCCC;
+/*  stroke-dasharray: 3 3;*/
+  stroke-width:0.4px;
 }
 
 text.title
 {
-  font-size:14pt;
-  fill:#555555;
+  font-size:20pt;
+  fill:#192C47;
 }
 
 text.tagV
@@ -66,6 +66,6 @@ text.legend
 path.curve
 {
   fill:none;
-  stroke-width:1px;
+  stroke-width:0.5px;
 }
 

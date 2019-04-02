@@ -10,8 +10,8 @@ class SVGplot extends block
   var $totalHeight=200;
 
 // dims (%)
-  var $titleHeight=10;
-  var $plotHeight=80;
+  var $titleHeight=14;
+  var $plotHeight=76;
   var $legendHeight=5;
   var $framePositionX=20;
   var $framePositionY=5;
@@ -19,7 +19,10 @@ class SVGplot extends block
   var $frameHeight=85;
   var $tagHeight=10;
   var $tagWidth=20;
-  var $legendSeparation=20;
+  var $legendSeparation=5;
+  var $legendXseparation=15;
+  
+  var $legendSeparationYFactor=0.75;
   
 
 // data
@@ -66,7 +69,7 @@ class SVGplot extends block
   
   function title()
   {
-    $this->svgStr.="  <svg width='100%' height='".$this->titleHeight."%'>\n";
+    $this->svgStr.="  <svg width='".$this->frameWidth."%' height='".$this->titleHeight."%' x='".$this->framePositionX."%'>\n";
     $strTmp;
     $this->svgStr.="    <text class='title' x='50%' y='85%' text-anchor='middle'>".$this->title."</text>\n";
     $this->svgStr.="  </svg>\n";
@@ -150,7 +153,7 @@ class SVGplot extends block
     {
       $Y=($this->framePositionY)+$i*($this->frameHeight)/($this->gridY);
       $value=$this->strNum($this->minY+($this->maxY-$this->minY)*($this->gridY-$i)/($this->gridY));
-      $this->svgStr.="    <text class='tagV' x='90%' y='".$Y."%' text-anchor='end' >".$value."</text>\n";
+      $this->svgStr.="    <text class='tagV' x='80%' y='".$Y."%' text-anchor='end' >".$value."</text>\n";
     }
     $this->svgStr.="   </svg>\n";
   }
@@ -166,14 +169,14 @@ class SVGplot extends block
   
   function legend()
   {
-    $this->svgStr.="  <svg x='0%' y='".($this->plotHeight+$this->titleHeight)."%' width='100%' height='".(100-$this->plotHeight+$this->titleHeight)."%'>\n";
+    $this->svgStr.="  <svg x='0%' y='".($this->plotHeight+$this->titleHeight+$this->legendSeparation)."%' width='100%' height='".(100.0-$this->plotHeight-$this->titleHeight-+$this->legendSeparation)."%'>\n";
 //    $this->svgStr.="   <rect fill='red' x='0' y='0' width='100%' height='100%' />\n";
     $cnt=0;
     foreach($this->colors as $str=>$rgb)
     {
       $strTmp=$this->legends[$str];
       $strTmp.=" : (".$this->units[$str].") vs (".$this->unitsH.")";
-      $this->svgStr.="   <text class='legend' title='".$this->descriptions[$str]."' y='".(($cnt+0.5)*100/(count($this->legends)+3))."%' x='5%' style='fill:".$rgb.";text-anchor: top;;'>".$strTmp."</text>";
+      $this->svgStr.="   <text class='legend' title='".$this->descriptions[$str]."' y='".(($cnt+0.5)*100/(count($this->legends)/$this->legendSeparationYFactor+0))."%' x='".$this->legendXseparation."%' style='fill:".$rgb.";text-anchor: top;;'>".$strTmp."</text>";
       $cnt++;
     }
     $this->svgStr.="  </svg>\n";

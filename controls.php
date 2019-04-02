@@ -27,11 +27,13 @@ class controls extends block
     echo "      <td>\n";
     echo "        <div class=\"controls_change\" >\n";
     echo "          <input class='controls' name='parameter_id_".$data['parameter_id']."'  onchange=\"cambia(".$data['parameter_id'].");\"  autocomplete='off'>\n";
-    echo "          <svg class='controls' xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" onload='Init(evt);' onmousemove='Drag(evt);' onmouseup='Drop(evt);'>\n";
-    echo "           <rect id=\"C".$data['parameter_id']."\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\" class='control_back'/>\n";
-    $d=$this->datos[$data['parameter_id']];
+    echo "          <svg class='controls' xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" onload='Init(evt);' onmousemove='Drag(evt);' onmouseup='Drop(evt);' width='100%'>\n";
+    echo "           <rect id=\"C".$data['parameter_id']."\" x=\"0%\" y=\"37.5%\" rx=\"4\" ry=\"4\" width=\"100%\" height=\"25%\" class='control_back'/>\n";
+
+    $d=$this->datos[$data['parameter_id']];    
     $posx=($d['value']-$d['min'])/($d['max']-$d['min'])*100;
-    echo "            <rect id=\"B".$data['parameter_id']."\" onmousedown='Grab(evt,".$data['parameter_id'].")' x=\"".$posx."%\" y=\"1\" class='control_bar' width=\"5%\" height=\"100%\"/>\n";
+
+    echo "            <circle id=\"B".$data['parameter_id']."\" onmousedown='Grab(evt,".$data['parameter_id'].")'  cx=\"".$posx."%\" cy=\"50%\" r=\"6\"  class='control_bar'/>\n";
     echo "          </svg>\n";
     echo "        </div>\n";
     echo "      </td>\n";
@@ -376,14 +378,4 @@ class controls extends block
     }
   }
 }
-/*
-$M=new controls();
-if($M->connect())
-{
-  $M->display();
-}else
-{
-  echo "error en la conexión\n";
-}
-*/
 ?>

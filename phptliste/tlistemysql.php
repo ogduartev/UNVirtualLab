@@ -52,6 +52,8 @@ class tlistemysql {
     $this->initBar();
     $this->restoreNode();
     $this->saveNode();
+    $this->imagePath = $sqldata["dir_img"]."/ot";
+
   }  
   
   function getParameter( $sf ) 

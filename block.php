@@ -67,7 +67,7 @@ class block
 
   function validateValue($type,$par_id,$new_value,$default_value)
   {
-    if(isset($_POST['reset'])){return $default_value;}
+    if(isset($_REQUEST['reset'])){return $default_value;}
     switch($type)
     {
       case 'Integer':
@@ -198,12 +198,12 @@ class block
   
   function x_id($key)
   {
-    if(isset($_GET[$key]))
+    if(isset($_REQUEST[$key]))
     {
-      return $_GET[$key];
-    }elseif(isset($_POST[$key]))
+      return $_REQUEST[$key];
+    }elseif(isset($_REQUEST[$key]))
     {
-      return $_POST[$key];
+      return $_REQUEST[$key];
     }
     return 0;
   }
@@ -261,7 +261,7 @@ class block
   function display()
   {
     $model_id=$this->model_id();
-    echo $model_id;
+//    echo $model_id;
   }
 
   function logMessage($flag)
@@ -280,7 +280,7 @@ class block
     }
     
     $strDate = date("Y-m-d h:m:s.ms");
-    $strModel = "Model id: ".$_POST['modelid'];
+    $strModel = "Model id: ".$_REQUEST['modelid'];
     $strRemote= "Remote IP: ".$_SERVER['REMOTE_ADDR'];
     
     $sep="; ";

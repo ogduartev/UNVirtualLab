@@ -1,0 +1,8 @@
+<block id="unvl_admin" type="body" class="unvlfaqs">
+  <block id="UNVLheader" type="div" class="header" action="header"> </block>
+  <block id="UNVLbody" type="div" class="bodyfaqs">
+    <block id="UNVLfaqs" type="div" class="faqs" action="faqs"> </block>
+  </block>
+  <block id="UNVLfooter" type="div" class="footer" action="footer"> </block>
+</block>
+

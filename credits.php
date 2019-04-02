@@ -15,7 +15,6 @@ class credits extends block
     echo "  window.open('about.php?modelid='+modelid,'','scrollbars=yes,menubar=no,height=".$this->configurationSettings['aboutHeight'].",width=".$this->configurationSettings['aboutWidth'].",resizable=yes,toolbar=no,location=no,status=no');";
     echo "}";
     echo "</script>";
-/*    echo "<a onclick='about(\"".$model_id."\")'><img src='themes/".$this->configurationSettings['theme']."/img/info.png'></a>";*/
     echo "<a onclick='about(\"".$model_id."\")'><div class='credits'></div></a>";
   }
 }

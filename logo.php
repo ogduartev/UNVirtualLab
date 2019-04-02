@@ -9,4 +9,12 @@ class logo extends block
   }
 }
 
+class logosmall extends block
+{  
+  function display()
+  {
+    echo "<a href='info.php' target='_blank' class='logosmall'></a>\n";
+  }
+}
+
 ?>

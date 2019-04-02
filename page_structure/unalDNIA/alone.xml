@@ -1,16 +1,21 @@
 <block id="UNVLunvl" type="body" class="unvl">
   <block id="UNVLheader" type="div" class="header" action="header"> </block>
   <block id="UNVLbody" type="div" class="body">
-    <block id="UNVLtitle_frame" type="div" class="title_frame">
-      <block id="UNVLtitle" type="div" class="title" action="title"></block>
-      <block id="UNVLcredits" type="div" class="credits" action="credits"></block>
+    <block id="UNVLtitle_launch" type="div" class="title_launch_sim">
+      <block id="UNVLlaunchdoc" type="div" class="launchsmall_doc_sim" action="launchsmalldoc"></block>
+      <block id="UNVLlaunchinf" type="div" class="launchsmall_inf_sim" action="launchsmallinf"></block>
+    </block>
+    <block id="UNVLtitle_frame" type="div" class="title_frame_sim">
+      <block id="UNVLtitle" type="div" class="title_sim" action="title"></block>
+      <block id="UNVLdescription" type="div" class="description_sim" action="description"></block>
     </block>
     <block id="UNVLleft" type="div" class="left">
-      <block id="UNVLlogo" type="div" class="logounvl" action="logo"></block>
+      <block id="UNVLlogo" type="div" class="logounvlsim" action="logosmall"></block>
       <block id="UNVLcontrols" type="div" class="controlsAlone" action="controls"></block>
     </block>
     <block id="UNVLoutputs" type="div" class="outputsAlone" action="outputs">
       <block id="UNVLplots" type="div" class="plots" action="plots"></block>
+      <block id="UNVLbr"    type="br"></block>
       <block id="UNVLanim2d" type="div" class="anim2d" action="anim2d"></block>
       <block id="UNVLtables" type="div" class="tables" action="tables"></block>
     </block>

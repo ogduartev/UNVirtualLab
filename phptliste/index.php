@@ -10,13 +10,13 @@
 <?php 
 	$tree1 = new tliste("_1") ;
 	$tree2 = new tliste("_2", "txt/tliste2.txt") ;
-	$tree3 = new tlistemysql("_3") ;
+//	$tree3 = new tlistemysql("_3") ;
 ?>
 <table width="80%" border=2>
 <tr valign="top">
 <td width="33%"><?php  $tree1->display() ; ?></td>
 <td width="33%"><?php  $tree2->display() ; ?></td>
-<td width="33%"><?php  $tree3->display() ; ?></td>
+//<td width="33%"><?php  $tree3->display() ; ?></td>
 </tr>
 </body>
 </HTML>

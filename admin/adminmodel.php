@@ -27,6 +27,9 @@ class adminmodel extends adminblock
     $this->fields[]=array("dbname"=>"description",
                           "showname"=>$this->text("adminmodel_Description"),
                           "type"=>"longtext");
+    $this->fields[]=array("dbname"=>"bibliography",
+                          "showname"=>$this->text("adminmodel_Theory"),
+                          "type"=>"longtext");
     $this->fields[]=array("dbname"=>"enabled",
                           "showname"=>$this->text("adminmodel_Enabled"),
                           "type"=>"bool");

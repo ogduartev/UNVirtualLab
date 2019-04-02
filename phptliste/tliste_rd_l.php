@@ -96,7 +96,7 @@ class rd_l {
 	}
 
 	function draw($iNo, &$tli) 
-	{echo "<nobr>";
+	{//echo "<nobr>";
 	//	global $iOpen, $imagePath, $lnode, $url, $style ;
 		$s = "" ;
 
@@ -177,18 +177,23 @@ class rd_l {
 
 				if ($this->iS > -1) 
 				{
-					$s = $s . "</a>" ;
+//					$s = $s . "</a>" ;
 				}
 
 				$s = $s."&nbsp;" ;
 	
 				if ($this->sURL === "") 
 				{
-       	  $s = $s . "<span class=\"". $tli->style ."\">".$this->sDesc."</span>" ; /*OJO: aqui escribe la sección*/
+       	  $s = $s . "<span class=\"". $tli->style ."\">".$this->sDesc."</span></a>" ; /*OJO: aqui escribe la sección*/
 				}
 				else
 				{
-        	$s = $s."<a class=\"section_name\" href=\""  ;
+				  $class="jq_model";
+				  if($this->sURL=="?modelid=".$_REQUEST['modelid'])
+				  {
+				    $class.="_selected";
+				  }
+        	$s = $s."<a class=\"".$class."\" href=\""  ;
 					if ($this->sTarg === "_reload") 
 					{
 							$tt = $tli->_id."file=".$tli->sFile ;
@@ -199,7 +204,19 @@ class rd_l {
           }
           else 
           {
-          	$s = $s. $this->sURL ."\" " ;
+          	$s = $s. $this->sURL;
+/////////////// NODE-¿desplegado o recogido?
+							$l = $tli->lnode ;
+							if ($this->iS === 0) 
+							{
+								$l = $tli->lnode | (1 << $iNo) ;
+							}
+							else 
+							{
+								$l = $tli->lnode & ~(1 << $iNo) ;
+							}
+							$s = $s. "&" . $tli->_id."node=" . $l ."\"" ;
+////////////////
             	if ($this->sTarg != "") 
             	{
               	$s = $s . "target=\"" . $this->sTarg . "\" " ;

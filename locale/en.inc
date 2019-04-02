@@ -41,6 +41,7 @@ function strings()
   $strings["adminsection_Section_name"]                  = "Section name";
   $strings["adminsection_Enabled"]                       = "Enabled";
   $strings["adminsection_Description"]                   = "Description";
+  $strings["adminmodel_Theory"]                          = "Theory";
   $strings["adminsection_Daugther_sections"]             = "Daugther sections";
   $strings["adminsection_Models"]                        = "Models";
   $strings["adminsection_Model_name"]                    = "Model name";

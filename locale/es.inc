@@ -55,6 +55,7 @@ function strings()
   $strings["adminmodel_Model_title"]                     = "Título del modelo";
   $strings["adminmodel_Enabled"]                         = "Habilitado";
   $strings["adminmodel_Description"]                     = "Descripción";
+  $strings["adminmodel_Theory"]                          = "Teoría";
   $strings["adminmodel_Plots"]                           = "Figuras";
   $strings["adminmodel_2D_Animations"]                   = "Animaciones en 2D";
   $strings["adminmodel_Animation_name"]                  = "Nombre de la animación";

@@ -1,7 +1,9 @@
 <?php
 require_once('block.php');
+require_once('logo.php');
 require_once('menu.php');
 require_once('title.php');
+require_once('description.php');
 require_once('launch.php');
 require_once('credits.php');
 require_once('documentation.php');

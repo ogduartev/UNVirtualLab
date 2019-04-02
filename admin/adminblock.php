@@ -235,6 +235,7 @@ class adminblock extends block
     }
     echo "</table>\n";
     echo "<input type=\"hidden\" name=\"".$this->sectionidname."\" value=\"".$this->idvalue."\">\n";
+    echo "<input type=\"hidden\" name=\"_1node\" value=\"".$_REQUEST['_1node']."\">\n";
     echo "<div class=\"controls_buttons\">\n";
     echo "<input type=\"submit\" class=\"controls_button\" name=\"update\" value=\"".$this->text("adminblock_Update")."\"/>\n";
     echo "</div>\n";
@@ -257,7 +258,7 @@ class adminblock extends block
         echo "  <td class=\"update_name\">";
         echo $linea['NAME'];
         echo "  </td>\n";
-        echo "  <td class=\"update_name\">\n";
+        echo "  <td class=\"update_value\">\n";
         echo "   <form action=\"admin.php\" method=\"POST\">\n";
         echo "    <div class=\"controls_buttons\">\n";
         echo "     <input type=\"hidden\" name=\"".$rel['linkname']."\" value=\"".$linea['ID']."\">\n";
@@ -266,6 +267,7 @@ class adminblock extends block
         echo "     <input type=\"hidden\" name=\"delete_colid\" value=\"".$rel['id1']."\">\n";
         echo "     <input type=\"hidden\" name=\"delete_id\" value=\"".$linea['ID']."\">\n";
         echo "     <input type=\"submit\" class=\"controls_button\" name=\"delete\" value=\"".$this->text("adminblock_Delete")."\" onClick=\"return confirm('".$this->text("adminblock_Delete_confirm")."')\">\n";
+        echo "     <input type=\"hidden\" name=\"_1node\" value=\"".$_REQUEST['_1node']."\">\n";
         echo "    </div>\n";
         echo "   </form>\n";
         echo "  </td>";
@@ -276,7 +278,7 @@ class adminblock extends block
     echo "  <form action=\"admin.php\" method=\"post\">\n";
     echo "   <td class=\"update_name\">";
     echo "     <input type=\"text\" name=\"db_".$rel['showdbname']."\" value=\"".$this->text("adminblock_No_name")."\">\n";
-    echo "   </td><td class=\"update_name\">";
+    echo "   </td><td class=\"update_value\">";
     echo "    <div class=\"controls_buttons\">\n";
     echo "     <input type=\"hidden\" name=\"".$this->sectionidname."\" value=\"".$this->idvalue."\">\n";
 //    echo "     <input type=\"hidden\" name=\"".$rel['linkname']."\" value=\"".$rel['idvalue']."\">\n";
@@ -287,6 +289,7 @@ class adminblock extends block
       echo "     <input type=\"hidden\" name=\"db_".$rel['id3']."\" value=\"".$rel['idvalue3']."\">\n";
     }
     echo "     <input type=\"submit\" class=\"controls_button\" name=\"insert\" value=\"".$this->text("adminblock_Add")."\">\n";
+    echo "     <input type=\"hidden\" name=\"_1node\" value=\"".$_REQUEST['_1node']."\">\n";
     echo "    </div>\n";
     echo "   </td>";
     echo "  </form>\n";
@@ -332,7 +335,7 @@ class adminblock extends block
           $this->displayOneField($linea,$FF,"miniUpdate");
           echo "</td>\n";
         }
-        echo "  <td class=\"update_name\">\n";
+        echo "  <td class=\"update_value\">\n";
         echo "    <div class=\"controls_buttons\">\n";
         echo "     <input type=\"hidden\" name=\"".$this->sectionidname."\" value=\"".$this->idvalue."\">\n";
         echo "     <input type=\"hidden\" name=\"".$rel['linkname']."\" value=\"".$linea['ID']."\">\n";
@@ -341,6 +344,7 @@ class adminblock extends block
         echo "     <input type=\"hidden\" name=\"delete_colid\" value=\"".$rel['id1']."\">\n";
         echo "     <input type=\"hidden\" name=\"delete_id\" value=\"".$linea['ID']."\">\n";
         echo "     <input type=\"submit\" class=\"controls_button\" name=\"delete\" value=\"".$this->text("adminblock_Delete")."\" onClick=\"return confirm('".$this->text("adminblock_Delete_confirm")."')\">\n";
+        echo "     <input type=\"hidden\" name=\"_1node\" value=\"".$_REQUEST['_1node']."\">\n";
         echo "    </div>\n";
         echo "  </td>";
         echo "   </form>\n";
@@ -363,6 +367,7 @@ class adminblock extends block
       echo "     <input type=\"hidden\" name=\"db_".$rel['id2']."\" value=\"".$this->idvalue."\">\n";
       echo "     <input type=\"hidden\" name=\"db_".$this->varpar."_id\" value=\"".$linea['id']."\">\n";    
       echo "     <input type=\"submit\" class=\"controls_button\" name=\"insert\" value=\"".$this->text("adminblock_Add")."\">\n";
+      echo "     <input type=\"hidden\" name=\"_1node\" value=\"".$_REQUEST['_1node']."\">\n";
       echo "    </form>\n";
       echo "   </td>";
       echo " </tr>\n";
@@ -433,7 +438,7 @@ class adminblock extends block
           $F['value']=1;
         }
         $data=array();
-        echo "     <td class=\"update_value\">";
+        echo "     <td class=\"update_fixed\">";
         echo $this->displayOneField($data,$F,"checkUpdate");
         echo "       <input type=\"hidden\" name=\"tableLink\" value=\"".$rel['tableLink']."\">\n";
         echo "       <input type=\"hidden\" name=\"table2\" value=\"".$rel['table2']."\">\n";
@@ -441,11 +446,12 @@ class adminblock extends block
         echo "       <input type=\"hidden\" name=\"id2\" value=\"".$rel['id2']."\">\n";
         echo "       <input type=\"hidden\" name=\"idLink1\" value=\"".$rel['idLink1']."\">\n";
         echo "       <input type=\"hidden\" name=\"idLink2\" value=\"".$rel['idLink2']."\">\n";
+        echo "       <input type=\"hidden\" name=\"_1node\" value=\"".$_REQUEST['_1node']."\">\n";
         echo "</td>\n";
         foreach($rel['subfields'] AS $FF)
         {
-          echo "  <td class=\"update_value\">";
-          $this->displayOneField($linea,$FF,"mediumUpdate");
+          echo "  <td class=\"update_fixed\">";
+          $this->displayOneField($linea,$FF,"normalUpdate");
           echo "</td>\n";          
         }
         echo "    <td class=\"update_value\">\n";
@@ -471,6 +477,7 @@ class adminblock extends block
     echo "     <input type=\"hidden\" name=\"table2\" value=\"".$rel['table2']."\">\n";
     echo "     <input type=\"hidden\" name=\"idLink1\" value=\"".$rel['idLink1']."\">\n";
     echo "     <input type=\"hidden\" name=\"idLink2\" value=\"".$rel['idLink2']."\">\n";
+    echo "     <input type=\"hidden\" name=\"_1node\" value=\"".$_REQUEST['_1node']."\">\n";
     echo "   </td>\n";
     foreach($rel['subfields'] AS $FF)
     {

@@ -1,17 +1,16 @@
 <block id="UNVLunvl" type="body" class="unvl">
   <block id="UNVLheader" type="div" class="header" action="header"> </block>
+
   <block id="UNVLbody" type="div" class="body">
-    <block id="UNVLleft" type="div" class="left">
+    <block id="UNVLmenu" type="div" class="menuAlone" action="menu"></block>
+    <block id="UNVLFrame" type="div" class="unvlFrame">
       <block id="UNVLlogo" type="div" class="logounvl" action="logo"></block>
-      <block id="UNVLmenu" type="div" class="menuAlone" action="menu"></block>
-    </block>
-    <block id="UNVLtitle_frame" type="div" class="title_frame">
       <block id="UNVLtitle" type="div" class="title" action="title"></block>
-      <block id="UNVLlaunch" type="div" class="launch" action="launch"></block>
-      <block id="UNVLcredits" type="div" class="credits" action="credits"></block>
+      <block id="UNVLdescription" type="div" class="description" action="description"></block>
+      <block id="UNVLlaunch" type="div" class="launchButtons" action="launch"></block>
     </block>
-    <block id="UNVLdocumentation" type="div" class="documentationAlone" action="documentation"></block>
   </block>
+
   <block id="UNVLfooter" type="div" class="footer" action="footer"> </block>
 </block>
 

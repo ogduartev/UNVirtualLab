@@ -116,7 +116,7 @@ div.credits
   background:url('img/info.gif');
 }
 
-div.launch
+div.launchsmall
 {
   position: absolute;
   left:0px;
@@ -124,6 +124,37 @@ div.launch
   height:30px;
   background:url('img/launch.gif');
 }
+
+
+div.launchButtons
+{
+  position: absolute;
+  left:0px;
+  width:30px;
+  height:30px;
+  background:url('img/launch.gif');
+}
+
+div.launchSim
+{
+  position: relative;
+  display:block;
+  top:0px;
+  width:30px;
+  height:30px;
+  background-image:url('img/launch.gif');
+}
+
+div.launchDoc
+{
+  display:none;
+}
+
+div.launchInf
+{
+  display:none;
+}
+
 
 /*----------------------
 Menú
@@ -424,6 +455,11 @@ rect.control_back
  stroke:none;
 }
 
+circle.control_bar
+{
+ fill:#CC0000;
+ stroke:none;
+}
 
 select.controls
 {

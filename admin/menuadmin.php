@@ -7,6 +7,10 @@ class menuadmin extends block
   
   function display()
   {
+    if(!isset($_REQUEST["_1node"]))
+    {
+      $_REQUEST["_1node"]=1;
+    }
     $data=array();
     $data['class']="section_name";
     $data['table1']="sections";
@@ -20,6 +24,7 @@ class menuadmin extends block
     $data['help2']="description";
     $data['url']="block.php";
     $data['link_id2']="modelid";
+    $data['dir_img']="./themes/".$this->configurationSettings['theme']."/menuimg";
     $tree = new tlistemysql($this->link,"_1","","menumodel",$data,"") ;
     $tree->display();
   }

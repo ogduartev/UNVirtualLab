@@ -336,6 +336,12 @@ rect.control_back
 }
 
 
+circle.control_bar
+{
+ fill:#CC0000;
+ stroke:none;
+}
+
 select.controls
 {
   background-color:#ffffff;

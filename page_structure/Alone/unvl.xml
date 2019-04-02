@@ -5,7 +5,7 @@
     <block id="menu" type="div" class="menuAlone" action="menu"></block>
     <block id="title_frame" type="div" class="title_frame">
       <block id="title" type="div" class="title" action="title"></block>
-      <block id="launch" type="div" class="launch" action="launch"></block>
+      <block id="launch" type="div" class="launchsmall" action="launchsmall"></block>
       <block id="credits" type="div" class="credits" action="credits"></block>
     </block>
     <block id="documentation" type="div" class="documentationAlone" action="documentation"></block>
