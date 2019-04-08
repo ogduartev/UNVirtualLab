@@ -70,7 +70,7 @@ class abouttable extends block
     {
       if(file_exists("./files/".$this->model_id().$K))
       {
-        echo "<a href=\"./files/".$this->model_id().$K."\" target='_blank'>".$this->text($V)."<br>\n";
+        echo "<a class=\"unvlabout\" href=\"./files/".$this->model_id().$K."\" target='_blank'>".$this->text($V)."<br>\n";
       }
     }
     echo "  </td>\n";    

@@ -118,8 +118,6 @@ class block
        $f=file($fHtml);
        foreach($f as $linea)
        {
-         $linea=str_replace("href=\"","href=\"themes/".$this->configurationSettings['theme']."/",$linea);
-         $linea=str_replace("src=\"js","src=\"themes/".$this->configurationSettings['theme']."/js",$linea);
          echo $linea;
        }
     }
@@ -279,7 +277,7 @@ class block
       default : $strCase.="NN";break;
     }
     
-    $strDate = date("Y-m-d h:m:s.ms");
+    $strDate = gmdate("Y-m-d H:i:s.ms");
     $strModel = "Model id: ".$_REQUEST['modelid'];
     $strRemote= "Remote IP: ".$_SERVER['REMOTE_ADDR'];
     

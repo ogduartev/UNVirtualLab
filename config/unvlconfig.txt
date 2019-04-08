@@ -11,8 +11,8 @@
 
 :plotWidth = 320    # default is 300
 :plotHeight = 320   # default is 200
-:aboutWidth = 400
-:aboutHeight = 400
+:aboutWidth = 800
+:aboutHeight = 600
 :docWidth = 940
 :docHeight = 600
 

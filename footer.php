@@ -11,8 +11,6 @@ class footer extends block
        $f=file($fHtml);
        foreach($f as $linea)
        {
-         $linea=str_replace("href=\"images","href=\"themes/".$this->configurationSettings['theme']."/images",$linea);
-         $linea=str_replace("src=\"images" ,"src=\"themes/".$this->configurationSettings['theme']."/images",$linea);
          echo $linea;
        }
     }
