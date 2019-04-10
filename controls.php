@@ -32,6 +32,7 @@ class controls extends block
 
     $d=$this->datos[$data['parameter_id']];    
     $posx=($d['value']-$d['min'])/($d['max']-$d['min'])*100;
+    $posx=10 + 0.8*$posx;
 
     echo "            <circle id=\"B".$data['parameter_id']."\" onmousedown='Grab(evt,".$data['parameter_id'].")'  cx=\"".$posx."%\" cy=\"50%\" r=\"6\"  class='control_bar'/>\n";
     echo "          </svg>\n";
