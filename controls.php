@@ -28,7 +28,7 @@ class controls extends block
     echo "        <div class=\"controls_change\" >\n";
     echo "          <input class='controls' name='parameter_id_".$data['parameter_id']."'  onchange=\"cambia(".$data['parameter_id'].");\"  autocomplete='off'>\n";
     echo "          <svg class='controls' xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" onload='Init(evt);' onmousemove='Drag(evt);' onmouseup='Drop(evt);' width='100%'>\n";
-    echo "           <rect id=\"C".$data['parameter_id']."\" x=\"0%\" y=\"37.5%\" rx=\"4\" ry=\"4\" width=\"100%\" height=\"25%\" class='control_back'/>\n";
+    echo "           <rect id=\"C".$data['parameter_id']."\" onclick='clickBar(evt,".$data['parameter_id'].")' x=\"10%\" y=\"37.5%\" rx=\"4\" ry=\"4\" width=\"80%\" height=\"25%\" class='control_back'/>\n";
 
     $d=$this->datos[$data['parameter_id']];    
     $posx=($d['value']-$d['min'])/($d['max']-$d['min'])*100;
@@ -233,6 +233,45 @@ class controls extends block
     echo "  v[0].value=x.toString();\n";
     echo "  moverBarra(id,(x-inicialJS(id))/(maxi-mini));\n";
     echo "}\n";
+    
+    echo "function moverFinal(id)\n";
+    echo "{\n";
+    echo "  var c=document.getElementById(\"B\"+id);\n";
+    echo "  var r=document.getElementById(\"C\"+id);\n";
+    echo "  var x=0.5*(c.getBoundingClientRect().left + c.getBoundingClientRect().right);\n";
+    echo "  var xmin=r.getBoundingClientRect().left;\n";
+    echo "  var xmax=r.getBoundingClientRect().right;\n";
+    echo "  if(x<xmin)\n";
+    echo "  {\n";
+    echo "    cambia(id);\n";
+    echo "  }\n";
+    echo "  if(x>xmax)\n";
+    echo "  {\n";
+    echo "    cambia(id);\n";
+    echo "  }\n";
+    echo "}\n";
+    echo "function clickBar(evt,id)\n";
+    echo "{\n";
+    echo "  var xm=evt.clientX;\n";
+    echo "  var c=document.getElementById(\"B\"+id);\n";
+    echo "  var xc=0.5*(c.getBoundingClientRect().left + c.getBoundingClientRect().right);\n";
+    echo "  if(xm<xc)\n";
+    echo "  {\n";
+    echo "    cambio(id,-1);\n";
+    echo "  }else\n";
+    echo "  {\n";
+    echo "    cambio(id,1);\n";
+    echo "  }\n";
+    echo "}\n";
+    
+    
+    
+    
+    
+    
+    
+    
+    
     echo "function cambia(id)\n";
     echo "{\n";
     echo "  var mini=minimoJS(parseInt(id));\n";
@@ -316,6 +355,7 @@ class controls extends block
     echo "        }\n";
     echo "        function Drop(evt)\n";
     echo "        {\n";
+    echo "           moverFinal(id);\n";
     echo "           if ( DragTarget )\n";
     echo "           {\n";
     echo "             DragTarget.setAttributeNS(null, 'pointer-events', 'all');\n";
