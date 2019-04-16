@@ -46,7 +46,7 @@ class launch extends block
 
   function displayVideo()
   {
-      echo "    <video controls=\"controls\" src=\"info/inicio.ogv\" type=\"video/ogg\" class=\"unvlvideo\" poster=\"info/inicio_frame\">\n";
+      echo "    <video controls=\"controls\" src=\"info/inicio.mp4\" type=\"video/mp4\" class=\"unvlvideo\" poster=\"info/inicio_frame\">\n";
       echo $this->text("description_Select_an_experimentation_plant")."\n";
       echo "    </video>\n";
   }

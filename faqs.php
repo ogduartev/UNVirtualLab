@@ -10,7 +10,7 @@ class faqs extends block
     echo "   <script type=\"text/javascript\">\n";
     echo "   function video(fn)\n";
     echo "    {\n";
-    echo "      window.open('info/'+fn+'.ogv','','scrollbars=yes,menubar=no,height=372,width=656,resizable=yes,toolbar=no,location=no,status=no');\n";
+    echo "      window.open('info/'+fn+'.mp4','','scrollbars=yes,menubar=no,height=372,width=656,resizable=yes,toolbar=no,location=no,status=no');\n";
     echo "    }\n";
     echo "   </script>\n";
   
@@ -53,7 +53,7 @@ class faqs extends block
 
     echo "  <tr>\n";
     echo "   <td class='faqs_name'>5. ¿Dónde encuentro los experimentos sugeridos para realizar con la planta?</td> \n";
-    echo "   <td class='faqs_value'>Haga  </I>'<I>clic</I>' sobre el logo de ayuda. Se desplegará una ventana que contiene información sobre la planta experimental, entre la que se encuentra el listado de experimentos sugeridos.</td> \n";
+    echo "   <td class='faqs_value'>Haga  </I>'<I>clic</I>' sobre el ícono de información. Se desplegará una ventana que contiene información sobre la planta experimental, entre la que se encuentra el listado de experimentos sugeridos.</td> \n";
     echo "   <td class='faqs_video'>\n";
     echo "<a onclick='video(\"experimento\")'><img src=\"./themes/".$this->configurationSettings['theme']."/img/video.gif\"></a>\n";
     echo "   </td>\n";
@@ -61,7 +61,7 @@ class faqs extends block
 
     echo "  <tr>\n";
     echo "   <td class='faqs_name'>6. ¿Cómo descargo la documentación?</td> \n";
-    echo "   <td class='faqs_value'>Haga  </I>'<I>clic</I>' sobre el logo de ayuda. Se desplegará una ventana que contiene información sobre la planta experimental. En la línea marcada como  </I>'<I>Archivos</I>' encontrará el enlace a la  </I>'<I>Documentación</I>' que está en formato pdf. También puede utilizar las opciones de descarga del visualizador de pdf de su navegador, si este las tiene.</td> \n";
+    echo "   <td class='faqs_value'>Haga  </I>'<I>clic</I>' sobre el ícono de información. Se desplegará una ventana que contiene información sobre la planta experimental. En la línea marcada como  </I>'<I>Archivos</I>' encontrará el enlace a la  </I>'<I>Documentación</I>' que está en formato pdf. También puede utilizar las opciones de descarga del visualizador de pdf de su navegador, si este las tiene.</td> \n";
     echo "   <td class='faqs_video'>\n";
     echo "<a onclick='video(\"documenta\")'><img src=\"./themes/".$this->configurationSettings['theme']."/img/video.gif\"></a>\n";
     echo "   </td>\n";
@@ -69,28 +69,20 @@ class faqs extends block
 
     echo "  <tr>\n";
     echo "   <td class='faqs_name'>7. ¿Cómo descargo el código fuente de la simulación?</td> \n";
-    echo "   <td class='faqs_value'>Haga  </I>'<I>clic</I>' sobre el logo de ayuda. Se desplegará una ventana que contiene información sobre la planta experimental. En la línea marcada como  </I>'<I>Archivos</I>' encontrará el enlace a los  </I>'<I>Archivos Modelica</I>', que aparecen comprimidos en un único archivo en formato tar.gz.</td> \n";
+    echo "   <td class='faqs_value'>Haga  </I>'<I>clic</I>' sobre el ícono de información. Se desplegará una ventana que contiene información sobre la planta experimental. En la línea marcada como  </I>'<I>Archivos</I>' encontrará el enlace a los  </I>'<I>Archivos Modelica</I>', que aparecen comprimidos en un único archivo en formato tar.gz.</td> \n";
     echo "   <td class='faqs_video'>\n";
     echo "<a onclick='video(\"fuente\")'><img src=\"./themes/".$this->configurationSettings['theme']."/img/video.gif\"></a>\n";
     echo "   </td>\n";
     echo "   </tr>\n";
 
     echo "  <tr>\n";
-    echo "   <td class='faqs_name'>8. ¿Cómo inserto la planta de experimentación en un documento SCORM o HTML?</td> \n";
-    echo "   <td class='faqs_value'>Haga  </I>'<I>clic</I>' sobre el logo de ayuda. Se desplegará una ventana que contiene información sobre la planta experimental. En la línea marcada como  </I>'<I>Modelo</I>', bajo la marca  </I>'<I>Enlaces para incrustar</I>' encontrará el  código en lenguaje HTML que necesita para incrustar en su documento el experimento. Este código genera un frame interno que contiene todos los instrumentos de la planta, es decir, que contiene tanto los controles como visualizadores.</td> \n";
+    echo "   <td class='faqs_name'>8. ¿Cómo inserto la planta de experimentación o su documentación en un documento SCORM o HTML?</td> \n";
+    echo "   <td class='faqs_value'>Haga  </I>'<I>clic</I>' sobre el ícono de información. Se desplegará una ventana que contiene información sobre la planta experimental. En las líneas marcadas como  </I>'<I>Enlaces para incrustar</I>' encontrará el  código en lenguaje HTML que necesita para incrustar en su documento el experimento o la documentación.</td> \n";
     echo "   <td class='faqs_video'>\n";
     echo "<a onclick='video(\"scorm\")'><img src=\"./themes/".$this->configurationSettings['theme']."/img/video.gif\"></a>\n";
     echo "   </td>\n";
     echo "   </tr>\n";
 
-    echo "  <tr>\n";
-    echo "   <td class='faqs_name'>9. ¿Cómo inserto la documentación en un documento SCORM o HTML?</td> \n";
-    echo "   <td class='faqs_value'>Haga  </I>'<I>clic</I>' sobre el logo de ayuda. Se desplegará una ventana que contiene información sobre la planta experimental. En la línea marcada como  </I>'<I>Documentación</I>', bajo la marca  </I>'<I>Enlaces para incrustar</I>' encontrará el  código en lenguaje HTML que necesita para incrustar en su documento la documentación de la planta. También puede emplear el enlace de la línea  </I>'<I>Pdf</I>' para enlazar directamente el archivo pdf correspondiente.</td> \n";
-    echo "   <td class='faqs_video'>\n";
-    echo "<a onclick='video(\"scormdoc\")'><img src=\"./themes/".$this->configurationSettings['theme']."/img/video.gif\"></a>\n";
-    echo "   </td>\n";
-
-    echo "   </tr>\n";
     echo "  <tr>\n";
     echo "   <td class='faqs_name'>10. ¿Cómo incorporo más controles, gráficas o animaciones?</td> \n";
     echo "   <td class='faqs_value'>Esta opción sólo está disponible para el administrador del sitio.</td> \n";
