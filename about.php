@@ -83,13 +83,13 @@ class abouttable extends block
     echo "  <th colspan=2 class='about_title'>".$this->text('about_Links_for_embedding')."</th>\n";
     echo " </tr>\n";
     $links_data=array();
-    $links_data[$this->text("about_Model")]="&lt;iframe src=\"http://".$this->configurationSettings['URLbase'].
+    $links_data[$this->text("about_Model")]="&lt;iframe src=\"".$this->configurationSettings['URLbase'].
                                                    "/embed.php?modelid=".$this->model_id()."\" width=940 height=400&gt;&lt;/iframe&gt;";
     if(file_exists("./files/".$this->model_id()."/doc/documentation.pdf"))
     {
-      $links_data[$this->text("about_Documentation")]="&lt;iframe src=\"http://".$this->configurationSettings['URLbase'].
+      $links_data[$this->text("about_Documentation")]="&lt;iframe src=\"".$this->configurationSettings['URLbase'].
                                                           "/doc.php?modelid=".$this->model_id()."\" width=940 height=400&gt;&lt;/iframe&gt;";
-      $links_data[$this->text("about_Pdf")]="http://".$this->configurationSettings['URLbase'].
+      $links_data[$this->text("about_Pdf")]="".$this->configurationSettings['URLbase'].
                                                  "/files/".$this->model_id()."/doc/documentation.pdf";
     }
     foreach($links_data as $K=>$V)

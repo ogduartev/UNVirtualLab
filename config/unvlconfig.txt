@@ -25,7 +25,7 @@
 
 :UNVLadmin = adminUNVL
 :UNVLadminpass = adminpassword
-:URLbase = localhost/unvl
+:URLbase = http://localhost/unvl
 :unvlDir = /home/ogduartev/public_html/unvl
 
 :Compilation = TRUE
