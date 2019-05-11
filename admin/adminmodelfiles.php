@@ -200,8 +200,11 @@ class adminmodelfiles extends block
   function varsInResCsv($fn)
   {
     $f=file($fn);
-    $f=str_replace(",\n","",$f);
-    $dataName=explode(',',str_replace('"','',$f[0]));
+    $l=$f[0];
+    $l=str_replace(",\n", "", $l);
+    $l=str_replace("\n" , "", $l);
+    $l=str_replace('"'  , '', $l);
+    $dataName=explode(',',$l);
     return $dataName;  
   }
   
