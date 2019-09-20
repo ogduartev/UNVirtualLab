@@ -7,8 +7,10 @@
     </block>
     <block id="controls" type="div" class="controlsEmbed" action="controls"></block>
     <block id="outputs" type="div" class="outputsEmbed" action="outputs">
-      <block id="plots" type="div" class="plots" action="plots"></block>
       <block id="anim2d" type="div" class="anim2d" action="anim2d"></block>
+      <block id="UNVLbr"    type="br"></block>
+      <block id="plots" type="div" class="plots" action="plots"></block>
+      <block id="UNVLbr"    type="br"></block>
       <block id="tables" type="div" class="tables" action="tables"></block>
     </block>
     <block id="erase" type="div" class="erase" action="erase"></block>

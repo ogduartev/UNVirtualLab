@@ -5,6 +5,7 @@ class export
 {
   var $tables;
   var $configurationSettings;
+  var $link;
                          
   function export()
   {
@@ -19,10 +20,10 @@ class export
     $userpass="";
     $username=$this->configurationSettings['DBuser'];
     $userpass=$this->configurationSettings['DBuserpass'];
-    if($link=mysql_connect($this->configurationSettings['DBserver'],$username,$userpass))
+    if($this->link=mysqli_connect($this->configurationSettings['DBserver'],$username,$userpass))
     {
       $sql="USE ".$this->configurationSettings['DBname'];
-      if(!mysql_query($sql))
+      if(!mysqli_query($this->link,$sql))
       {
         echo $this->text('about_No_Database_connection');
         return FALSE;
@@ -31,7 +32,7 @@ class export
     {
       return FALSE;
     }
-    return $link;
+    return $this->link;
   }
   
   function exportLine($table,$line)
@@ -45,10 +46,10 @@ class export
   {
     $modellers_id=array();
     $sql="SELECT * FROM modellers_models WHERE model_id='".$id."'";
-    $result=mysql_query($sql) or die(mysql_error()." ".$sql);
-    if($result and mysql_num_rows($result)>0)
+    $result=mysqli_query($this->link,$sql) or die(mysqli_error($this->link)." ".$sql);
+    if($result and mysqli_num_rows($result)>0)
     {
-      while($line=mysql_fetch_array($result,MYSQL_ASSOC))
+      while($line=mysqli_fetch_array($result,MYSQLI_ASSOC))
       {
         $modellers_id[]=$line["modeller_id"];
         $this->exportLine("modellers_models",$line);
@@ -61,10 +62,10 @@ class export
   {
     $array_id=array();
     $sql="SELECT * FROM ".$tn." WHERE ".$idn."='".$id."'";
-    $result=mysql_query($sql) or die(mysql_error()." ".$sql);
-    if($result and mysql_num_rows($result)>0)
+    $result=mysqli_query($this->link,$sql) or die(mysqli_error($this->link)." ".$sql);
+    if($result and mysqli_num_rows($result)>0)
     {
-      while($line=mysql_fetch_array($result,MYSQL_ASSOC))
+      while($line=mysqli_fetch_array($result,MYSQLI_ASSOC))
       {
         $array_id[]=$line["id"];
         $this->exportLine($tn,$line);
@@ -76,10 +77,10 @@ class export
   function exportTable($tn,$idn,$id)
   {
     $sql="SELECT * FROM ".$tn." WHERE ".$idn."='".$id."'";
-    $result=mysql_query($sql) or die(mysql_error()." ".$sql);
-    if($result and mysql_num_rows($result)>0)
+    $result=mysqli_query($this->link,$sql) or die(mysqli_error($this->link)." ".$sql);
+    if($result and mysqli_num_rows($result)>0)
     {
-      while($line=mysql_fetch_array($result,MYSQL_ASSOC))
+      while($line=mysqli_fetch_array($result,MYSQLI_ASSOC))
       {
         $this->exportLine($tn,$line);
       }
@@ -95,10 +96,10 @@ class export
       $sql.=$idn."='".$id."' OR ";
     }
     $sql=substr($sql,0,strlen($sql)-4);
-    $result=mysql_query($sql) or die(mysql_error()." ".$sql);
-    if($result and mysql_num_rows($result)>0)
+    $result=mysqli_query($this->link,$sql) or die(mysqli_error($this->link)." ".$sql);
+    if($result and mysqli_num_rows($result)>0)
     {
-      while($line=mysql_fetch_array($result,MYSQL_ASSOC))
+      while($line=mysqli_fetch_array($result,MYSQLI_ASSOC))
       {
         $this->exportLine($tn,$line);
       }

@@ -139,6 +139,7 @@ function strings()
   $strings["admin2deffect_RGB_maximum_color"]            = "RGB maximum color";
   $strings["admin2deffect_Minimum_color_value"]          = "Minimum color value";
   $strings["admin2deffect_Maximum_color_value"]          = "Maximum color value";
+  $strings["admin2deffect_Sequence"]                     = "Sequence";
   $strings["adminpractice_Practice"]                     = "Suggested experiment";
   $strings["adminpractice_Identifier"]                   = "Identifier";
   $strings["adminpractice_Practice_name"]                = "Experiment name";

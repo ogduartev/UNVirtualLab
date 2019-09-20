@@ -14,9 +14,10 @@
       <block id="UNVLcontrols" type="div" class="controlsAlone" action="controls"></block>
     </block>
     <block id="UNVLoutputs" type="div" class="outputsAlone" action="outputs">
+      <block id="UNVLanim2d" type="div" class="anim2d" action="anim2d"></block>
+      <block id="UNVLbr"    type="br"></block>
       <block id="UNVLplots" type="div" class="plots" action="plots"></block>
       <block id="UNVLbr"    type="br"></block>
-      <block id="UNVLanim2d" type="div" class="anim2d" action="anim2d"></block>
       <block id="UNVLtables" type="div" class="tables" action="tables"></block>
     </block>
     <block id="UNVLerase" type="div" class="erase" action="erase"></block>

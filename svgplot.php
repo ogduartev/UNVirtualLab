@@ -252,12 +252,12 @@ class SVGplot extends block
       }
       if($this->autoscaleY==1)
       {
-        $this->minY=min($mnY)*0.99;
-        $this->maxY=max($mxY)*1.01;
-        if( (($this->maxY-$this->minY)/$this->minY) < 0.01)
+        $this->minY=min($mnY)*0.9;
+        $this->maxY=max($mxY)*1.1;
+        if( (($this->maxY-$this->minY)/$this->minY) < 0.1)
         {
-          $this->minY=$this->minY*0.99;
-          $this->maxY=$this->maxY*1.01;
+          $this->minY=$this->minY*0.9;
+          $this->maxY=$this->maxY*1.1;
         }
       }
     }

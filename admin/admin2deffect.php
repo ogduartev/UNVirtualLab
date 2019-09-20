@@ -63,6 +63,9 @@ class admin2deffect extends adminblock
     $this->fields[]=array("dbname"=>"colorMax",
                           "showname"=>$this->text("admin2deffect_Maximum_color_value"),
                           "type"=>"float");
+    $this->fields[]=array("dbname"=>"sequence",
+                          "showname"=>$this->text("admin2deffect_Sequence"),
+                          "type"=>"int");
   }  
   
   function createRelations1N()
