@@ -275,6 +275,7 @@ class adminreports extends adminblock
     echo "        <div class='admin_reports_table_model'>\n";
     if(file_exists($fn))
     {
+      echo date ("Y/m/d", filemtime($fn));
       $this->showTable($fn,"\t");
     }
     echo "        </div>\n";
@@ -283,6 +284,7 @@ class adminreports extends adminblock
     echo "  <div class='admin_reports_table_country'>\n";
     if(file_exists($fn))
     {
+      echo date ("Y/m/d", filemtime($fn));
       $this->showTable($fn,"\t");
     }
     echo "  </div>\n";
