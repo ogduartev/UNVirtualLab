@@ -27,10 +27,8 @@ class adminreports extends adminblock
 
 	function getPais($ip)
 	{
-		$orden="geoiplookup ".$ip." > ppp.txt";
-		passthru($orden);
-		$f=file($this->configurationSettings['unvlDir']."/logs/ppp.txt");
-		$l=$f[0];
+		$orden="geoiplookup ".$ip;
+		$l=exec($orden);
 		$p=str_replace("GeoIP Country Edition: ","",$l);
 		$p=str_replace("\n","",$p);
 		$pos=strpos($p,", ")+2;
@@ -298,28 +296,36 @@ class adminreports extends adminblock
     echo "          <select class='admin_report_month' name='adminreport_ini_month'>\n";
     for($i=1;$i<13;$i++)
     {
-      echo "            <option>".$i."\n";
+      $selected="";
+      if(isset($_POST['adminreport_ini_month']) and $_POST['adminreport_ini_month']==$i){$selected="selected";}
+      echo "            <option ".$selected.">".$i."\n";
     }
     echo "          </select>";
     echo "         <span>".$this->text('adminreports_Initial_year')."</span>\n";
     echo "          <select class='admin_report_month' name='adminreport_ini_year'>\n";
     for($i=2019;$i<2030;$i++)
     {
-      echo "            <option>".$i."\n";
+      $selected="";
+      if(isset($_POST['adminreport_ini_year']) and $_POST['adminreport_ini_year']==$i){$selected="selected";}
+      echo "            <option ".$selected.">".$i."\n";
     }
     echo "          </select>";
    echo "         <span>".$this->text('adminreports_Final_month')."</span>\n";
     echo "          <select class='admin_report_motnh' name='adminreport_fin_month'>\n";
     for($i=1;$i<13;$i++)
     {
-      echo "            <option>".$i."\n";
+      $selected="";
+      if(isset($_POST['adminreport_fin_month']) and $_POST['adminreport_fin_month']==$i){$selected="selected";}
+      echo "            <option ".$selected.">".$i."\n";
     }
     echo "          </select>";
     echo "         <span>".$this->text('adminreports_Final_year')."</span>\n";
     echo "          <select class='admin_report_motnh' name='adminreport_fin_year'>\n";
     for($i=2019;$i<2030;$i++)
     {
-      echo "            <option>".$i."\n";
+      $selected="";
+      if(isset($_POST['adminreport_fin_year']) and $_POST['adminreport_fin_year']==$i){$selected="selected";}
+      echo "            <option ".$selected.">".$i."\n";
     }
     echo "          </select>";
     echo "         <span><input type='submit' name='reportupdate' class='admin_button' value='".$this->text('adminreports_Update')."'></span>\n";
@@ -334,6 +340,12 @@ class adminreports extends adminblock
     if(isset($_POST['reportupdate']))
     {
       $this->updateCsv();
+    }else
+    {
+      $_POST['adminreport_ini_month']=4;
+      $_POST['adminreport_ini_year']=2019;
+      $_POST['adminreport_fin_month']=date("n");
+      $_POST['adminreport_fin_year']=date("Y");
     }
     $this->displayTables();
     $this->displayControls();
