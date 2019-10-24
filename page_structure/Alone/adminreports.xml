@@ -1,8 +1,7 @@
 <block id="unvl_admin" type="body" class="unvl_admin">
   <block id="body_admin" type="div" class="body_admin">
     <block id="logo" type="div" class="logo" action="logo"></block>
-    <block id="adminbuttons" type="div" class="admin_buttons" action="adminbuttons"></block>
-    <block id="menuadmin" type="div" class="menu" action="menuadmin"></block>
+    <block id="adminreports" type="div" class="admin_reports" action="adminreports"></block>
   </block>
 </block>
 

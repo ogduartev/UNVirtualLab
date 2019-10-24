@@ -901,7 +901,7 @@ div.admin_logout
   border:0px solid #000000;
   position:absolute;
   left:10px;
-  top:320px;
+  top:600px;
   width:209px;
   height:25px;
   text-align:center;
@@ -921,9 +921,85 @@ input.logout_button
   font-size:1.0em;
 }
 
+/* ADMIN BUTTONS */
+
+div.admin_buttons
+{
+  background-color:transparent;
+  border:0px solid #000000;
+  position:absolute;
+  left:10px;
+  top:320px;
+  width:209px;
+  height:25px;
+  text-align:center;
+}
+
+input.admin_button
+{
+  background-color:#dddddd;
+  border: solid 1px #000000;
+  position:relative;
+  float:center;
+  color:#000000;
+  margin-left:auto;
+  margin-right:auto;
+  width:150px;
+  height:25px;
+  font-size:1.0em;
+}
+
 video.unvlvideo
 {
   width: 100%;
   height: auto;
 }
+
+/* ADMIN_REPORTS  */
+div.admin_reports
+{
+	background-color:inherit;
+	margin-left:auto;
+	margin-right:auto;
+	width:95%;
+	margin-top:10px;
+	height: 500px;
+}
+
+div.admin_reports_table_model
+{
+  position: absolute;
+  width:45%;
+  height:400px;
+  top:80px;
+  left: 20px;
+  overflow-x:auto;
+  overflow-y:auto;
+  border:1px solid #000000;
+}
+
+div.admin_reports_table_country
+{
+  position: absolute;
+  width:45%;
+  height:400px;
+  top:80px;
+  right: 20px;
+  overflow-x:auto;
+  overflow-y:auto;
+  border:1px solid #000000;
+}
+
+div.admin_reports_controls
+{
+	background-color:inherit;
+	text-align:center;
+	margin-left:auto;
+	margin-right:auto;
+	width:95%;
+	margin-top:450px;
+	height: 100px;
+	padding-top:10px;
+}
+
 

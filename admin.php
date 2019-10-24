@@ -2,6 +2,8 @@
 require_once('block.php');
 require_once('admin/adminlogin.php');
 require_once('admin/adminlogout.php');
+require_once('admin/adminbuttons.php');
+require_once('admin/adminreports.php');
 require_once('admin/session.php');
 require_once('admin/menuadmin.php');
 require_once('admin/adminmodel.php');
@@ -13,7 +15,6 @@ require_once('admin/adminpractice.php');
 require_once('admin/adminmodelfiles.php');
 require_once('admin/adminsection.php');
 require_once('admin/databasemanager.php');
-
 
 $B=new block();
 $B->connect();
@@ -53,6 +54,9 @@ if($B->link)
   {
     $xmlFN="page_structure/".$pageStructure."/login.xml";
     session_unset();
+  }elseif(isset($_POST['reportsubmit']) and !isset($_POST['loginsubmit']))
+  {
+    $xmlFN="page_structure/".$pageStructure."/adminreports.xml";
   }elseif($section_id > 0)
   {
     $xmlFN="page_structure/".$pageStructure."/adminsection.xml";

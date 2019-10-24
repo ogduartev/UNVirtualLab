@@ -165,7 +165,15 @@ function strings()
   $strings["adminlogin_User"]                            = "Usuario";
   $strings["adminlogin_Password"]                        = "Clave";
   
+  $strings["adminlogout_Reports"]                        = "Reportes";
   $strings["adminlogout_Logout"]                         = "Cerrar sesión";
+
+  $strings["adminreports_Update"]                        = "Actualizar";
+  $strings["adminreports_Return"]                        = "Regresar";
+  $strings["adminreports_Initial_month"]                 = "Mes inicial";
+  $strings["adminreports_Initial_year"]                  = "Año inicial";
+  $strings["adminreports_Final_month"]                   = "Mes final";
+  $strings["adminreports_Final_year"]                    = "Año final";
 
   $strings["loggin_Simulation_Starts"]                   = "Inicio de simulación";
   $strings["loggin_Simulation_Ends"]                     = "Final de simulación ";
